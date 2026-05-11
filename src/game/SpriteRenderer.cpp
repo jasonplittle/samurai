@@ -9,10 +9,10 @@ SpriteRenderer::SpriteRenderer()
     };
 
     float verticies[] = {
-        -0.5f, 0.f, 0.0f, 0.0f,
-         0.5f, 0.f, 1.0f, 0.0f,
-         0.5f, 1.f, 1.0f, 1.0f,
-        -0.5f, 1.f, 0.0f, 1.0f
+        -0.5f, -0.5f, 0.0f, 0.0f,
+         0.5f, -0.5f, 1.0f, 0.0f,
+         0.5f,  0.5f, 1.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f, 1.0f
     };
 
     m_shader = std::make_unique<Shader>("src/renderer/shaders/Texture.shader");
@@ -29,33 +29,39 @@ SpriteRenderer::SpriteRenderer()
 }
 
 
-void SpriteRenderer::Render(const Sprite& sprite, glm::vec2 screenSize, glm::vec2 cameraPos, glm::vec2 modelSize, glm::vec2 modelPos)
-{
+void SpriteRenderer::Render(
+    const Sprite& sprite, 
+    glm::vec2 spriteCellCoords, 
+    bool flipX, 
+    glm::vec2 cameraPos, 
+    glm::vec2 screenSize, 
+    glm::vec2 modelPos, 
+    glm::vec2 modelSize
+){
     Renderer renderer;
 
-    float zoomX = screenSize.x * 0.5 * 0.75;
-    float zoomY = screenSize.y * 0.5 * 0.75;
+    float zoomX = screenSize.x * 0.5;
+    float zoomY = screenSize.y * 0.5;
+
+    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelPos.x, modelPos.y, 0.0));
+    model = glm::scale(model, glm::vec3(modelSize.x, modelSize.y, 0.0f));
+
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraPos.x, -cameraPos.y, 0));
 
     glm::mat4 projection = glm::ortho(-zoomX, zoomX, -zoomY, zoomY, -1.0f, 1.0f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraPos.x, -cameraPos.y, 0));
-    glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(player.GetPlayerPosition().x, player.GetPlayerPosition().y, 0.0));
-    model = glm::scale(model, glm::vec3(player.GetPlayerSize().x, player.GetPlayerSize().y, 0.0f));
+
     glm::mat4 mvp = projection * view * model;
 
+    
+    m_shader->Bind();
+    m_shader->SetUniformMat4f("u_MVP", mvp);
+    m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-    for (const auto& sprite : player.GetSprites())
-    {
-        Vec4 color = sprite->GetColor();
-        Vec4 uv = sprite->GetAtlasCoords(!player.IsMovingRight());
-        
-        m_shader->Bind();
-        m_shader->SetUniformMat4f("u_MVP", mvp);
-        m_shader->SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
-        m_shader->SetUniform4f("u_UV", uv.x, uv.y, uv.z, uv.w);
-        
-        sprite->GetTexture().Bind();
-        m_shader->SetUniform1i("u_Texture", 0);
-        renderer.Draw(*m_vertexArray, *m_indexBuffer, *m_shader);
-    }
+    glm::vec4 uv = sprite.GetUV(spriteCellCoords, flipX);
+    m_shader->SetUniform4f("u_UV", uv.x, uv.y, uv.z, uv.w);
+
+    sprite.GetTexture().Bind();
+    m_shader->SetUniform1i("u_Texture", 0);
+    renderer.Draw(*m_vertexArray, *m_indexBuffer, *m_shader);
 }
 

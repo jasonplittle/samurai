@@ -18,7 +18,15 @@ class SpriteRenderer
 public:
     SpriteRenderer();
 
-    void Render(const Sprite& sprite, const glm::vec2& screenSize);
+    void Render(
+        const Sprite& sprite, 
+        glm::vec2 spriteCellCoords, 
+        bool flipX, 
+        glm::vec2 cameraPos, 
+        glm::vec2 screenSize, 
+        glm::vec2 modelPos, 
+        glm::vec2 modelSize
+    );
 
 private:
     std::unique_ptr<Shader> m_shader;
@@ -26,5 +34,4 @@ private:
     std::unique_ptr<VertexArray> m_vertexArray;
     std::unique_ptr<IndexBuffer> m_indexBuffer;
     std::unique_ptr<VertexBuffer> m_vertexBuffer;
-
 };

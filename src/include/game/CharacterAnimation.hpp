@@ -26,6 +26,9 @@ public:
     CharacterAnimation(CharacterState initState, AnimationSet animationSet) : m_currentState(initState), m_animationSet(animationSet) {};
     void Update(float dt, CharacterState characterState);
 
+    int GetCurrentFrame() const { return m_currentFrame; }
+    const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentState).Sprite; }
+
 private:
     CharacterState m_currentState;
     AnimationSet m_animationSet;

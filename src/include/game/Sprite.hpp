@@ -13,16 +13,9 @@ public:
     Sprite(const std::string& textureFilePath, glm::vec2 cellSize);
 
     const Texture& GetTexture() const { return *m_texture; }
-
-    glm::vec4 GetAtlasCoords(bool flipX) const;
-    void SetAtlasPosition(int atlasPosition) { m_atlasPosition = atlasPosition; }
-    glm::vec4 GetColor() const { return m_color; }
-    void SetColor(glm::vec4 color) { m_color = color; }
+    glm::vec4 GetUV(glm::vec2 cellCoords, bool flipX) const;
     
 private:
     std::unique_ptr<Texture> m_texture;
-    glm::vec2 m_spriteSize;
-    glm::vec4 m_color = { 1.0, 1.0, 1.0, 1.0 };
-
-    glm::vec2 m_spriteTextureSize;
+    glm::vec2 m_cellSize;
 };

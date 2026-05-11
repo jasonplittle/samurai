@@ -66,6 +66,8 @@ int main()
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
 
+    SpriteRenderer spriteRenderer;
+
 
     
     while (!glfwWindowShouldClose(window))
@@ -98,7 +100,17 @@ int main()
         playerController.Update(dt);
         playerAnimation.Update(dt, player.GetState());
 
-        
+        spriteRenderer.Render(
+            playerAnimation.GetCurrentSprite(), 
+            glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
+            player.IsFacingRight(),
+            player.GetPosition(),
+            VIRTUAL_SCEEEN,
+            player.GetPosition(),
+            player.GetSize()
+        );
+
+    
 
         glfwSwapBuffers(window);
 		glfwPollEvents();
