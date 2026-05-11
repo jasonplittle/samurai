@@ -5,6 +5,7 @@
 enum class CharacterState
 {
     Idle,
+    Walk,
     Run,
     Jump,
     Attack,
@@ -14,25 +15,26 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() : m_characterState(CharacterState::Idle), m_size(96, 96) {};
+    Character() : m_state(CharacterState::Idle), m_size(96, 96) {};
     ~Character() = default;
 
-    // virtual void Attack() = 0;
-    // virtual void Jump() = 0;
+    void Update(float dt, bool animationFinished);
 
-    void Attack() {};
-    void Jump() {};
+    void Attack() { m_state = CharacterState::Attack; }
+    void Jump() { m_state = CharacterState::Jump; };
+    void Idle() { m_state = CharacterState::Idle; };
+    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; };
+    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; };
 
-    CharacterState GetState() const { return m_characterState; }
-
+    CharacterState GetState() const { return m_state; }
 
     glm::vec2 GetPosition() const { return m_pos; }
     glm::vec2 GetSize() const { return m_size; }
 
-    bool IsFacingRight() { return true; }
+    bool IsFacingRight() { return m_isFacingRight; }
 
 protected:
-    CharacterState m_characterState;
+    CharacterState m_state;
 
     glm::vec2 m_pos;
     glm::vec2 m_vel;
@@ -40,6 +42,7 @@ protected:
 
     bool m_grounded;
     bool m_attacking;
+    bool m_isFacingRight;
 
     int m_health;
 

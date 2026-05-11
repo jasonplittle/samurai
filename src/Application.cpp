@@ -11,8 +11,7 @@
 
 #include "Renderer.hpp"
 #include "Input.hpp"
-// #include "PlayerController.hpp"
-
+#include "PlayerController.hpp"
 #include "Character.hpp"
 #include "CharacterAnimation.hpp"
 #include "SamuraiAnimationFactory.hpp"
@@ -20,7 +19,6 @@
 
 
 constexpr glm::vec2 VIRTUAL_SCEEEN = { 1280.0f, 720.0f };
-
 
 int main()
 {
@@ -64,13 +62,13 @@ int main()
     float dt;
 
     Character player;
-    // PlayerController playerController(player);
+    PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
 
     SpriteRenderer spriteRenderer;
 
-
+    InputState inputState;
     
     while (!glfwWindowShouldClose(window))
     {
@@ -82,30 +80,19 @@ int main()
         dt = currentTime - lastTime;
         lastTime = currentTime;
 
+        inputState.left = Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT);
+        inputState.right = Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT);
+        inputState.jump = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
+        inputState.attack = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
 
-        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT)) 
-        //     playerController.MoveLeft();
-    
-        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT));
-        //     playerController.MoveRight();
-
-        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN));
-        //     playerController.MoveDown();
-
-        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_UP))
-        //     playerController.Jump();
-
-        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE))
-        //     playerController.Attack();
-        
-
-        // playerController.Update(dt);
+        playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
+        player.Update(dt, playerAnimation.IsFinished());
 
         spriteRenderer.Render(
             playerAnimation.GetCurrentSprite(),
             glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
-            player.IsFacingRight(),
+            !player.IsFacingRight(),
             player.GetPosition(),
             VIRTUAL_SCEEEN,
             player.GetPosition(),

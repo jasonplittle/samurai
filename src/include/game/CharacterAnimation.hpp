@@ -29,9 +29,13 @@ public:
     int GetCurrentFrame() const { return m_currentFrame; }
     const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentState).Sprite; }
 
+    bool IsFinished() const { return m_isFinished; }
+
 private:
     CharacterState m_currentState;
     AnimationSet m_animationSet;
     int m_currentFrame;
     float m_timeInCurrentFrame;
+
+    bool m_isFinished;
 };

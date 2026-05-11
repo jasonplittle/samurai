@@ -14,24 +14,34 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 10,
-            .FrameDuration = 0.2f,
+            .FrameDuration = 0.1f,
             .Loop = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/Idle.png", glm::vec2(96, 96))
+            .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", glm::vec2(96, 96))
         };
-
-        // Where to store current frame?
-        // Sprite ior clip
-
-
-            // glm::ivec2 spriteSizes = {32, 32};
-    // glm::ivec2 spriteSizes = {96, 96};
-
-    // m_attackSprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", spriteSizes, 0);
-    // m_hurtSprite = std::make_unique<Sprite>("resources/samurai/HURT.png", spriteSizes, 0);
-    // m_idleSprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", spriteSizes, 0);
-    // m_runSprite = std::make_unique<Sprite>("resources/samurai/RUN.png", spriteSizes, 0);
-    // m_jumpSprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", spriteSizes, 0);
-
+        set.Clips[CharacterState::Walk] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 12,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", glm::vec2(96, 96))
+        };
+        set.Clips[CharacterState::Attack] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 7,
+            .FrameDuration = 0.1f,
+            .Loop = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", glm::vec2(96, 96))
+        };
+        set.Clips[CharacterState::Jump] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 3,
+            .FrameDuration = 0.1f,
+            .Loop = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", glm::vec2(96, 96))
+        };
 
         return set;
     }
