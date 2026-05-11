@@ -23,7 +23,7 @@ struct AnimationSet
 class CharacterAnimation
 {
 public:
-    CharacterAnimation(CharacterState initState, AnimationSet animationSet) : m_currentState(initState), m_animationSet(animationSet) {};
+    CharacterAnimation(CharacterState initState, AnimationSet animationSet);
     void Update(float dt, CharacterState characterState);
 
     int GetCurrentFrame() const { return m_currentFrame; }
@@ -33,4 +33,5 @@ private:
     CharacterState m_currentState;
     AnimationSet m_animationSet;
     int m_currentFrame;
+    int m_timeInCurrentFrame;
 };

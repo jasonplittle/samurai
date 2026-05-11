@@ -16,11 +16,11 @@ public:
             .FrameCount = 10,
             .FrameDuration = 0.2f,
             .Loop = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/Idle.png", {96, 96}, 0)
+            .Sprite = std::make_unique<Sprite>("resources/samurai/Idle.png", glm::vec2(96, 96))
         };
 
-        Where to store current frame?
-        Sprite ior clip
+        // Where to store current frame?
+        // Sprite ior clip
 
 
             // glm::ivec2 spriteSizes = {32, 32};

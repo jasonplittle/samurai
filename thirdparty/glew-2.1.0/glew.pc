@@ -1,6 +1,6 @@
-prefix=C:/Program Files (x86)/terraria
+prefix=C:/Program Files (x86)/samurai
 exec_prefix=${prefix}
-libdir=C:/Program Files (x86)/terraria/lib
+libdir=C:/Program Files (x86)/samurai/lib
 includedir=${prefix}/include
 
 Name: glew

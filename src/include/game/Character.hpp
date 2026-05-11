@@ -14,11 +14,14 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() = default;
+    Character() : m_characterState(CharacterState::Idle), m_size(200, 200) {};
     ~Character() = default;
 
-    virtual void Attack() = 0;
-    virtual void Jump() = 0;
+    // virtual void Attack() = 0;
+    // virtual void Jump() = 0;
+
+    void Attack() {};
+    void Jump() {};
 
     CharacterState GetState() const { return m_characterState; }
 

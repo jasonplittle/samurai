@@ -11,7 +11,9 @@
 
 #include "Renderer.hpp"
 #include "Input.hpp"
-#include "PlayerController.hpp"
+// #include "PlayerController.hpp"
+
+#include "Character.hpp"
 #include "CharacterAnimation.hpp"
 #include "SamuraiAnimationFactory.hpp"
 #include "SpriteRenderer.hpp"
@@ -32,7 +34,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(1280, 720, "Terraria", nullptr, nullptr);
+    window = glfwCreateWindow(1280, 720, "Samurai", nullptr, nullptr);
 
     if (!window)
     {
@@ -61,8 +63,8 @@ int main()
     float currentTime;
     float dt;
 
-    Player player;
-    PlayerController playerController(player);
+    Character player;
+    // PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
 
@@ -81,27 +83,27 @@ int main()
         lastTime = currentTime;
 
 
-        if (Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT)) 
-            playerController.MoveLeft();
+        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT)) 
+        //     playerController.MoveLeft();
     
-        if (Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT));
-            playerController.MoveRight();
+        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT));
+        //     playerController.MoveRight();
 
-        if (Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN));
-            playerController.MoveDown();
+        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN));
+        //     playerController.MoveDown();
 
-        if (Input::Instance().IsKeyPressed(window, GLFW_KEY_UP))
-            playerController.Jump();
+        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_UP))
+        //     playerController.Jump();
 
-        if (Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE))
-            playerController.Attack();
+        // if (Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE))
+        //     playerController.Attack();
         
 
-        playerController.Update(dt);
+        // playerController.Update(dt);
         playerAnimation.Update(dt, player.GetState());
 
         spriteRenderer.Render(
-            playerAnimation.GetCurrentSprite(), 
+            playerAnimation.GetCurrentSprite(),
             glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
             player.IsFacingRight(),
             player.GetPosition(),
@@ -109,8 +111,6 @@ int main()
             player.GetPosition(),
             player.GetSize()
         );
-
-    
 
         glfwSwapBuffers(window);
 		glfwPollEvents();

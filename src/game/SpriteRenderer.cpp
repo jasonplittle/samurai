@@ -1,5 +1,6 @@
 #include "SpriteRenderer.hpp"
 
+#include <iostream>
 
 SpriteRenderer::SpriteRenderer()
 {
@@ -59,6 +60,9 @@ void SpriteRenderer::Render(
 
     glm::vec4 uv = sprite.GetUV(spriteCellCoords, flipX);
     m_shader->SetUniform4f("u_UV", uv.x, uv.y, uv.z, uv.w);
+
+    std::cout << uv.x << ", " << uv.y << ", " << uv.z << ", " << uv.w << std::endl;
+
 
     sprite.GetTexture().Bind();
     m_shader->SetUniform1i("u_Texture", 0);
