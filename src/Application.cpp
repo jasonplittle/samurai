@@ -12,10 +12,12 @@
 #include "Renderer.hpp"
 #include "Input.hpp"
 #include "PlayerController.hpp"
+#include "CharacterAnimation.hpp"
+#include "SamuraiAnimationFactory.hpp"
+#include "SpriteRenderer.hpp"
 
 
-constexpr float VIRTUAL_WIDTH  = 1280.0f;
-constexpr float VIRTUAL_HEIGHT = 720.0f;
+constexpr glm::vec2 VIRTUAL_SCEEEN = { 1280.0f, 720.0f };
 
 
 int main()
@@ -62,6 +64,8 @@ int main()
     Player player;
     PlayerController playerController(player);
 
+    CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
+
 
     
     while (!glfwWindowShouldClose(window))
@@ -92,6 +96,7 @@ int main()
         
 
         playerController.Update(dt);
+        playerAnimation.Update(dt, player.GetState());
 
         
 

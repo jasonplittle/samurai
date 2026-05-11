@@ -10,7 +10,7 @@
 class Sprite
 {
 public:
-    Sprite(const std::string& textureFilePath, glm::vec2 spriteTextureSize, int atlasPosition);
+    Sprite(const std::string& textureFilePath, glm::vec2 cellSize);
 
     const Texture& GetTexture() const { return *m_texture; }
 
@@ -21,7 +21,6 @@ public:
     
 private:
     std::unique_ptr<Texture> m_texture;
-    int m_atlasPosition;
     glm::vec2 m_spriteSize;
     glm::vec4 m_color = { 1.0, 1.0, 1.0, 1.0 };
 

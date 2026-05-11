@@ -23,12 +23,11 @@ struct AnimationSet
 class CharacterAnimation
 {
 public:
-    CharacterAnimation(CharacterState initState, AnimationSet animationSet);
-
-    void Update(float dt);
+    CharacterAnimation(CharacterState initState, AnimationSet animationSet) : m_currentState(initState), m_animationSet(animationSet) {};
+    void Update(float dt, CharacterState characterState);
 
 private:
-    AnimationSet animationSet;
     CharacterState m_currentState;
-
+    AnimationSet m_animationSet;
+    int m_currentFrame;
 };

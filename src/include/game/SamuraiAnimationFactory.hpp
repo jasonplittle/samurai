@@ -19,6 +19,9 @@ public:
             .Sprite = std::make_unique<Sprite>("resources/samurai/Idle.png", {96, 96}, 0)
         };
 
+        Where to store current frame?
+        Sprite ior clip
+
 
             // glm::ivec2 spriteSizes = {32, 32};
     // glm::ivec2 spriteSizes = {96, 96};

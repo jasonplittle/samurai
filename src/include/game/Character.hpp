@@ -9,7 +9,6 @@ enum class CharacterState
     Jump,
     Attack,
     Hurt,
-    
 };
 
 class Character
@@ -20,6 +19,8 @@ public:
 
     virtual void Attack() = 0;
     virtual void Jump() = 0;
+
+    CharacterState GetState() const { return m_characterState; }
 
 protected:
     CharacterState m_characterState;
