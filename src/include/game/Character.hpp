@@ -14,7 +14,7 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() : m_characterState(CharacterState::Idle), m_size(200, 200) {};
+    Character() : m_characterState(CharacterState::Idle), m_size(96, 96) {};
     ~Character() = default;
 
     // virtual void Attack() = 0;

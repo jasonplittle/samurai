@@ -1,5 +1,7 @@
 #include "Sprite.hpp"
 
+#include <iostream>
+
 
 Sprite::Sprite(const std::string& textureFilePath, glm::vec2 cellSize)
     : m_cellSize(cellSize) 
@@ -9,6 +11,8 @@ Sprite::Sprite(const std::string& textureFilePath, glm::vec2 cellSize)
 
 glm::vec4 Sprite::GetUV(glm::vec2 cellCoords, bool flipX) const
 {
+    // std::cout << cellCoords.x << ", " << cellCoords.y << std::endl;
+
     glm::ivec2 spriteSize{ m_texture->GetWidth(), m_texture->GetHeight() };
 
     // Vec2 pixelSize = { 1.0f / spriteSize.x, 1.0f / spriteSize.y };

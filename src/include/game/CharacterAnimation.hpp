@@ -33,5 +33,5 @@ private:
     CharacterState m_currentState;
     AnimationSet m_animationSet;
     int m_currentFrame;
-    int m_timeInCurrentFrame;
+    float m_timeInCurrentFrame;
 };

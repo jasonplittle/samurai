@@ -41,8 +41,8 @@ void SpriteRenderer::Render(
 ){
     Renderer renderer;
 
-    float zoomX = screenSize.x * 0.5;
-    float zoomY = screenSize.y * 0.5;
+    float zoomX = screenSize.x * 0.3;
+    float zoomY = screenSize.y * 0.3;
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelPos.x, modelPos.y, 0.0));
     model = glm::scale(model, glm::vec3(modelSize.x, modelSize.y, 0.0f));
@@ -52,17 +52,12 @@ void SpriteRenderer::Render(
     glm::mat4 projection = glm::ortho(-zoomX, zoomX, -zoomY, zoomY, -1.0f, 1.0f);
 
     glm::mat4 mvp = projection * view * model;
-
+    glm::vec4 uv = sprite.GetUV(spriteCellCoords, flipX);
     
     m_shader->Bind();
     m_shader->SetUniformMat4f("u_MVP", mvp);
     m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-    glm::vec4 uv = sprite.GetUV(spriteCellCoords, flipX);
     m_shader->SetUniform4f("u_UV", uv.x, uv.y, uv.z, uv.w);
-
-    std::cout << uv.x << ", " << uv.y << ", " << uv.z << ", " << uv.w << std::endl;
-
 
     sprite.GetTexture().Bind();
     m_shader->SetUniform1i("u_Texture", 0);

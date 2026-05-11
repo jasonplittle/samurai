@@ -17,7 +17,7 @@ void CharacterAnimation::Update(float dt, CharacterState characterState)
     {
         m_currentFrame++;
 
-        if (m_animationSet.Clips.at(m_currentState).Loop && m_currentFrame > m_animationSet.Clips.at(m_currentState).FrameCount + m_animationSet.Clips.at(m_currentState).StartFrame)
+        if (m_animationSet.Clips.at(m_currentState).Loop && m_currentFrame >= m_animationSet.Clips.at(m_currentState).FrameCount + m_animationSet.Clips.at(m_currentState).StartFrame)
         {
             m_currentFrame = m_animationSet.Clips.at(m_currentState).StartFrame;
         }
