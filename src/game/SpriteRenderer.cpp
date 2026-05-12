@@ -38,18 +38,18 @@ void SpriteRenderer::Render(
     glm::vec2 screenSize, 
     glm::vec2 modelPos, 
     glm::vec2 modelSize
-){
+) const {
     Renderer renderer;
 
-    float zoomX = screenSize.x * 0.3;
-    float zoomY = screenSize.y * 0.3;
+    float halfWidth = screenSize.x * 0.5;
+    float halfHeight = screenSize.y * 0.5;
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelPos.x, modelPos.y, 0.0));
     model = glm::scale(model, glm::vec3(modelSize.x, modelSize.y, 0.0f));
 
     glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraPos.x, -cameraPos.y, 0));
 
-    glm::mat4 projection = glm::ortho(-zoomX, zoomX, -zoomY, zoomY, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1.0f, 1.0f);
 
     glm::mat4 mvp = projection * view * model;
     glm::vec4 uv = sprite.GetUV(spriteCellCoords, flipX);

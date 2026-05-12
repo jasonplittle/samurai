@@ -17,6 +17,8 @@
 #include "SamuraiAnimationFactory.hpp"
 #include "SpriteRenderer.hpp"
 
+#include "BackgroundParallax.hpp"
+#include "FeudalJapanBackdropParallaxFactory.hpp"
 
 constexpr glm::vec2 VIRTUAL_SCEEEN = { 1280.0f, 720.0f };
 
@@ -68,6 +70,8 @@ int main()
 
     SpriteRenderer spriteRenderer;
 
+    BackgroundParallax backdrop(FeudalJapanBackdropParallaxFactory::CreateFeudalJapanBackdrop());
+
     InputState inputState;
     
     while (!glfwWindowShouldClose(window))
@@ -88,6 +92,10 @@ int main()
         playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
         player.Update(dt, playerAnimation.IsFinished());
+
+
+        backdrop.RenderLayers(spriteRenderer, player.GetPosition(), VIRTUAL_SCEEEN);
+
 
         spriteRenderer.Render(
             playerAnimation.GetCurrentSprite(),

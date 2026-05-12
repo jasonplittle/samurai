@@ -26,7 +26,7 @@ public:
         glm::vec2 screenSize, 
         glm::vec2 modelPos, 
         glm::vec2 modelSize
-    );
+    ) const;
 
 private:
     std::unique_ptr<Shader> m_shader;
