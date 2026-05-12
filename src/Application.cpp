@@ -18,9 +18,11 @@
 #include "SpriteRenderer.hpp"
 
 #include "BackgroundParallax.hpp"
-#include "FeudalJapanBackdropParallaxFactory.hpp"
+#include "ForestBackdropParallaxFactory.hpp"
 
-constexpr glm::vec2 VIRTUAL_SCEEEN = { 1280.0f, 720.0f };
+// constexpr glm::vec2 VIRTUAL_SCEEEN = { 360.0f, 180.0f };
+
+constexpr glm::vec2 VIRTUAL_SCEEEN = { 720.0f, 360.0f };
 
 int main()
 {
@@ -70,7 +72,7 @@ int main()
 
     SpriteRenderer spriteRenderer;
 
-    BackgroundParallax backdrop(FeudalJapanBackdropParallaxFactory::CreateFeudalJapanBackdrop());
+    BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop());
 
     InputState inputState;
     

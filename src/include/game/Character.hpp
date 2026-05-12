@@ -15,7 +15,7 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() : m_state(CharacterState::Idle), m_size(96, 96) {};
+    Character() : m_state(CharacterState::Idle), m_size(32, 32) {};
     ~Character() = default;
 
     void Update(float dt, bool animationFinished);
@@ -23,8 +23,8 @@ public:
     void Attack() { m_state = CharacterState::Attack; }
     void Jump() { m_state = CharacterState::Jump; };
     void Idle() { m_state = CharacterState::Idle; };
-    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; m_pos.x -= 1.f; };
-    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; m_pos.x += 1.f; };
+    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; m_pos.x -= 3.f; };
+    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; m_pos.x += 3.f; };
 
     CharacterState GetState() const { return m_state; }
 

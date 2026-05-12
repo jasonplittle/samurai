@@ -13,32 +13,63 @@ void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm:
 {
     for (auto& layer : m_parallaxLayers.set)
     {
-        float parallaxX = cameraPos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
+        // float scroll = -cameraPos.x; * layer.ParallaxFactor * k_parallaxGlobalScale
 
-        float x = fmod(-parallaxX, screenSize.x);
+        int offset = std::floor(scroll / layer.Width);
 
-        // std::cout << x << std::endl;
-        // std::cout << cameraPos.x << ", " << cameraPos.y << std::endl;
+        int baseX = (-offset * layer.Width) - (layer.Width / 2);
 
-        // std::cout << renderPos.x << ", " << renderPos.y
-        spriteRenderer.Render(
-            *layer.Sprite,
-            glm::vec2(0, 0),
-            false,
-            cameraPos,
-            screenSize,
-            glm::vec2(x, 0),
-            glm::vec2(layer.Width, layer.Height)
-        );
-  
-        spriteRenderer.Render(
-            *layer.Sprite,
-            glm::vec2(0, 0),
-            false,
-            cameraPos,
-            screenSize,
-            glm::vec2(x + layer.Width, 0),
-            glm::vec2(layer.Width, layer.Height)
-        );
+        for (int i = -1; i <= 1; i++)
+        {
+            int x = baseX + (i * layer.Width);
+
+            spriteRenderer.Render(
+                *layer.Sprite,
+                glm::vec2(0, 0),
+                false,
+                cameraPos,
+                screenSize,
+                glm::vec2(x, 0),
+                glm::vec2(layer.Width, layer.Height)
+            );
+        }
     }
 }
+
+
+// void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm::vec2 cameraPos, glm::vec2 screenSize)
+// {
+//     for (auto& layer : m_parallaxLayers.set)
+//     {
+//         // Background moves slower than camera
+//         float scroll = cameraPos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
+
+//         // Wrap position
+//         float offset = std::fmod(scroll, layer.Width);
+
+//         // Ensure positive offset
+//         if (offset < 0)
+//             offset += layer.Width;
+
+//         // Start drawing slightly offscreen
+//         float startX = -offset;
+
+//         // Draw enough tiles to fill screen
+//         int tileCount = (int)(screenSize.x / layer.Width) + 2;
+
+//         for (int i = 0; i < tileCount; i++)
+//         {
+//             float x = startX + i * layer.Width;
+
+//             spriteRenderer.Render(
+//                 *layer.Sprite,
+//                 glm::vec2(0, 0),
+//                 false,
+//                 cameraPos,
+//                 screenSize,
+//                 glm::vec2(x, 0),
+//                 glm::vec2(layer.Width, layer.Height)
+//             );
+//         }
+//     }
+// }

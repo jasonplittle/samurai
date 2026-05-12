@@ -30,7 +30,6 @@ public:
 
     void RenderLayers(const SpriteRenderer& spriteRenderer, glm::vec2 cameraPos, glm::vec2 screenSize);
 
-
 private:
     ParallaxLayers m_parallaxLayers;
 
