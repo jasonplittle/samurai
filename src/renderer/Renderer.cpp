@@ -27,6 +27,14 @@ void Renderer::EnableBlending() const
 {
     GLCall(glEnable(GL_BLEND));
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+    // GLCall(glTexParameteri(GL_TEXTURE_2D,
+    //             GL_TEXTURE_MIN_FILTER,
+    //             GL_NEAREST));
+
+    // GLCall(glTexParameteri(GL_TEXTURE_2D,
+    //             GL_TEXTURE_MAG_FILTER,
+    //             GL_NEAREST));
 }
 
 void Renderer::Viewport(int width, int height) const

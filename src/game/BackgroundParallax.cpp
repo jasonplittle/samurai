@@ -6,18 +6,19 @@
 BackgroundParallax::BackgroundParallax(ParallaxLayers parallaxLayers)
     : 
     m_parallaxLayers(std::move(parallaxLayers))
-{
-
-}
+{}
 
 
 void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm::vec2 cameraPos, glm::vec2 screenSize)
 {
     for (auto& layer : m_parallaxLayers.set)
     {
-        float parallaxX = cameraPos.x * layer.ParallaxFactor;
+        float parallaxX = cameraPos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
 
-        float x = fmod(-parallaxX, layer.Width);
+        float x = fmod(-parallaxX, screenSize.x);
+
+        // std::cout << x << std::endl;
+        // std::cout << cameraPos.x << ", " << cameraPos.y << std::endl;
 
         // std::cout << renderPos.x << ", " << renderPos.y
         spriteRenderer.Render(
