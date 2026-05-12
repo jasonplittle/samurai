@@ -13,7 +13,7 @@ void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm:
 {
     for (auto& layer : m_parallaxLayers.set)
     {
-        // float scroll = -cameraPos.x; * layer.ParallaxFactor * k_parallaxGlobalScale
+        float scroll = -cameraPos.x; // * layer.ParallaxFactor * k_parallaxGlobalScale
 
         int offset = std::floor(scroll / layer.Width);
 
