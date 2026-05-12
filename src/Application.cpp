@@ -20,9 +20,9 @@
 #include "BackgroundParallax.hpp"
 #include "ForestBackdropParallaxFactory.hpp"
 
-// constexpr glm::vec2 VIRTUAL_SCEEEN = { 360.0f, 180.0f };
+// constexpr glm::vec2 VIRTUAL_SCEEEN = { 320.0f, 180.0f };
 
-constexpr glm::vec2 VIRTUAL_SCEEEN = { 720.0f, 360.0f };
+constexpr glm::vec2 VIRTUAL_SCEEEN = { 640.0f, 360.0f };
 
 int main()
 {
