@@ -131,18 +131,18 @@ int main()
 
         camera.Pos.x = player.GetPosition().x;
 
-        // backdrop.RenderLayers(spriteRenderer, camera);
+        backdrop.RenderLayers(spriteRenderer, camera);
 
         world.DrawTiles(spriteRenderer, camera);
 
-        // spriteRenderer.Render(
-        //     playerAnimation.GetCurrentSprite(),
-        //     glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
-        //     !player.IsFacingRight(),
-        //     camera,
-        //     player.GetPosition(),
-        //     player.GetSize()
-        // );
+        spriteRenderer.Render(
+            playerAnimation.GetCurrentSprite(),
+            glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
+            !player.IsFacingRight(),
+            camera,
+            player.GetPosition(),
+            player.GetSize()
+        );
 
         glfwSwapBuffers(window);
 		glfwPollEvents();

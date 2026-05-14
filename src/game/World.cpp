@@ -4,6 +4,8 @@
 
 Tile& World::GetTileByWorldGrid(int x, int y)
 {
+    std::cout << "World grid: " << x << ", " << y << std::endl;
+
     if (x > 0 && x <= WORLD_GRID.x && y > 0 && y < WORLD_GRID.y)
     {
         
@@ -11,7 +13,6 @@ Tile& World::GetTileByWorldGrid(int x, int y)
 
     return m_worldGrid[x][y];
 }
-
 
 Tile& World::GetTileByWorldPos(int x, int y)
 {
@@ -30,20 +31,6 @@ void World::ShowTile(bool show, int worldX, int worldY)
 
 void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
 {
-    spriteRenderer.Render(
-        *m_tileSet.Sprite,
-        glm::vec2(1, 1),
-        // m_tileSet.Set[0].TileId,
-        false,
-        camera,
-        glm::vec2(0, 0),
-        glm::vec2(TILE_SIZE, TILE_SIZE)
-    );
-
-
-    return;
-
-
     for (int x = 0; x < WORLD_GRID.x; x++)
     {
         for (int y = 0; y < WORLD_GRID.y; y++)
@@ -54,10 +41,10 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
             {
                 spriteRenderer.Render(
                     *m_tileSet.Sprite,
-                    m_tileSet.Set[0].TileId, 
+                    m_tileSet.Set[3].TileId,
                     false,
                     camera,
-                    glm::vec2(x, y),
+                    glm::vec2((x * TILE_SIZE) - (0.5 * camera.Size.x), (y * TILE_SIZE) - (0.5 * camera.Size.y)),
                     glm::vec2(TILE_SIZE, TILE_SIZE)
                 );
             }

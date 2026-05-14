@@ -62,4 +62,3 @@ void SpriteRenderer::Render(
     m_shader->SetUniform1i("u_Texture", 0);
     renderer.Draw(*m_vertexArray, *m_indexBuffer, *m_shader);
 }
-
