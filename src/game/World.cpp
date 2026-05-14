@@ -44,7 +44,8 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
                     m_tileSet.Set[3].TileId,
                     false,
                     camera,
-                    glm::vec2((x * TILE_SIZE) - (0.5 * camera.Size.x), (y * TILE_SIZE) - (0.5 * camera.Size.y)),
+                    glm::vec2((x * TILE_SIZE) - (0.5 * camera.Size.x) + (TILE_SIZE * 0.5), 
+                        (camera.Size.y * 0.5) - (y * TILE_SIZE) - (TILE_SIZE * 0.5)),
                     glm::vec2(TILE_SIZE, TILE_SIZE)
                 );
             }
