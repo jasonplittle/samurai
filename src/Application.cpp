@@ -116,12 +116,12 @@ int main()
 
         if (lMouse)
         {
-            std::cout << "left: " << cPos.x << ", " << cPos.y << std::endl;
+            // std::cout << "left: " << cPos.x << ", " << cPos.y << std::endl;
             world.ShowTile(true, cWPos.x, cWPos.y);
         }
         if (rMouse)
         {
-            std::cout << "right: " << cPos.x << ", " << cPos.y << std::endl;
+            // std::cout << "right: " << cPos.x << ", " << cPos.y << std::endl;
             world.ShowTile(false, cWPos.x, cWPos.y);
         }
 

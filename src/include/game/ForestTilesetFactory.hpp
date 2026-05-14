@@ -19,105 +19,105 @@ public:
             .MaskId = maskId
         };
 
-        MaskId maskId = 1;
+        maskId = 1;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {4, 7},
             .MaskId = maskId
         };
 
-        MaskId maskId = 2;
+        maskId = 2;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {3, 6},
             .MaskId = maskId
         };
 
-        MaskId maskId = 3;
+        maskId = 3;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {3, 7},
             .MaskId = maskId
         };
 
-        MaskId maskId = 4;
+        maskId = 4;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {1, 6},
             .MaskId = maskId
         };
 
-        MaskId maskId = 5;
+        maskId = 5;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {1, 7},
             .MaskId = maskId
         };
 
-        MaskId maskId = 6;
+        maskId = 6;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {2, 6},
             .MaskId = maskId
         };
 
-        MaskId maskId = 7;
+        maskId = 7;
+        tileSet.Set[maskId] = 
+        TileType {
+            .TileId = {2, 7},
+            .MaskId = maskId
+        };
+
+        maskId = 8;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {4, 9},
             .MaskId = maskId
         };
 
-        MaskId maskId = 8;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {4, 9},
-            .MaskId = maskId
-        };
-
-        MaskId maskId = 9;
+        maskId = 9;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {4, 8},
             .MaskId = maskId
         };
 
-        MaskId maskId = 10;
+        maskId = 10;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {3, 9},
             .MaskId = maskId
         };
 
-        MaskId maskId = 11;
+        maskId = 11;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {3, 8},
             .MaskId = maskId
         };
 
-        MaskId maskId = 12;
+        maskId = 12;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {1, 9},
             .MaskId = maskId
         };
 
-        MaskId maskId = 13;
+        maskId = 13;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {1, 8},
             .MaskId = maskId
         };
 
-        MaskId maskId = 14;
+        maskId = 14;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {2, 9},
             .MaskId = maskId
         };
 
-        MaskId maskId = 15;
+        maskId = 15;
         tileSet.Set[maskId] = 
         TileType {
             .TileId = {2, 8},
