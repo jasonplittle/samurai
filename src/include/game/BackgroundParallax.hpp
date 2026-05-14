@@ -27,8 +27,7 @@ class BackgroundParallax
 {
 public:
     BackgroundParallax(ParallaxLayers parallaxLayers);
-
-    void RenderLayers(const SpriteRenderer& spriteRenderer, glm::vec2 cameraPos, glm::vec2 screenSize);
+    void RenderLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera);
 
 private:
     ParallaxLayers m_parallaxLayers;

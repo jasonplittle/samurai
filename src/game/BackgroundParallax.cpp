@@ -9,14 +9,14 @@ BackgroundParallax::BackgroundParallax(ParallaxLayers parallaxLayers)
 {}
 
 
-void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm::vec2 cameraPos, glm::vec2 screenSize)
+void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera)
 {
     for (auto& layer : m_parallaxLayers.set)
     {
-        float parallaxX = cameraPos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
+        float parallaxX = camera.Pos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
         float offset = fmod(-parallaxX, layer.Width);
 
-        float baseX = offset + (std::floor((cameraPos.x - offset) / layer.Width) * layer.Width);
+        float baseX = offset + (std::floor((camera.Pos.x - offset) / layer.Width) * layer.Width);
 
         for (int i = 0; i <= 1; i++)
         {
@@ -26,8 +26,7 @@ void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, glm:
                 *layer.Sprite,
                 glm::vec2(0, 0),
                 false,
-                cameraPos,
-                screenSize,
+                camera,
                 glm::vec2(x, 0),
                 glm::vec2(layer.Width, layer.Height)
             );

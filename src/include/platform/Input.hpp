@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 class Input
 {
@@ -17,11 +18,12 @@ public:
     Input& operator=(Input&&) = delete;
 
     bool IsKeyPressed(GLFWwindow *window, int keycode);
+    glm::vec2 GetCursorPos(GLFWwindow *window);
+    bool IsMousePressed(GLFWwindow *window, int keycode);
 
 private:
     Input() = default;
     ~Input() = default;
-
 };
 
 

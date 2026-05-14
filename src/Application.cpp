@@ -20,9 +20,16 @@
 #include "BackgroundParallax.hpp"
 #include "ForestBackdropParallaxFactory.hpp"
 
-// constexpr glm::vec2 VIRTUAL_SCEEEN = { 320.0f, 180.0f };
+#include "World.hpp"
+#include "ForestTilesetFactory.hpp"
 
-constexpr glm::vec2 VIRTUAL_SCEEEN = { 640.0f, 360.0f };
+constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
+constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
+
+constexpr glm::vec2 SCEEEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
+
+
+// constexpr glm::vec2 VIRTUAL_SCEEEN = { 640.0f, 360.0f };
 
 int main()
 {
@@ -36,7 +43,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(1280, 720, "Samurai", nullptr, nullptr);
+    window = glfwCreateWindow(REAL_SCEEEN.x, REAL_SCEEEN.y, "Samurai", nullptr, nullptr);
 
     if (!window)
     {
@@ -74,13 +81,24 @@ int main()
 
     BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop());
 
+    World world(ForestTilesetFactory::CreateTileset());
+
     InputState inputState;
+
+    OrthographicCamera camera;
+    camera.Pos.y = 0;
+    camera.Zoom = 1;
+    camera.Size = VIRTUAL_SCEEEN;
     
     while (!glfwWindowShouldClose(window))
     {
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
         renderer.Clear();
         renderer.Viewport(windowWidth, windowHeight);
+
+        // game.GetInput
+        // game.Update
+        // game.render
 
         currentTime = glfwGetTime();
         dt = currentTime - lastTime;
@@ -91,28 +109,44 @@ int main()
         inputState.jump = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
         inputState.attack = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
 
+        bool lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
+        bool rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
+        glm::vec2 cPos = Input::Instance().GetCursorPos(window);
+        glm::vec2 cWPos = {cPos.x / SCEEEN_FACTOR.x, cPos.y / SCEEEN_FACTOR.x };
+
+        if (lMouse)
+        {
+            std::cout << "left: " << cPos.x << ", " << cPos.y << std::endl;
+            world.ShowTile(true, cWPos.x, cWPos.y);
+        }
+        if (rMouse)
+        {
+            std::cout << "right: " << cPos.x << ", " << cPos.y << std::endl;
+            world.ShowTile(false, cWPos.x, cWPos.y);
+        }
+
         playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
         player.Update(dt, playerAnimation.IsFinished());
 
+        camera.Pos.x = player.GetPosition().x;
 
-        backdrop.RenderLayers(spriteRenderer, player.GetPosition(), VIRTUAL_SCEEEN);
+        // backdrop.RenderLayers(spriteRenderer, camera);
 
+        world.DrawTiles(spriteRenderer, camera);
 
-        spriteRenderer.Render(
-            playerAnimation.GetCurrentSprite(),
-            glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
-            !player.IsFacingRight(),
-            player.GetPosition(),
-            VIRTUAL_SCEEEN,
-            player.GetPosition(),
-            player.GetSize()
-        );
+        // spriteRenderer.Render(
+        //     playerAnimation.GetCurrentSprite(),
+        //     glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
+        //     !player.IsFacingRight(),
+        //     camera,
+        //     player.GetPosition(),
+        //     player.GetSize()
+        // );
 
         glfwSwapBuffers(window);
 		glfwPollEvents();
     }
-
 
 
     ImGui_ImplOpenGL3_Shutdown();

@@ -13,6 +13,13 @@
 
 #include "Sprite.hpp"
 
+struct OrthographicCamera
+{
+    glm::vec2 Pos;
+    glm::vec2 Size;
+    int Zoom;
+};
+
 class SpriteRenderer
 {
 public:
@@ -21,9 +28,8 @@ public:
     void Render(
         const Sprite& sprite, 
         glm::vec2 spriteCellCoords, 
-        bool flipX, 
-        glm::vec2 cameraPos, 
-        glm::vec2 screenSize, 
+        bool flipX,
+        OrthographicCamera camera,
         glm::vec2 modelPos, 
         glm::vec2 modelSize
     ) const;

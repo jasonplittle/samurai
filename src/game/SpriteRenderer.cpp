@@ -34,20 +34,19 @@ void SpriteRenderer::Render(
     const Sprite& sprite, 
     glm::vec2 spriteCellCoords, 
     bool flipX, 
-    glm::vec2 cameraPos, 
-    glm::vec2 screenSize, 
+    OrthographicCamera camera, 
     glm::vec2 modelPos, 
     glm::vec2 modelSize
 ) const {
     Renderer renderer;
 
-    float halfWidth = screenSize.x * 0.5;
-    float halfHeight = screenSize.y * 0.5;
+    float halfWidth = camera.Size.x * 0.5;
+    float halfHeight = camera.Size.y * 0.5;
 
     glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelPos.x, modelPos.y, 0.0));
     model = glm::scale(model, glm::vec3(modelSize.x, modelSize.y, 0.0f));
 
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraPos.x, -cameraPos.y, 0));
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-camera.Pos.x, -camera.Pos.y, 0));
 
     glm::mat4 projection = glm::ortho(-halfWidth, halfWidth, -halfHeight, halfHeight, -1.0f, 1.0f);
 
