@@ -15,7 +15,7 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() : m_state(CharacterState::Idle), m_size(32, 32) {};
+    Character() : m_state(CharacterState::Idle), m_size(96, 96) {};
     ~Character() = default;
 
     void Update(float dt, bool animationFinished);

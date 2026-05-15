@@ -2,10 +2,7 @@
 
 #include <iostream>
 
-constexpr uint8_t BIT(int x)
-{
-    return 1u << x;
-}
+#define BIT(i) 1 << i
 
 World::World(TileSet tileSet) : m_tileSet(std::move(tileSet))
 {
@@ -49,7 +46,7 @@ void World::ShowTile(bool show, int worldX, int worldY)
     tile->IsVisible = show;
     tile->NeighbourMask = 0;
 
-                            //   N        W      E      S       NW      NE       SW      SE
+                           //   N        W      E      S       NW      NE       SW      SE
     int neighbourOffset[16] = { 0, -1,  -1, 0,  1, 0,  0, 1,  -1, -1,  1, -1,  -1, 1,  -1, -1 };
 
 
@@ -58,7 +55,6 @@ void World::ShowTile(bool show, int worldX, int worldY)
         for (int y = 0; y < WORLD_GRID.y; y++)
         {
             Tile* gridTtile = GetTileByWorldGrid(x, y);
-
             gridTtile->NeighbourMask = 0;
 
             if (!gridTtile->IsVisible) 
@@ -66,19 +62,20 @@ void World::ShowTile(bool show, int worldX, int worldY)
                 continue;
             }
 
-            for (uint8_t n = 0; n < 4; n++)
+            int cout = 0;
+
+            for (int n = 0; n < 4; n++)
             {
-                Tile* neighbour = GetTileByWorldGrid(x + neighbourOffset[n * 2], y + neighbourOffset[n * 2 + 1]);
+                Tile* neighbour = GetTileByWorldGrid(x + neighbourOffset[n * 2], y + neighbourOffset[(n * 2) + 1]);
 
                 if (!neighbour || neighbour->IsVisible)
                 {
-                    tile->NeighbourMask |= BIT(n);
-                    // tile->NeighbourMask = 0;
+                    gridTtile->NeighbourMask |= BIT(n);
                 }
             }
 
             if (tile == gridTtile){
-                std::cout << "Neighbour: " << (int)tile->NeighbourMask << std::endl;
+                std::cout << "Neighbour count: " << cout << " - mask: " << tile->NeighbourMask << std::endl;
             }
             
         }
@@ -93,7 +90,7 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
         {
             Tile* tile = GetTileByWorldGrid(x, y);
 
-            if (!tile || !tile->IsVisible) 
+            if (!tile->IsVisible) 
             {
                 continue;
             }

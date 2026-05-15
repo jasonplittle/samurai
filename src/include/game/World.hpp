@@ -15,7 +15,7 @@ constexpr glm::ivec2 WORLD_GRID = { 10, 6 };
 
 struct Tile
 {
-    uint8_t NeighbourMask = 0;
+    int NeighbourMask = 0;
     bool IsVisible = false;
 };
 
