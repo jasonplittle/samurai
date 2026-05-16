@@ -42,7 +42,6 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
             if (!m_tileMap.IsSolid(x, y)) 
                 continue;
 
-
             spriteRenderer.Render(
                 *m_tileSet.Sprite,
                 m_tileSet.Set[m_tileMap.MaskAt(x, y)],

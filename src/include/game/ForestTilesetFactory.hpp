@@ -36,7 +36,7 @@ public:
         tileSet.Set[NW | N | W | E | S | SE] = {10, 3};
 
         tileSet.Set[N | NE | E] = {1, 2};
-        tileSet.Set[NW | N | NE] = {2, 2};
+        tileSet.Set[NW | N | NE | W | E] = {2, 2};
         tileSet.Set[NW | N | W] = {3, 2};
         tileSet.Set[N] = {4, 2};
         tileSet.Set[N | E | S | SE] = {5, 2};

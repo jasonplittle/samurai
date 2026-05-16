@@ -47,8 +47,6 @@ void TileMap::AddTile(int x, int y)
     tile->IsSolid = true;
     tile->Mask = calculateMask(x, y);
 
-    std::cout << (int)tile->Mask << std::endl;
-
     updateNeighbours(x, y);
 }
 
@@ -75,22 +73,32 @@ Mask TileMap::MaskAt(int x, int y) const
 
 Mask TileMap::calculateMask(int x, int y) const
 {
-    uint8_t mask = 0;
+    Mask mask = 0;
 
-    if (IsSolid(x - 1, y - 1)) mask |= NW;
-    if (IsSolid(x,     y - 1)) mask |= N;
-    if (IsSolid(x + 1, y - 1)) mask |= NE;
+    bool n  = IsSolid(x, y - 1);
+    bool s  = IsSolid(x, y + 1);
+    bool w  = IsSolid(x - 1, y);
+    bool e  = IsSolid(x + 1, y);
 
-    if (IsSolid(x - 1, y))     mask |= W;
-    if (IsSolid(x + 1, y))     mask |= E;
+    bool nw = IsSolid(x - 1, y - 1);
+    bool ne = IsSolid(x + 1, y - 1);
+    bool sw = IsSolid(x - 1, y + 1);
+    bool se = IsSolid(x + 1, y + 1);
 
-    if (IsSolid(x - 1, y + 1)) mask |= SW;
-    if (IsSolid(x,     y + 1)) mask |= S;
-    if (IsSolid(x + 1, y + 1)) mask |= SE;
+    // Cardinals (always valid)
+    if (n) mask |= N;
+    if (s) mask |= S;
+    if (w) mask |= W;
+    if (e) mask |= E;
+
+    // Diagonals (ONLY if corner is “supported”)
+    if (nw && n && w) mask |= NW;
+    if (ne && n && e) mask |= NE;
+    if (sw && s && w) mask |= SW;
+    if (se && s && e) mask |= SE;
 
     return mask;
 }
-
 void TileMap::updateMask(int x, int y)
 {
     Tile* tile = getTile(x, y);
@@ -113,3 +121,4 @@ void TileMap::updateNeighbours(int x, int y)
     updateMask(x,     y + 1); // S
     updateMask(x + 1, y + 1); // SE
 }
+
