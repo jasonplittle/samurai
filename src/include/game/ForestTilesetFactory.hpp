@@ -9,7 +9,7 @@ public:
     static TileSet CreateTileSet()
     {
         TileSet tileSet;
-        tileSet.Sprite = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32));
+        tileSet.Sprite = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32), glm::vec4(1.f, 1.f, 1.f, 1.f));
 
         // In sprite-sheet order. Top-left to bottom-right.
 
@@ -33,7 +33,7 @@ public:
         tileSet.Set[NW | N | NE | W | E | S | SE] = {7, 3};
         tileSet.Set[NW | N | W | S] = {8, 3};
         tileSet.Set[NW | N | NE | W | E | S] = {9, 3};
-        tileSet.Set[NW | N | W | E | S | SE] = {10, 3};
+        tileSet.Set[N | NE | W | E | SW | S] = {10, 3};
 
         tileSet.Set[N | NE | E] = {1, 2};
         tileSet.Set[NW | N | NE | W | E] = {2, 2};

@@ -8,11 +8,11 @@
 #include "SpriteRenderer.hpp"
 #include "Character.hpp"
 
-constexpr int WORLD_WIDTH = 320;
-constexpr int WORLD_HEIGHT = 180;
+constexpr int WORLD_WIDTH = 640;
+constexpr int WORLD_HEIGHT = 360;
 constexpr int TILE_SIZE = 32;
 
-constexpr glm::ivec2 WORLD_GRID = { 10, 6 };
+constexpr glm::ivec2 WORLD_GRID = { 20, 12 };
 
 
 class World

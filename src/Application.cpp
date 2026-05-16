@@ -24,7 +24,8 @@
 #include "ForestTilesetFactory.hpp"
 
 constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
-constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
+// constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
+constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 
 constexpr glm::vec2 SCEEEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
 
@@ -79,7 +80,7 @@ int main()
 
     SpriteRenderer spriteRenderer;
 
-    BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop());
+    BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y));
 
     World world(ForestTilesetFactory::CreateTileSet());
 
