@@ -46,9 +46,6 @@ void World::ShowTile(bool show, int worldX, int worldY)
     tile->IsVisible = show;
     tile->NeighbourMask = 0;
 
-                           //   N        W      E      S       NW      NE       SW      SE
-    int neighbourOffset[16] = { 0, -1,  -1, 0,  1, 0,  0, 1,  -1, -1,  1, -1,  -1, 1,  -1, -1 };
-
 
     for (int x = 0; x < WORLD_GRID.x; x++)
     {
