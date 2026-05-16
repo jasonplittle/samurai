@@ -81,7 +81,7 @@ int main()
 
     BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop());
 
-    World world(ForestTilesetFactory::CreateTileset());
+    World world(ForestTilesetFactory::CreateTileSet());
 
     InputState inputState;
 

@@ -18,6 +18,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/SpriteRenderer.cpp
     ${CMAKE_SOURCE_DIR}/src/game/BackgroundParallax.cpp
     ${CMAKE_SOURCE_DIR}/src/game/World.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/TileMap.cpp
 
     ${CMAKE_SOURCE_DIR}/src/platform/Input.cpp
 

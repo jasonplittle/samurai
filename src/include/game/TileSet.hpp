@@ -6,8 +6,8 @@
 #include "Sprite.hpp"
 
 
-typedef glm::ivec2 TileId;
-typedef int MaskId;
+using TileId = glm::ivec2;
+using Mask = uint8_t;
 
 
 enum NeighborBits
@@ -24,6 +24,6 @@ enum NeighborBits
 
 struct TileSet
 {
-    std::unordered_map<uint8_t, TileId> Set;
+    std::unordered_map<Mask, TileId> Set;
     std::unique_ptr<Sprite> Sprite;
 };

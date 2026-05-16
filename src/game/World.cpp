@@ -4,80 +4,34 @@
 
 #define BIT(i) 1 << i
 
-World::World(TileSet tileSet) : m_tileSet(std::move(tileSet))
-{
-    for (int x = 0; x < WORLD_GRID.x; x++)
-    {
-        for (int y = 0; y < WORLD_GRID.y; y++)
-        {
-            m_worldGrid[x][y] = Tile { .NeighbourMask = 0, .IsVisible = false };
-        }
-    }
-};
+World::World(TileSet tileSet) : m_tileSet(std::move(tileSet)), m_tileMap(WORLD_WIDTH, WORLD_HEIGHT) {};
 
 
-Tile* World::GetTileByWorldGrid(int x, int y)
-{
-    if (x >= 0 && x < WORLD_GRID.x && y >= 0 && y < WORLD_GRID.y)
-    {
-        return &m_worldGrid[x][y];    
-    }
-
-    std::cout << "World grid null: " << x << ", " << y << std::endl;
-
-    return nullptr;
-}
-
-Tile* World::GetTileByWorldPos(int x, int y)
+static glm::ivec2 worldToGrid(int x, int y)
 {
     int gridX = std::floor(x / TILE_SIZE);
     int gridY = std::floor(y / TILE_SIZE);
 
-    return GetTileByWorldGrid(gridX, gridY);
+    return glm::ivec2(gridX, gridY);
 }
 
 void World::ShowTile(bool show, int worldX, int worldY)
 {
-    Tile* tile = GetTileByWorldPos(worldX, worldY);
+    glm::ivec2 pos = worldToGrid(worldX, worldY);
+    
+    if (show == m_tileMap.IsSolid(pos.x, pos.y)) 
+        return;
 
-    if (!tile) return;
-    if (tile->IsVisible == show) return;
-
-    tile->IsVisible = show;
-    tile->NeighbourMask = 0;
-
-
-    for (int x = 0; x < WORLD_GRID.x; x++)
+    if (show)
     {
-        for (int y = 0; y < WORLD_GRID.y; y++)
-        {
-            Tile* gridTtile = GetTileByWorldGrid(x, y);
-            gridTtile->NeighbourMask = 0;
-
-            if (!gridTtile->IsVisible) 
-            {
-                continue;
-            }
-
-            int cout = 0;
-
-            for (int n = 0; n < 4; n++)
-            {
-                Tile* neighbour = GetTileByWorldGrid(x + neighbourOffset[n * 2], y + neighbourOffset[(n * 2) + 1]);
-
-                if (!neighbour || neighbour->IsVisible)
-                {
-                    gridTtile->NeighbourMask |= BIT(n);
-                }
-            }
-
-            if (tile == gridTtile){
-                std::cout << "Neighbour count: " << cout << " - mask: " << tile->NeighbourMask << std::endl;
-            }
-            
-        }
+        m_tileMap.AddTile(pos.x, pos.y);
+    }
+    else
+    {
+        m_tileMap.RemoveTile(pos.x, pos.y);
     }
 }
+
 
 void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
 {
@@ -85,16 +39,13 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
     {
         for (int y = 0; y < WORLD_GRID.y; y++)
         {
-            Tile* tile = GetTileByWorldGrid(x, y);
-
-            if (!tile->IsVisible) 
-            {
+            if (!m_tileMap.IsSolid(x, y)) 
                 continue;
-            }
+
 
             spriteRenderer.Render(
                 *m_tileSet.Sprite,
-                m_tileSet.Set[tile->NeighbourMask].TileId,
+                m_tileSet.Set[m_tileMap.MaskAt(x, y)],
                 false,
                 camera,
                 glm::vec2((x * TILE_SIZE) - (0.5 * camera.Size.x) + (TILE_SIZE * 0.5), 

@@ -1,5 +1,7 @@
 #include "TileMap.hpp"
 
+#include <iostream>
+
 
 TileMap::TileMap(int width, int height)
     :
@@ -9,7 +11,7 @@ TileMap::TileMap(int width, int height)
 {}
 
 
-Tile* TileMap::GetTile(int x, int y)
+Tile* TileMap::getTile(int x, int y)
 {
     if (x < 0 || x >= m_width ||
             y < 0 || y >= m_height)
@@ -17,12 +19,19 @@ Tile* TileMap::GetTile(int x, int y)
         return nullptr;
     }
 
-    return &m_tiles[y * m_width + x];
+    Tile* tile = &m_tiles[y * m_width + x]; 
+
+    return tile;
+}
+
+const Tile* TileMap::getTile(int x, int y) const
+{
+    return const_cast<TileMap*>(this)->getTile(x, y);
 }
 
 bool TileMap::IsSolid(int x, int y) const
 {
-    const Tile* tile = GetTile(x, y);
+    const Tile* tile = getTile(x, y);
 
     if (!tile) return true;
 
@@ -31,17 +40,40 @@ bool TileMap::IsSolid(int x, int y) const
 
 void TileMap::AddTile(int x, int y)
 {
-    Tile* tile = GetTile(x, y);
+    Tile* tile = getTile(x, y);
 
     if (!tile) return;
 
     tile->IsSolid = true;
     tile->Mask = calculateMask(x, y);
 
+    std::cout << (int)tile->Mask << std::endl;
+
     updateNeighbours(x, y);
 }
 
-uint8_t TileMap::calculateMask(int x, int y) const
+void TileMap::RemoveTile(int x, int y)
+{
+    Tile* tile = getTile(x, y);
+
+    if (!tile) return;
+
+    tile->IsSolid = false;
+    tile->Mask = calculateMask(x, y);
+
+    updateNeighbours(x, y);
+}
+
+Mask TileMap::MaskAt(int x, int y) const
+{
+    const Tile* tile = getTile(x, y);
+
+    // if (!tile) return -1;
+
+    return tile->Mask;
+}
+
+Mask TileMap::calculateMask(int x, int y) const
 {
     uint8_t mask = 0;
 
@@ -61,7 +93,7 @@ uint8_t TileMap::calculateMask(int x, int y) const
 
 void TileMap::updateMask(int x, int y)
 {
-    Tile* tile = GetTile(x, y);
+    Tile* tile = getTile(x, y);
 
     if (!tile) return;
 
