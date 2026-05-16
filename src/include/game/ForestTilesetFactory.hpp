@@ -6,123 +6,64 @@
 class ForestTilesetFactory
 {
 public:
-    static TileSet CreateTileset()
+    static TileSet CreateTileSet()
     {
         TileSet tileSet;
+        tileSet.Sprite = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32));
 
-        tileSet.Sprite = std::make_unique<Sprite>("resources/world/Tileset_v2.png", glm::vec2(32, 32));
+        // In sprite-sheet order. Top-left to bottom-right.
 
-        MaskId maskId = 0;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {4, 6},
-            .MaskId = maskId
-        };
+        tileSet.Set[E | S | SE] = {1, 4};
+        tileSet.Set[W | E | SW | S | SE] = {2, 4};
+        tileSet.Set[W | SW | S ] = {3, 4};
+        tileSet.Set[S] = {4, 4};
+        tileSet.Set[E | S] = {5, 4};
+        tileSet.Set[W | E | SW | S] = {6, 4};
+        tileSet.Set[W | E | S | SE] = {7, 4};
+        tileSet.Set[W | S] = {8, 4};
+        tileSet.Set[W | E | S] = {9, 4};
+        tileSet.Set[NW | N | W | E | S | SE] = {10, 4};
 
-        maskId = 1;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {4, 7},
-            .MaskId = maskId
-        };
+        tileSet.Set[N | NE | E | S | SE] = {1, 3};
+        tileSet.Set[NW | N | NE | W | E | SW | S | SE] = {2, 3};
+        tileSet.Set[NW | N | W | SW | S] = {3, 3};
+        tileSet.Set[N | S] = {4, 3};
+        tileSet.Set[N | NE | E | S] = {5, 3};
+        tileSet.Set[NW | N | NE | W | E | SW | S] = {6, 3};
+        tileSet.Set[NW | N | NE | W | E | S | SE] = {7, 3};
+        tileSet.Set[NW | N | W | S] = {8, 3};
+        tileSet.Set[NW | N | NE | W | E | S] = {9, 3};
+        tileSet.Set[NW | N | W | E | S | SE] = {10, 3};
 
-        maskId = 2;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {3, 6},
-            .MaskId = maskId
-        };
+        tileSet.Set[N | NE | E] = {1, 2};
+        tileSet.Set[NW | N | NE] = {2, 2};
+        tileSet.Set[NW | N | W] = {3, 2};
+        tileSet.Set[N] = {4, 2};
+        tileSet.Set[N | E | S | SE] = {5, 2};
+        tileSet.Set[NW | N | W | E | SW | S | SE] = {6, 2};
+        tileSet.Set[N | NE | W | E | SW | S | SE] = {7, 2};
+        tileSet.Set[N | W | SW | S] = {8, 2};
+        tileSet.Set[N | W | E | SW | S | SE] = {9, 2};
+        tileSet.Set[N | W | E | S | SE] = {10, 2};
+        tileSet.Set[N | W | E | SW | S] = {11, 2};
 
-        maskId = 3;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {3, 7},
-            .MaskId = maskId
-        };
+        tileSet.Set[E] = {1, 1};
+        tileSet.Set[W | E] = {2, 1};
+        tileSet.Set[W] = {3, 1};
+        tileSet.Set[0] = {4, 1};
+        tileSet.Set[N | E] = {5, 1};
+        tileSet.Set[NW | N | W | E] = {6, 1};
+        tileSet.Set[N | NE | E | W] = {7, 1};
+        tileSet.Set[N | W] = {8, 1};
+        tileSet.Set[N | W | E] = {9, 1};
+        tileSet.Set[N | NE | W | E | S] = {10, 1};
+        tileSet.Set[NW | N | W | E | S] = {11, 1};
 
-        maskId = 4;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {1, 6},
-            .MaskId = maskId
-        };
-
-        maskId = 5;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {1, 7},
-            .MaskId = maskId
-        };
-
-        maskId = 6;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {2, 6},
-            .MaskId = maskId
-        };
-
-        maskId = 7;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {2, 7},
-            .MaskId = maskId
-        };
-
-        maskId = 8;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {4, 9},
-            .MaskId = maskId
-        };
-
-        maskId = 9;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {4, 8},
-            .MaskId = maskId
-        };
-
-        maskId = 10;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {3, 9},
-            .MaskId = maskId
-        };
-
-        maskId = 11;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {3, 8},
-            .MaskId = maskId
-        };
-
-        maskId = 12;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {1, 9},
-            .MaskId = maskId
-        };
-
-        maskId = 13;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {1, 8},
-            .MaskId = maskId
-        };
-
-        maskId = 14;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {2, 9},
-            .MaskId = maskId
-        };
-
-        maskId = 15;
-        tileSet.Set[maskId] = 
-        TileType {
-            .TileId = {2, 8},
-            .MaskId = maskId
-        };
+        tileSet.Set[N | E | S] = {5, 0};
+        tileSet.Set[NW | N | W | E | SW | S] = {6, 0};
+        tileSet.Set[N | NE | W | E | S | SE] = {7, 0};
+        tileSet.Set[N | W | S] = {8, 0};
+        tileSet.Set[N | W | E | S] = {9, 0};
 
         return tileSet;
     }
