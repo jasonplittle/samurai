@@ -18,6 +18,7 @@ struct AnimationClip
 struct AnimationSet
 {
     std::unordered_map<CharacterState, AnimationClip> Clips;
+    glm::vec2 FrameSize;
 };
 
 class CharacterAnimation
@@ -30,6 +31,8 @@ public:
     const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentState).Sprite; }
 
     bool IsFinished() const { return m_isFinished; }
+
+    glm::vec2 GetFrameSize() const { return m_animationSet.FrameSize; }
 
 private:
     CharacterState m_currentState;

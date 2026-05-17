@@ -23,6 +23,10 @@ public:
     void ShowTile(bool show, int worldX, int worldY);
     void DrawTiles(SpriteRenderer& renderer, OrthographicCamera camera);
 
+    void CreateDefaultWorld();
+
+    // void Get
+
 private:
     TileSet m_tileSet;
     TileMap m_tileMap;

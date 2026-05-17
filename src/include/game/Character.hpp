@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include "PhysicsSystem.hpp"
+
 enum class CharacterState
 {
     Idle,
@@ -15,30 +17,38 @@ enum class CharacterState
 class Character
 {
 public:
-    Character() : m_state(CharacterState::Idle), m_size(96, 96) {};
+    Character(glm::vec2 position, glm::vec2 size, float mass);
     ~Character() = default;
 
     void Update(float dt, bool animationFinished);
 
     void Attack() { m_state = CharacterState::Attack; }
-    void Jump() { m_state = CharacterState::Jump; };
-    void Idle() { m_state = CharacterState::Idle; };
-    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; m_pos.x -= 1.f; };
-    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; m_pos.x += 1.f; };
+    void Jump() { m_state = CharacterState::Jump; m_transform.Position.y -= 1;};
+    void Idle() { m_state = CharacterState::Idle; m_targetSpeed = 0; };
+    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; m_targetSpeed = -100; };
+    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; m_targetSpeed = 100; };
+    void MoveDown() { m_state = CharacterState::Walk; m_transform.Position.y += 1; };
+
 
     CharacterState GetState() const { return m_state; }
 
-    glm::vec2 GetPosition() const { return m_pos; }
-    glm::vec2 GetSize() const { return m_size; }
+    glm::vec2 GetPosition() const { return m_transform.Position; }
+    glm::vec2 GetSize() const { return m_collider.Size; }
+
+    // Transform& GetTransform() { return m_transform; }
+    // Rigidbody& GetRigidBody() { return m_body; }
 
     bool IsFacingRight() { return m_isFacingRight; }
 
 protected:
     CharacterState m_state;
 
-    glm::vec2 m_pos = {0.f, 0.f};
-    glm::vec2 m_vel;
-    glm::vec2 m_size;
+    Rigidbody m_rigidbody;
+    BoxCollider m_collider;
+    Transform m_transform;
+
+    float m_targetSpeed = 0;
+    float m_acc = 10;
 
     bool m_grounded;
     bool m_attacking;

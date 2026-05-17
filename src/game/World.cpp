@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#define BIT(i) 1 << i
 
 World::World(TileSet tileSet) : m_tileSet(std::move(tileSet)), m_tileMap(WORLD_WIDTH, WORLD_HEIGHT) {};
 
@@ -13,6 +12,15 @@ static glm::ivec2 worldToGrid(int x, int y)
     int gridY = std::floor(y / TILE_SIZE);
 
     return glm::ivec2(gridX, gridY);
+}
+
+void World::CreateDefaultWorld()
+{
+    const int floorLevel = 7;
+    for (int x = 0; x < WORLD_WIDTH; x++)
+    {
+        m_tileMap.AddTile(x, floorLevel);
+    }
 }
 
 void World::ShowTile(bool show, int worldX, int worldY)

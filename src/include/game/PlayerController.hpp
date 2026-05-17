@@ -11,8 +11,9 @@ struct InputState
 {
     bool left;
     bool right;
-    bool jump;
-    bool attack;
+    bool up;
+    bool down;
+    bool space;
 };
 
 class PlayerController

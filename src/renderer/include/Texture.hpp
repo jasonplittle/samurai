@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Renderer.hpp"
-
 #include "UtilLib.hpp"
 
 

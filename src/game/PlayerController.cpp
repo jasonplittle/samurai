@@ -3,21 +3,33 @@
 
 void PlayerController::Update(float dt, InputState inputState)
 {
-    if (inputState.attack)
+    if (inputState.space)
     {
         m_player.Attack();
     }
-    if (inputState.jump)
+    if (inputState.up)
     {
         m_player.Jump();
     }
+    if (inputState.down)
+    {
+        m_player.MoveDown();
+    }
     if (inputState.left)
     {
+        // std::cout << "Move" << std::endl;
         m_player.MoveLeft();
     }
     if (inputState.right)
     {
+        // std::cout << "Move" << std::endl;
         m_player.MoveRight();
+    }
+
+    if (!inputState.right && !inputState.left)
+    {
+        // std::cout << "Idle" << std::endl;
+        m_player.Idle();
     }
 }
 

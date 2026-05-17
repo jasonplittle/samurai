@@ -2,27 +2,26 @@
 
 #include <glm/glm.hpp>
 
+constexpr float GRAVITY = 30.f;
+
 struct Rigidbody
 {
-    glm::vec2 velocity = {0.0f, 0.0f};
-
-    glm::vec2 forces = {0.f, 0.0f};
-
-    float mass = 1.0f;
-
-    bool useGravity = true;
-
-    bool grounded = false;
+    glm::vec2 Velocity = glm::vec2(0.f, 0.f);
+    glm::vec2 Acceleration = glm::vec2(0.f, 0.f);
+    float Mass = 1.0f;
+    bool UseGravity = false;
+    bool Grounded = true;
 };
 
 struct Transform
 {
-    glm::vec2 position;
+    glm::vec2 Position = glm::vec2(0.f, 0.f);
 };
 
 struct BoxCollider
 {
-    glm::vec2 halfSize;
+    glm::vec2 Size;
+    glm::vec2 HalfSize;
 };
 
 
@@ -35,26 +34,16 @@ public:
         float dt)
     {
         // Gravity
-        if (rigidbody.useGravity)
+        if (rigidbody.UseGravity)
         {
-            rigidbody.forces.y -=
-                gravity * rigidbody.mass;
+            rigidbody.Acceleration.y += gravity * dt;
         }
 
-        // Acceleration
-        glm::vec2 acceleration =
-            rigidbody.forces / rigidbody.mass;
-
         // Integrate Velocity
-        rigidbody.velocity +=
-            acceleration * dt;
+        rigidbody.Velocity += rigidbody.Acceleration * dt;
 
         // Integrate Position
-        transform.position +=
-            rigidbody.velocity * dt;
-
-        // Clear Forces
-        rigidbody.forces = {0.0f, 0.0f};
+        transform.Position += rigidbody.Velocity * dt;
     }
 
     bool Collides(
@@ -64,19 +53,20 @@ public:
         const BoxCollider& bCollider)
     {
         return
-            std::abs(aTransform.position.x -
-                    bTransform.position.x)
-                < (aCollider.halfSize.x +
-                bCollider.halfSize.x)
+            std::abs(aTransform.Position.x -
+                    bTransform.Position.x)
+                < (aCollider.HalfSize.x +
+                bCollider.HalfSize.x)
 
             &&
 
-            std::abs(aTransform.position.y -
-                    bTransform.position.y)
-                < (aCollider.halfSize.y +
-                bCollider.halfSize.y);
+            std::abs(aTransform.Position.y -
+                    bTransform.Position.y)
+                < (aCollider.HalfSize.y +
+                bCollider.HalfSize.y);
     }
 
 private:
     float gravity = 30.0f;
+    float friction = 20.f;
 };

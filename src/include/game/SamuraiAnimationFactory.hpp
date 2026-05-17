@@ -9,6 +9,7 @@ public:
     static AnimationSet CreateSamuraiAnimations()
     {
         AnimationSet set;
+        set.FrameSize = glm::vec2(96, 96);
 
         set.Clips[CharacterState::Idle] =
         {
@@ -16,7 +17,7 @@ public:
             .FrameCount = 10,
             .FrameDuration = 0.1f,
             .Loop = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", glm::vec2(96, 96))
+            .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", set.FrameSize)
         };
         set.Clips[CharacterState::Walk] =
         {
@@ -24,7 +25,7 @@ public:
             .FrameCount = 12,
             .FrameDuration = 0.1f,
             .Loop = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", glm::vec2(96, 96))
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", set.FrameSize)
         };
         set.Clips[CharacterState::Attack] =
         {
@@ -32,7 +33,7 @@ public:
             .FrameCount = 7,
             .FrameDuration = 0.1f,
             .Loop = false,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", glm::vec2(96, 96))
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
         };
         set.Clips[CharacterState::Jump] =
         {
@@ -40,7 +41,7 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = false,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", glm::vec2(96, 96))
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", set.FrameSize)
         };
 
         return set;

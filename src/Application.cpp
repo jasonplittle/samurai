@@ -23,14 +23,12 @@
 #include "World.hpp"
 #include "ForestTilesetFactory.hpp"
 
-constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
+
 // constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
-
+constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
 constexpr glm::vec2 SCEEEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
 
-
-// constexpr glm::vec2 VIRTUAL_SCEEEN = { 640.0f, 360.0f };
 
 int main()
 {
@@ -73,7 +71,7 @@ int main()
     float currentTime;
     float dt;
 
-    Character player;
+    Character player(glm::vec2(0.f, 0.f), glm::vec2(32, 32), 1.f);
     PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
@@ -83,13 +81,18 @@ int main()
     BackgroundParallax backdrop(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y));
 
     World world(ForestTilesetFactory::CreateTileSet());
+    world.CreateDefaultWorld();
 
     InputState inputState;
 
-    OrthographicCamera camera;
-    camera.Pos.y = 0;
-    camera.Zoom = 1;
-    camera.Size = VIRTUAL_SCEEEN;
+    OrthographicCamera camera
+    {
+        .Pos = glm::vec2(0.f, 0.f),
+        .Size = VIRTUAL_SCEEEN,
+        .Zoom = 1
+    };
+
+    PhysicsSystem physics;
     
     while (!glfwWindowShouldClose(window))
     {
@@ -107,8 +110,9 @@ int main()
 
         inputState.left = Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT);
         inputState.right = Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT);
-        inputState.jump = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
-        inputState.attack = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
+        inputState.up = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
+        inputState.down = Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN);
+        inputState.space = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
 
         bool lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         bool rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
@@ -130,7 +134,7 @@ int main()
         playerAnimation.Update(dt, player.GetState());
         player.Update(dt, playerAnimation.IsFinished());
 
-        camera.Pos.x = player.GetPosition().x;
+        // camera.Pos.x = player.GetPosition().x;
 
         backdrop.RenderLayers(spriteRenderer, camera);
 
@@ -141,8 +145,8 @@ int main()
             glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
             !player.IsFacingRight(),
             camera,
-            player.GetPosition(),
-            player.GetSize()
+            glm::vec2(player.GetPosition().x - (0.5 * camera.Size.x), (0.5 * camera.Size.y) - player.GetPosition().y),
+            playerAnimation.GetFrameSize()
         );
 
         glfwSwapBuffers(window);
