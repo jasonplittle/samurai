@@ -31,7 +31,7 @@ public:
     {
         if (body.UseGravity)
         {
-            body.Acceleration.y = GRAVITY;
+            body.Acceleration.y = -GRAVITY;
         }
 
         body.Velocity += body.Acceleration * dt;
@@ -41,25 +41,23 @@ public:
 
         body.Position.x += body.Velocity.x * dt;
 
-        int top = body.Position.y - body.Radii.y;
-        int bottom = body.Position.y + body.Radii.y;
-        int left = body.Position.x - body.Radii.x;
-        int right = body.Position.x + body.Radii.x;
+        int bodyTop = body.Position.y + body.Radii.y;
+        int bodyBottom = body.Position.y - body.Radii.y;
+        int bodyLeft = body.Position.x - body.Radii.x;
+        int bodyRight = body.Position.x + body.Radii.x;
 
-        for (int y = bottom; y <= top; y++)
+        for (int y = bodyBottom; y <= bodyTop; y++)
         {
-            if (world.IsSolid(right, y))
+            if (world.IsSolid(bodyLeft, y))
             {
-                std::cout << "right" << std::endl;
-                body.Position.x -= body.Velocity.x * dt;
+                body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
                 body.Velocity.x = 0;
                 break;
             }
 
-            if (world.IsSolid(left, y))
+            if (world.IsSolid(bodyRight, y))
             {
-                std::cout << "left" << std::endl;
-                body.Position.x += body.Velocity.x * dt;
+                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
                 body.Velocity.x = 0;
                 break;
             }
@@ -67,23 +65,23 @@ public:
 
         body.Position.y += body.Velocity.y * dt;
 
-        top = body.Position.y - body.Radii.y;
-        bottom = body.Position.y + body.Radii.y;
-        left = body.Position.x - body.Radii.x;
-        right = body.Position.x + body.Radii.x;
+        bodyTop = body.Position.y + body.Radii.y;
+        bodyBottom = body.Position.y - body.Radii.y;
+        bodyLeft = body.Position.x - body.Radii.x;
+        bodyRight = body.Position.x + body.Radii.x;
 
-        for (int x = left; x <= right; x++)
+        for (int x = bodyLeft; x <= bodyRight; x++)
         {
-            if (world.IsSolid(x, top))
+            if (world.IsSolid(x, bodyTop))
             {
-                body.Position.y += body.Velocity.y * dt;
+                body.Position.y += world.WorldYToTileBottomY(bodyTop) - body.Radii.y;
                 body.Velocity.y = 0;
                 break;
             }
 
-            if (world.IsSolid(x, bottom))
+            if (world.IsSolid(x, bodyBottom))
             {
-                body.Position.y -= body.Velocity.y * dt;
+                body.Position.y = world.WorldYToTileTopY(bodyBottom) + body.Radii.y;
                 body.Velocity.y = 0;
                 body.IsGrounded = true;
                 break;

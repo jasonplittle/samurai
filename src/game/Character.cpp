@@ -6,9 +6,9 @@ Character::Character(glm::vec2 position, glm::vec2 size)
     : m_state(CharacterState::Idle), m_body{.Position = position, .Radii = size * 0.5f, }
 {
     m_body.Position = position;
-    m_body.Radii = size * 0.5f;
+    m_body.Radii.y = size.y * 0.5f;
+    m_body.Radii.x = size.x * 0.25f;
     m_body.UseGravity = true;
-    // m_body.UseGravity = true;
 }
 
 

@@ -25,9 +25,12 @@ public:
     void ShowTile(bool show, int worldX, int worldY);
     void DrawTiles(SpriteRenderer& renderer, OrthographicCamera camera);
 
-    void CreateDefaultWorld();
+    int WorldYToTileTopY(int worldY) const;
+    int WorldYToTileBottomY(int worldY) const;
+    int WorldXToTileRightX(int worldX) const;
+    int WorldXToTileLeftX(int worldX) const;
 
-    // void Get
+    void CreateDefaultWorld();
 
 private:
     TileSet m_tileSet;

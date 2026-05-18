@@ -71,7 +71,7 @@ int main()
     float currentTime;
     float dt;
 
-    Character player(glm::vec2(0, 0), glm::vec2(32, 32));
+    Character player(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), glm::vec2(32, 32));
     PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
@@ -87,7 +87,7 @@ int main()
 
     OrthographicCamera camera
     {
-        .Pos = glm::vec2(player.GetPosition().x, 100),
+        .Pos = glm::vec2(player.GetPosition().x, VIRTUAL_SCEEEN.y * 0.5),
         // .Pos = glm::vec2(VIRTUAL_SCEEEN.x * 0, VIRTUAL_SCEEEN.y * 0),
         .Size = VIRTUAL_SCEEEN,
         .Zoom = 1
@@ -120,7 +120,7 @@ int main()
         glm::vec2 mouseScreenPos = Input::Instance().GetCursorPos(window);
         glm::vec2 mouseWorldPos = 
         {
-            (mouseScreenPos.x / SCREEN_FACTOR.x) - (camera.Size.x * 0.5) - (camera.Pos.x), 
+            (mouseScreenPos.x / SCREEN_FACTOR.x) - (camera.Size.x * 0.5) + camera.Pos.x, 
             (((REAL_SCEEEN.y - mouseScreenPos.y) / SCREEN_FACTOR.y) - (camera.Size.y * 0.5) + camera.Pos.y) 
         };
 
@@ -137,10 +137,10 @@ int main()
 
         playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
-        // physics.UpdateBody(player.GetBody(), world, dt);
+        physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
 
-        camera.Pos.x = player.GetPosition().x;
+        // camera.Pos.x = player.GetPosition().x;
 
         backdrop.RenderLayers(spriteRenderer, camera);
 

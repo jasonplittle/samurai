@@ -33,6 +33,30 @@ void World::CreateDefaultWorld()
     m_tileMap.AddTile(1, 0);
 }
 
+int World::WorldYToTileTopY(int worldY) const
+{
+    glm::ivec2 pos = worldToGrid(0, worldY);
+    return (pos.y * TILE_SIZE) + TILE_SIZE;
+}
+
+int World::WorldYToTileBottomY(int worldY) const
+{
+    glm::ivec2 pos = worldToGrid(0, worldY);
+    return pos.y * TILE_SIZE;
+}
+
+int World::WorldXToTileRightX(int worldX) const
+{
+    glm::ivec2 pos = worldToGrid(worldX, 0);
+    return (pos.x * TILE_SIZE) + TILE_SIZE;
+}
+
+int World::WorldXToTileLeftX(int worldX) const
+{
+    glm::ivec2 pos = worldToGrid(worldX, 0);
+    return pos.x * TILE_SIZE;
+}
+
 bool World::IsSolid(int worldX, int worldY) const
 {
     glm::ivec2 pos = worldToGrid(worldX, worldY);
@@ -46,16 +70,10 @@ void World::ShowTile(bool show, int worldX, int worldY)
     if (show == m_tileMap.IsSolid(pos.x, pos.y)) 
         return;
 
-    std::cout << "(" << worldX << ", " << worldY << ")" << " (" <<  pos.x << ", " << pos.y << ")" << std::endl;
-
     if (show)
-    {
         m_tileMap.AddTile(pos.x, pos.y);
-    }
     else
-    {
         m_tileMap.RemoveTile(pos.x, pos.y);
-    }
 }
 
 
