@@ -8,8 +8,8 @@ World::World(TileSet tileSet) : m_tileSet(std::move(tileSet)), m_tileMap(WORLD_W
 
 static glm::ivec2 worldToGrid(int x, int y)
 {
-    int gridX = std::floor(x / TILE_SIZE);
-    int gridY = std::floor(y / TILE_SIZE);
+    int gridX = static_cast<int>(std::floor(static_cast<float>(x) / TILE_SIZE));
+    int gridY = static_cast<int>(std::floor(static_cast<float>(y) / TILE_SIZE));
 
     return glm::ivec2(gridX, gridY);
 }
@@ -19,16 +19,18 @@ void World::CreateDefaultWorld()
     const int floorLevel = 7;
     const int leftWall = 0;
     const int rightWall = 19;
-    for (int x = 0; x < WORLD_WIDTH; x++)
+
+    for (int x = 0; x < WORLD_GRID.x; x++)
     {
         m_tileMap.AddTile(x, floorLevel);
     }
 
-    for (int y = 0; y < WORLD_HEIGHT; y++)
+    for (int y = 0; y < WORLD_GRID.y; y++)
     {
         m_tileMap.AddTile(leftWall, y);
         m_tileMap.AddTile(rightWall, y);
     }
+    m_tileMap.AddTile(1, 0);
 }
 
 bool World::IsSolid(int worldX, int worldY) const
@@ -43,6 +45,8 @@ void World::ShowTile(bool show, int worldX, int worldY)
     
     if (show == m_tileMap.IsSolid(pos.x, pos.y)) 
         return;
+
+    std::cout << "(" << worldX << ", " << worldY << ")" << " (" <<  pos.x << ", " << pos.y << ")" << std::endl;
 
     if (show)
     {
@@ -69,8 +73,7 @@ void World::DrawTiles(SpriteRenderer& spriteRenderer, OrthographicCamera camera)
                 m_tileSet.Set[m_tileMap.MaskAt(x, y)],
                 false,
                 camera,
-                glm::vec2((x * TILE_SIZE) - (0.5 * camera.Size.x) + (TILE_SIZE * 0.5), 
-                    (camera.Size.y * 0.5) - (y * TILE_SIZE) - (TILE_SIZE * 0.5)),
+                glm::vec2((x * TILE_SIZE) + HALF_TILE_SIZE, (y * TILE_SIZE) + HALF_TILE_SIZE),
                 glm::vec2(TILE_SIZE, TILE_SIZE)
             );
         }

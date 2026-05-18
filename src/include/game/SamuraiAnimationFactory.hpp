@@ -10,6 +10,7 @@ public:
     {
         AnimationSet set;
         set.FrameSize = glm::vec2(96, 96);
+        set.FrameCenterOffset = glm::vec2(0, -16);
 
         set.Clips[CharacterState::Idle] =
         {

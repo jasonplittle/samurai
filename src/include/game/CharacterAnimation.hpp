@@ -19,6 +19,7 @@ struct AnimationSet
 {
     std::unordered_map<CharacterState, AnimationClip> Clips;
     glm::vec2 FrameSize;
+    glm::vec2 FrameCenterOffset;
 };
 
 class CharacterAnimation
@@ -33,6 +34,7 @@ public:
     bool IsFinished() const { return m_isFinished; }
 
     glm::vec2 GetFrameSize() const { return m_animationSet.FrameSize; }
+    glm::vec2 GetFrameCenterOffset() const { return m_animationSet.FrameCenterOffset; }
 
 private:
     CharacterState m_currentState;

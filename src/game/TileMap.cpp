@@ -75,15 +75,15 @@ Mask TileMap::calculateMask(int x, int y) const
 {
     Mask mask = 0;
 
-    bool n  = IsSolid(x, y - 1);
-    bool s  = IsSolid(x, y + 1);
+    bool n  = IsSolid(x, y + 1);
+    bool s  = IsSolid(x, y - 1);
     bool w  = IsSolid(x - 1, y);
     bool e  = IsSolid(x + 1, y);
 
-    bool nw = IsSolid(x - 1, y - 1);
-    bool ne = IsSolid(x + 1, y - 1);
-    bool sw = IsSolid(x - 1, y + 1);
-    bool se = IsSolid(x + 1, y + 1);
+    bool nw = IsSolid(x - 1, y + 1);
+    bool ne = IsSolid(x + 1, y + 1);
+    bool sw = IsSolid(x - 1, y - 1);
+    bool se = IsSolid(x + 1, y - 1);
 
     // Cardinals (always valid)
     if (n) mask |= N;
@@ -110,15 +110,15 @@ void TileMap::updateMask(int x, int y)
 
 void TileMap::updateNeighbours(int x, int y)
 {
-    updateMask(x - 1, y - 1); // NW
-    updateMask(x,     y - 1); // N
-    updateMask(x + 1, y - 1); // NE
+    updateMask(x - 1, y + 1); // NW
+    updateMask(x,     y + 1); // N
+    updateMask(x + 1, y + 1); // NE
 
     updateMask(x - 1, y    ); // W
     updateMask(x + 1, y    ); // E
 
-    updateMask(x - 1, y + 1); // SW;
-    updateMask(x,     y + 1); // S
-    updateMask(x + 1, y + 1); // SE
+    updateMask(x - 1, y - 1); // SW;
+    updateMask(x,     y - 1); // S
+    updateMask(x + 1, y - 1); // SE
 }
 

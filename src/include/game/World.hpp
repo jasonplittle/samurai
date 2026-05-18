@@ -11,6 +11,7 @@
 constexpr int WORLD_WIDTH = 640;
 constexpr int WORLD_HEIGHT = 360;
 constexpr int TILE_SIZE = 32;
+constexpr int HALF_TILE_SIZE = 16;
 
 constexpr glm::ivec2 WORLD_GRID = { 20, 12 };
 

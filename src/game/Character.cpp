@@ -8,6 +8,7 @@ Character::Character(glm::vec2 position, glm::vec2 size)
     m_body.Position = position;
     m_body.Radii = size * 0.5f;
     m_body.UseGravity = true;
+    // m_body.UseGravity = true;
 }
 
 
@@ -17,7 +18,7 @@ void Character::Update(float dt, bool animationFinished)
     // m_body
     // m_rigidbody.Velocity.x += speedDiff * m_acc * dt;
 
-    std::cout << m_body.Velocity.x << std::endl;
+    // std::cout << m_body.Velocity.x << std::endl;
 
 
 

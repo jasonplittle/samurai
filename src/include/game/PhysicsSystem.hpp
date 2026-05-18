@@ -4,6 +4,8 @@
 
 #include "World.hpp"
 
+#include <iostream>
+
 
 constexpr float GRAVITY = 30.f;
 
@@ -34,6 +36,9 @@ public:
 
         body.Velocity += body.Acceleration * dt;
 
+
+        // Move and collide
+
         body.Position.x += body.Velocity.x * dt;
 
         int top = body.Position.y - body.Radii.y;
@@ -45,14 +50,16 @@ public:
         {
             if (world.IsSolid(right, y))
             {
-                body.Position.x -= body.Radii.x; // Temp
+                std::cout << "right" << std::endl;
+                body.Position.x -= body.Velocity.x * dt;
                 body.Velocity.x = 0;
                 break;
             }
 
             if (world.IsSolid(left, y))
             {
-                body.Position.x += body.Radii.x; // Temp
+                std::cout << "left" << std::endl;
+                body.Position.x += body.Velocity.x * dt;
                 body.Velocity.x = 0;
                 break;
             }
@@ -69,14 +76,14 @@ public:
         {
             if (world.IsSolid(x, top))
             {
-                body.Position.y += body.Radii.y; // Temp
+                body.Position.y += body.Velocity.y * dt;
                 body.Velocity.y = 0;
                 break;
             }
 
             if (world.IsSolid(x, bottom))
             {
-                body.Position.y -= body.Radii.y; // Temp
+                body.Position.y -= body.Velocity.y * dt;
                 body.Velocity.y = 0;
                 body.IsGrounded = true;
                 break;

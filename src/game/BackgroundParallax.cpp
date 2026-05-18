@@ -27,7 +27,7 @@ void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, Orth
                 glm::vec2(0, 0),
                 false,
                 camera,
-                glm::vec2(x, 0),
+                glm::vec2(x, camera.Pos.y),
                 glm::vec2(layer.Width, layer.Height)
             );
         }

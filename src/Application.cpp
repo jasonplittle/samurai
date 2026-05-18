@@ -27,7 +27,7 @@
 // constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
-constexpr glm::vec2 SCEEEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
+constexpr glm::vec2 SCREEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
 
 
 int main()
@@ -71,7 +71,7 @@ int main()
     float currentTime;
     float dt;
 
-    Character player(glm::vec2(100.f, 0.f), glm::vec2(32, 32));
+    Character player(glm::vec2(0, 0), glm::vec2(32, 32));
     PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
@@ -87,7 +87,8 @@ int main()
 
     OrthographicCamera camera
     {
-        .Pos = glm::vec2(0.f, 0.f),
+        .Pos = glm::vec2(player.GetPosition().x, 100),
+        // .Pos = glm::vec2(VIRTUAL_SCEEEN.x * 0, VIRTUAL_SCEEEN.y * 0),
         .Size = VIRTUAL_SCEEEN,
         .Zoom = 1
     };
@@ -116,26 +117,30 @@ int main()
 
         bool lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         bool rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
-        glm::vec2 cPos = Input::Instance().GetCursorPos(window);
-        glm::vec2 cWPos = {cPos.x / SCEEEN_FACTOR.x, cPos.y / SCEEEN_FACTOR.x };
+        glm::vec2 mouseScreenPos = Input::Instance().GetCursorPos(window);
+        glm::vec2 mouseWorldPos = 
+        {
+            (mouseScreenPos.x / SCREEN_FACTOR.x) - (camera.Size.x * 0.5) - (camera.Pos.x), 
+            (((REAL_SCEEEN.y - mouseScreenPos.y) / SCREEN_FACTOR.y) - (camera.Size.y * 0.5) + camera.Pos.y) 
+        };
 
         if (lMouse)
         {
-            // std::cout << "left: " << cPos.x << ", " << cPos.y << std::endl;
-            world.ShowTile(true, cWPos.x, cWPos.y);
+            // std::cout << "left: " << (REAL_SCEEEN.y - mouseScreenPos.y) << ", " << ((REAL_SCEEEN.y - mouseScreenPos.y) / SCREEN_FACTOR.y) << ", " << mouseWorldPos.y << ", " << camera.Pos.y << std::endl;
+            world.ShowTile(true, mouseWorldPos.x, mouseWorldPos.y);
         }
         if (rMouse)
         {
             // std::cout << "right: " << cPos.x << ", " << cPos.y << std::endl;
-            world.ShowTile(false, cWPos.x, cWPos.y);
+            world.ShowTile(false, mouseWorldPos.x, mouseWorldPos.y);
         }
 
         playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
-        physics.UpdateBody(player.GetBody(), world, dt);
+        // physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
 
-        // camera.Pos.x = player.GetPosition().x;
+        camera.Pos.x = player.GetPosition().x;
 
         backdrop.RenderLayers(spriteRenderer, camera);
 
@@ -146,7 +151,7 @@ int main()
             glm::ivec2(playerAnimation.GetCurrentFrame(), 0), 
             !player.IsFacingRight(),
             camera,
-            glm::vec2(player.GetPosition().x - (0.5 * camera.Size.x), (0.5 * camera.Size.y) - player.GetPosition().y),
+            player.GetPosition() - playerAnimation.GetFrameCenterOffset(),
             playerAnimation.GetFrameSize()
         );
 
