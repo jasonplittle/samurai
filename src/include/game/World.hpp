@@ -6,7 +6,7 @@
 #include "TileMap.hpp"
 
 #include "SpriteRenderer.hpp"
-#include "Character.hpp"
+
 
 constexpr int WORLD_WIDTH = 640;
 constexpr int WORLD_HEIGHT = 360;
@@ -20,6 +20,7 @@ class World
 public:
     World(TileSet tileSet);
 
+    bool IsSolid(int worldX, int worldY) const;
     void ShowTile(bool show, int worldX, int worldY);
     void DrawTiles(SpriteRenderer& renderer, OrthographicCamera camera);
 

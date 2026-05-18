@@ -71,7 +71,7 @@ int main()
     float currentTime;
     float dt;
 
-    Character player(glm::vec2(0.f, 0.f), glm::vec2(32, 32), 1.f);
+    Character player(glm::vec2(100.f, 0.f), glm::vec2(32, 32));
     PlayerController playerController(player);
 
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
@@ -132,6 +132,7 @@ int main()
 
         playerController.Update(dt, inputState);
         playerAnimation.Update(dt, player.GetState());
+        physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
 
         // camera.Pos.x = player.GetPosition().x;

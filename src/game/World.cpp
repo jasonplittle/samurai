@@ -17,10 +17,24 @@ static glm::ivec2 worldToGrid(int x, int y)
 void World::CreateDefaultWorld()
 {
     const int floorLevel = 7;
+    const int leftWall = 0;
+    const int rightWall = 19;
     for (int x = 0; x < WORLD_WIDTH; x++)
     {
         m_tileMap.AddTile(x, floorLevel);
     }
+
+    for (int y = 0; y < WORLD_HEIGHT; y++)
+    {
+        m_tileMap.AddTile(leftWall, y);
+        m_tileMap.AddTile(rightWall, y);
+    }
+}
+
+bool World::IsSolid(int worldX, int worldY) const
+{
+    glm::ivec2 pos = worldToGrid(worldX, worldY);
+    return m_tileMap.IsSolid(pos.x, pos.y);
 }
 
 void World::ShowTile(bool show, int worldX, int worldY)

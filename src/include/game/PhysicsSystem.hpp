@@ -2,71 +2,85 @@
 
 #include <glm/glm.hpp>
 
+#include "World.hpp"
+
+
 constexpr float GRAVITY = 30.f;
 
-struct Rigidbody
+
+struct KinematicBody
 {
+    bool UseGravity = false;
+    bool IsGrounded = false;
+    bool IsSolid = false;
+
+    glm::vec2 Position = glm::vec2(0.f, 0.f);
     glm::vec2 Velocity = glm::vec2(0.f, 0.f);
     glm::vec2 Acceleration = glm::vec2(0.f, 0.f);
-    float Mass = 1.0f;
-    bool UseGravity = false;
-    bool Grounded = true;
-};
 
-struct Transform
-{
-    glm::vec2 Position = glm::vec2(0.f, 0.f);
-};
-
-struct BoxCollider
-{
-    glm::vec2 Size;
-    glm::vec2 HalfSize;
+    glm::vec2 Radii = glm::vec2(0.f, 0.f);
 };
 
 
 class PhysicsSystem
 {
 public:
-    void Update(
-        Transform& transform,
-        Rigidbody& rigidbody,
-        float dt)
+    void UpdateBody(KinematicBody& body, World& world, float dt)
     {
-        // Gravity
-        if (rigidbody.UseGravity)
+        if (body.UseGravity)
         {
-            rigidbody.Acceleration.y += gravity * dt;
+            body.Acceleration.y = GRAVITY;
         }
 
-        // Integrate Velocity
-        rigidbody.Velocity += rigidbody.Acceleration * dt;
+        body.Velocity += body.Acceleration * dt;
 
-        // Integrate Position
-        transform.Position += rigidbody.Velocity * dt;
+        body.Position.x += body.Velocity.x * dt;
+
+        int top = body.Position.y - body.Radii.y;
+        int bottom = body.Position.y + body.Radii.y;
+        int left = body.Position.x - body.Radii.x;
+        int right = body.Position.x + body.Radii.x;
+
+        for (int y = bottom; y <= top; y++)
+        {
+            if (world.IsSolid(right, y))
+            {
+                body.Position.x -= body.Radii.x; // Temp
+                body.Velocity.x = 0;
+                break;
+            }
+
+            if (world.IsSolid(left, y))
+            {
+                body.Position.x += body.Radii.x; // Temp
+                body.Velocity.x = 0;
+                break;
+            }
+        }
+
+        body.Position.y += body.Velocity.y * dt;
+
+        top = body.Position.y - body.Radii.y;
+        bottom = body.Position.y + body.Radii.y;
+        left = body.Position.x - body.Radii.x;
+        right = body.Position.x + body.Radii.x;
+
+        for (int x = left; x <= right; x++)
+        {
+            if (world.IsSolid(x, top))
+            {
+                body.Position.y += body.Radii.y; // Temp
+                body.Velocity.y = 0;
+                break;
+            }
+
+            if (world.IsSolid(x, bottom))
+            {
+                body.Position.y -= body.Radii.y; // Temp
+                body.Velocity.y = 0;
+                body.IsGrounded = true;
+                break;
+            }
+        }
     }
-
-    bool Collides(
-        const Transform& aTransform,
-        const BoxCollider& aCollider,
-        const Transform& bTransform,
-        const BoxCollider& bCollider)
-    {
-        return
-            std::abs(aTransform.Position.x -
-                    bTransform.Position.x)
-                < (aCollider.HalfSize.x +
-                bCollider.HalfSize.x)
-
-            &&
-
-            std::abs(aTransform.Position.y -
-                    bTransform.Position.y)
-                < (aCollider.HalfSize.y +
-                bCollider.HalfSize.y);
-    }
-
-private:
-    float gravity = 30.0f;
-    float friction = 20.f;
 };

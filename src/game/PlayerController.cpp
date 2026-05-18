@@ -1,6 +1,13 @@
 #include "PlayerController.hpp"
 
 
+// player input
+// movement intentions
+// jump logic
+// dash logic
+// coyote time
+// jump buffering
+
 void PlayerController::Update(float dt, InputState inputState)
 {
     if (inputState.space)
