@@ -42,13 +42,13 @@ public:
         body.Velocity += body.Acceleration * dt;
 
         body.Position.y += body.Velocity.y * dt;
-        CollideY(body, world, dt);
+        CollideY(body, world);
 
         body.Position.x += body.Velocity.x * dt;
-        CollideX(body, world, dt);
+        CollideX(body, world);
     }
 
-    bool CollideX(KinematicBody& body, World& world, float dt)
+    bool CollideX(KinematicBody& body, World& world)
     {
         int bodyTop = body.Position.y + body.Radii.y;
         int bodyBottom = body.Position.y - body.Radii.y;
@@ -60,7 +60,7 @@ public:
             if (world.IsSolid(bodyLeft, y))
             {
                 body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
-                // body.Velocity.x = 0;
+                body.Velocity.x = 0;
                 body.IsWalled = true;
                 return true;
             }
@@ -68,7 +68,7 @@ public:
             if (world.IsSolid(bodyRight, y))
             {
                 body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
-                // body.Velocity.x = 0;
+                body.Velocity.x = 0;
                 body.IsWalled = true;
                 return true;
                 
@@ -77,7 +77,7 @@ public:
         return false;
     }
 
-    bool CollideY(KinematicBody& body, World& world, float dt)
+    bool CollideY(KinematicBody& body, World& world)
     {
         int bodyTop = body.Position.y + body.Radii.y;
         int bodyBottom = body.Position.y - body.Radii.y;

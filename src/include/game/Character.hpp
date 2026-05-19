@@ -9,11 +9,9 @@ enum class CharacterState
     Idle,
     Walk,
     Run,
-    Fall,
     JumpStart,
     JumpMid,
     JumpFall,
-    Jump,
     Attack,
     Hurt,
 };
@@ -28,7 +26,7 @@ public:
 
     void Attack() { m_state = CharacterState::Attack; m_body.Position = glm::vec2(320.f, 360.f); m_body.Velocity *= 0.f; }
     void Jump();
-    void Idle() { m_body.Velocity.x = 0; };
+    void Idle();
     void MoveLeft();
     void MoveRight();
     void MoveDown();

@@ -28,6 +28,14 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", set.FrameSize)
         };
+        set.Clips[CharacterState::Run] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 16,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/RUN.png", set.FrameSize)
+        };
         set.Clips[CharacterState::Attack] =
         {
             .StartFrame = 0,
@@ -35,22 +43,6 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
-        };
-        set.Clips[CharacterState::Jump] =
-        {
-            .StartFrame = 0,
-            .FrameCount = 3,
-            .FrameDuration = 0.1f,
-            .Loop = false,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", set.FrameSize)
-        };
-        set.Clips[CharacterState::Fall] =
-        {
-            .StartFrame = 0,
-            .FrameCount = 3,
-            .FrameDuration = 0.1f,
-            .Loop = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", set.FrameSize)
         };
         set.Clips[CharacterState::JumpStart] =
         {

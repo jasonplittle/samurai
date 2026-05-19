@@ -3,7 +3,7 @@
 #include <iostream>
 
 constexpr float jumpPeakTs = 0.3;
-constexpr float jumpPeakHeight = 48;
+constexpr float jumpPeakHeight = 64;
 
 constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
 constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
@@ -13,8 +13,12 @@ constexpr int fastGrav = 3 * regGrav;
 const float jumpMidThreshUp = std::sqrt(0.25) * v0;
 const float jumpMidThreshDown = std::sqrt(0.15) * v0;
 
+constexpr float idleSpeed = 5;
+constexpr float walkSpeed = 90;
+constexpr float runSpeed = 150;
 
-constexpr float walkSpeed = 45;
+constexpr float groundedAccel = 10;
+constexpr float groundedDeccel = 15;
 
 
 Character::Character(glm::vec2 position, glm::vec2 size)
@@ -49,41 +53,34 @@ void Character::MoveDown()
 void Character::MoveLeft() 
 { 
     m_isFacingRight = false; 
-    m_body.Velocity.x = -walkSpeed; 
+
+    const float speedDif = -runSpeed - m_body.Velocity.x;
+    m_body.Acceleration.x = speedDif * groundedAccel;
 };
 
 void Character::MoveRight() 
 { 
     m_isFacingRight = true; 
-    m_body.Velocity.x = walkSpeed; 
+
+    const float speedDif = runSpeed - m_body.Velocity.x;
+    m_body.Acceleration.x = speedDif * groundedAccel;
 };
+
+void Character::Idle()
+{
+    const float speedDif = -m_body.Velocity.x;
+    m_body.Acceleration.x = speedDif * groundedDeccel;
+}
 
 void Character::Update(float dt, bool animationFinished)
 {
-    // float speedDiff = m_targetSpeed - m_body.Velocity.x;
-    // m_body
-    // m_rigidbody.Velocity.x += speedDiff * m_acc * dt;
-
-    // std::cout << m_body.Velocity.y << std::endl;
-
-    // if (!m_body.IsGrounded)
-    // {
-    //     m_state = CharacterState::Fall;
-    // }
-    // else
-    // {
-    //     m_state = CharacterState::Idle;
-    // }
-
-
-
     switch(m_state)
     {
         case CharacterState::Idle:
         {
             // std::cout << "Idle" << std::endl;
 
-            if (abs(m_body.Velocity.x) > 0)
+            if (std::abs(m_body.Velocity.x) > idleSpeed)
             {
                 m_state = CharacterState::Walk;
             }
@@ -99,7 +96,7 @@ void Character::Update(float dt, bool animationFinished)
         {
             // std::cout << "Walk" << std::endl;
 
-            if (m_body.Velocity.x == 0)
+            if (std::abs(m_body.Velocity.x) <= idleSpeed && !m_body.IsWalled)
             {
                 m_state = CharacterState::Idle;
             }
@@ -107,6 +104,31 @@ void Character::Update(float dt, bool animationFinished)
             if (!m_body.IsGrounded)
             {
                 m_state = CharacterState::JumpMid;
+            }
+
+            if (std::abs(m_body.Velocity.x) > walkSpeed)
+            {
+                m_state = CharacterState::Run;
+            } 
+
+            break;
+        }
+        case CharacterState::Run:
+        {
+
+            // if (m_body.Velocity.x == 0 && !m_body.IsWalled)
+            // {
+            //     m_state = CharacterState::Idle;
+            // }
+
+            if (!m_body.IsGrounded)
+            {
+                m_state = CharacterState::JumpMid;
+            }
+
+            if (std::abs(m_body.Velocity.x) <= walkSpeed)
+            {
+                m_state = CharacterState::Walk;
             }
 
             break;
