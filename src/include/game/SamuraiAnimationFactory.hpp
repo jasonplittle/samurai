@@ -44,6 +44,38 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", set.FrameSize)
         };
+        set.Clips[CharacterState::Fall] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 3,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP.png", set.FrameSize)
+        };
+        set.Clips[CharacterState::JumpStart] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 3,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-START.png", set.FrameSize)
+        };
+        set.Clips[CharacterState::JumpMid] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 3,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-TRANSITION.png", set.FrameSize)
+        };
+        set.Clips[CharacterState::JumpFall] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 3,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
+        };
 
         return set;
     }

@@ -30,10 +30,8 @@ void CharacterAnimation::Update(float dt, CharacterState characterState)
             {
                 m_currentFrame = m_animationSet.Clips.at(m_currentState).StartFrame;
             }
-            else
-            {
-                m_isFinished = true;
-            }
+            
+            m_isFinished = true;
         }
 
         m_timeInCurrentFrame = 0;

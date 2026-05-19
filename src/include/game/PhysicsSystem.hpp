@@ -7,14 +7,17 @@
 #include <iostream>
 
 
-constexpr float GRAVITY = 30.f;
+constexpr float BASE_GRAVITY = 128.f;
 
 
 struct KinematicBody
 {
     bool UseGravity = false;
     bool IsGrounded = false;
+    bool IsWalled = false;
     bool IsSolid = false;
+
+    float Gravity = BASE_GRAVITY;
 
     glm::vec2 Position = glm::vec2(0.f, 0.f);
     glm::vec2 Velocity = glm::vec2(0.f, 0.f);
@@ -31,61 +34,74 @@ public:
     {
         if (body.UseGravity)
         {
-            body.Acceleration.y = -GRAVITY;
+            body.Acceleration.y = -body.Gravity;
         }
 
+        body.IsGrounded = false;
+        body.IsWalled = false;
         body.Velocity += body.Acceleration * dt;
 
-
-        // Move and collide
+        body.Position.y += body.Velocity.y * dt;
+        CollideY(body, world, dt);
 
         body.Position.x += body.Velocity.x * dt;
+        CollideX(body, world, dt);
+    }
 
+    bool CollideX(KinematicBody& body, World& world, float dt)
+    {
         int bodyTop = body.Position.y + body.Radii.y;
         int bodyBottom = body.Position.y - body.Radii.y;
         int bodyLeft = body.Position.x - body.Radii.x;
         int bodyRight = body.Position.x + body.Radii.x;
 
-        for (int y = bodyBottom; y <= bodyTop; y++)
+        for (int y = bodyBottom; y < bodyTop; y++)
         {
             if (world.IsSolid(bodyLeft, y))
             {
                 body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
-                body.Velocity.x = 0;
-                break;
+                // body.Velocity.x = 0;
+                body.IsWalled = true;
+                return true;
             }
 
             if (world.IsSolid(bodyRight, y))
             {
                 body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
-                body.Velocity.x = 0;
-                break;
+                // body.Velocity.x = 0;
+                body.IsWalled = true;
+                return true;
+                
             }
         }
+        return false;
+    }
 
-        body.Position.y += body.Velocity.y * dt;
+    bool CollideY(KinematicBody& body, World& world, float dt)
+    {
+        int bodyTop = body.Position.y + body.Radii.y;
+        int bodyBottom = body.Position.y - body.Radii.y;
+        int bodyLeft = body.Position.x - body.Radii.x;
+        int bodyRight = body.Position.x + body.Radii.x;
 
-        bodyTop = body.Position.y + body.Radii.y;
-        bodyBottom = body.Position.y - body.Radii.y;
-        bodyLeft = body.Position.x - body.Radii.x;
-        bodyRight = body.Position.x + body.Radii.x;
-
-        for (int x = bodyLeft; x <= bodyRight; x++)
+        for (int x = bodyLeft; x < bodyRight; x++)
         {
-            if (world.IsSolid(x, bodyTop))
-            {
-                body.Position.y += world.WorldYToTileBottomY(bodyTop) - body.Radii.y;
-                body.Velocity.y = 0;
-                break;
-            }
-
             if (world.IsSolid(x, bodyBottom))
             {
                 body.Position.y = world.WorldYToTileTopY(bodyBottom) + body.Radii.y;
                 body.Velocity.y = 0;
                 body.IsGrounded = true;
-                break;
+                return true;
+            }
+
+            if (world.IsSolid(x, bodyTop))
+            {
+                body.Position.y = world.WorldYToTileBottomY(bodyTop) - body.Radii.y;
+                body.Velocity.y = 0;
+                return true;
             }
         }
+        return false;
     }
+
 };

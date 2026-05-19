@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-World::World(TileSet tileSet) : m_tileSet(std::move(tileSet)), m_tileMap(WORLD_WIDTH, WORLD_HEIGHT) {};
+World::World(TileSet tileSet) : m_tileSet(std::move(tileSet)), m_tileMap(WORLD_GRID.x, WORLD_GRID.y) {};
 
 
 static glm::ivec2 worldToGrid(int x, int y)
@@ -16,7 +16,7 @@ static glm::ivec2 worldToGrid(int x, int y)
 
 void World::CreateDefaultWorld()
 {
-    const int floorLevel = 7;
+    const int floorLevel = 4;
     const int leftWall = 0;
     const int rightWall = 19;
 

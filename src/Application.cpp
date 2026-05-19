@@ -26,6 +26,7 @@
 
 // constexpr glm::ivec2 VIRTUAL_SCEEEN = { 320, 180 };
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
+// constexpr glm::ivec2 VIRTUAL_SCEEEN = { 1280, 720 };
 constexpr glm::ivec2 REAL_SCEEEN = { 1280, 720 };
 constexpr glm::vec2 SCREEN_FACTOR = { REAL_SCEEEN.x / VIRTUAL_SCEEEN.x, REAL_SCEEEN.y / VIRTUAL_SCEEEN.y };
 
@@ -140,7 +141,7 @@ int main()
         physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
 
-        // camera.Pos.x = player.GetPosition().x;
+        camera.Pos.x = player.GetPosition().x;
 
         backdrop.RenderLayers(spriteRenderer, camera);
 

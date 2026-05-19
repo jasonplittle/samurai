@@ -1,7 +1,5 @@
 #include "TileMap.hpp"
 
-#include <iostream>
-
 
 TileMap::TileMap(int width, int height)
     :

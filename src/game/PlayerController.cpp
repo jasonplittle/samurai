@@ -3,10 +3,16 @@
 
 // player input
 // movement intentions
-// jump logic
+// jump logic - coyote timer, jump before hitting the ground
 // dash logic
 // coyote time
 // jump buffering
+
+// Jump design
+    // coyote timer
+    // Jump buffering
+    // Press down to increase gravity
+    // Variable jump height
 
 void PlayerController::Update(float dt, InputState inputState)
 {

@@ -9,6 +9,10 @@ enum class CharacterState
     Idle,
     Walk,
     Run,
+    Fall,
+    JumpStart,
+    JumpMid,
+    JumpFall,
     Jump,
     Attack,
     Hurt,
@@ -22,12 +26,12 @@ public:
 
     void Update(float dt, bool animationFinished);
 
-    void Attack() { m_state = CharacterState::Attack; }
-    void Jump() { m_state = CharacterState::Jump; m_body.Position = glm::vec2(320.f, 360.f); };
-    void Idle() { m_state = CharacterState::Idle; m_body.Velocity.x = 0; };
-    void MoveLeft() { m_state = CharacterState::Walk; m_isFacingRight = false; m_body.Velocity.x = -100; };
-    void MoveRight() { m_state = CharacterState::Walk; m_isFacingRight = true; m_body.Velocity.x = 100; };
-    void MoveDown() { m_state = CharacterState::Walk; };
+    void Attack() { m_state = CharacterState::Attack; m_body.Position = glm::vec2(320.f, 360.f); m_body.Velocity *= 0.f; }
+    void Jump();
+    void Idle() { m_body.Velocity.x = 0; };
+    void MoveLeft();
+    void MoveRight();
+    void MoveDown();
 
 
     CharacterState GetState() const { return m_state; }
