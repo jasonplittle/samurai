@@ -44,6 +44,14 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
         };
+        set.Clips[CharacterState::Defend] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 5,
+            .FrameDuration = 0.1f,
+            .Loop = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", set.FrameSize)
+        };
         set.Clips[CharacterState::JumpStart] =
         {
             .StartFrame = 0,

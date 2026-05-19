@@ -13,6 +13,7 @@ enum class CharacterState
     JumpMid,
     JumpFall,
     Attack,
+    Defend,
     Hurt,
 };
 
@@ -30,6 +31,7 @@ public:
     void MoveLeft();
     void MoveRight();
     void MoveDown();
+    void Defend();
 
 
     CharacterState GetState() const { return m_state; }
@@ -47,14 +49,12 @@ protected:
 
     glm::vec2 m_size;
 
-    float m_targetSpeed = 0;
-    float m_acc = 10;
 
-    bool m_grounded;
-    bool m_attacking;
     bool m_isFacingRight;
 
     int m_health;
+
+    float m_defendCooldownTimer = 1.f;
 
 private:
 

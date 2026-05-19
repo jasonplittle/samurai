@@ -17,8 +17,12 @@ constexpr float idleSpeed = 5;
 constexpr float walkSpeed = 90;
 constexpr float runSpeed = 150;
 
-constexpr float groundedAccel = 10;
-constexpr float groundedDeccel = 15;
+constexpr float groundedAccel = 8;
+constexpr float groundedDeccel = 13;
+constexpr float defendDeccel = 20;
+constexpr float defendAccel = 0.8;
+
+// Todo Constants based on size
 
 
 Character::Character(glm::vec2 position, glm::vec2 size)
@@ -36,7 +40,7 @@ void Character::Jump()
 {
     if (m_body.IsGrounded)
     {
-        m_state = CharacterState::JumpStart; 
+        m_state = CharacterState::JumpStart;
         m_body.Velocity.y = v0;
     }
 }
@@ -45,8 +49,20 @@ void Character::MoveDown()
 {
     if (!m_body.IsGrounded)
     {
-        m_state = CharacterState::JumpFall; 
+        m_state = CharacterState::JumpFall;
         m_body.Gravity = fastGrav;
+    }
+}
+
+void Character::Defend()
+{
+    if (m_body.IsGrounded && m_defendCooldownTimer >= 1.0f)
+    {
+        m_state = CharacterState::Defend;
+        m_defendCooldownTimer = 0;
+
+        const float speedDif = -m_body.Velocity.x;
+        m_body.Acceleration.x = speedDif * defendDeccel;
     }
 }
 
@@ -55,7 +71,7 @@ void Character::MoveLeft()
     m_isFacingRight = false; 
 
     const float speedDif = -runSpeed - m_body.Velocity.x;
-    m_body.Acceleration.x = speedDif * groundedAccel;
+    m_body.Acceleration.x = speedDif * (m_state == CharacterState::Defend ? defendAccel : groundedAccel);
 };
 
 void Character::MoveRight() 
@@ -63,7 +79,7 @@ void Character::MoveRight()
     m_isFacingRight = true; 
 
     const float speedDif = runSpeed - m_body.Velocity.x;
-    m_body.Acceleration.x = speedDif * groundedAccel;
+    m_body.Acceleration.x = speedDif * (m_state == CharacterState::Defend ? defendAccel : groundedAccel);
 };
 
 void Character::Idle()
@@ -74,6 +90,8 @@ void Character::Idle()
 
 void Character::Update(float dt, bool animationFinished)
 {
+    m_defendCooldownTimer += dt;
+
     switch(m_state)
     {
         case CharacterState::Idle:
@@ -134,6 +152,14 @@ void Character::Update(float dt, bool animationFinished)
             break;
         }
         case CharacterState::Attack:
+        {
+            if (animationFinished)
+            {
+                m_state = CharacterState::Idle;
+            }
+            break;
+        }
+        case CharacterState::Defend:
         {
             if (animationFinished)
             {

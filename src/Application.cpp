@@ -137,9 +137,9 @@ int main()
         }
 
         playerController.Update(dt, inputState);
-        playerAnimation.Update(dt, player.GetState());
         physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
+        playerAnimation.Update(dt, player.GetState());
 
         camera.Pos.x = player.GetPosition().x;
 
