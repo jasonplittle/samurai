@@ -43,6 +43,10 @@ target_link_libraries("${CMAKE_PROJECT_NAME}"
 target_include_directories("${CMAKE_PROJECT_NAME}"
     PRIVATE
         ${CMAKE_SOURCE_DIR}/src/include/game
+        ${CMAKE_SOURCE_DIR}/src/include/game/world
+        ${CMAKE_SOURCE_DIR}/src/include/game/character
+        ${CMAKE_SOURCE_DIR}/src/include/game/animation
+        ${CMAKE_SOURCE_DIR}/src/include/game/controller
         ${CMAKE_SOURCE_DIR}/src/include/platform
         ${CMAKE_SOURCE_DIR}/src/renderer/include
         ${CMAKE_SOURCE_DIR}/thirdparty/glfw-3.4/include 

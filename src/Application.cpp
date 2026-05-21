@@ -15,6 +15,7 @@
 #include "Character.hpp"
 #include "CharacterAnimation.hpp"
 #include "SamuraiAnimationFactory.hpp"
+#include "ExecutionerAnimationFactory.hpp"
 #include "SpriteRenderer.hpp"
 
 #include "BackgroundParallax.hpp"
@@ -74,8 +75,13 @@ int main()
 
     Character player(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), glm::vec2(32, 32));
     PlayerController playerController(player);
-
     CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
+
+    Character player2(glm::vec2(VIRTUAL_SCEEEN.x * 0.5 + 50, VIRTUAL_SCEEEN.y), glm::vec2(48, 48));
+    PlayerController player2Controller(player2);
+    CharacterAnimation player2Animation(player2.GetState(), ExecutionerAnimationFactory::CreateExecutionerAnimations());
+    
+    
 
     SpriteRenderer spriteRenderer;
 
@@ -85,6 +91,7 @@ int main()
     world.CreateDefaultWorld();
 
     InputState inputState;
+    InputState inputState2;
 
     OrthographicCamera camera
     {
@@ -114,7 +121,13 @@ int main()
         inputState.right = Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT);
         inputState.up = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
         inputState.down = Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN);
-        inputState.space = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
+        inputState.ability = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
+
+        inputState2.left = Input::Instance().IsKeyPressed(window, GLFW_KEY_A);
+        inputState2.right = Input::Instance().IsKeyPressed(window, GLFW_KEY_D);
+        inputState2.up = Input::Instance().IsKeyPressed(window, GLFW_KEY_W);
+        inputState2.down = Input::Instance().IsKeyPressed(window, GLFW_KEY_S);
+        inputState2.ability = Input::Instance().IsKeyPressed(window, GLFW_KEY_F);
 
         bool lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         bool rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
@@ -136,16 +149,33 @@ int main()
             world.ShowTile(false, mouseWorldPos.x, mouseWorldPos.y);
         }
 
+        player2Controller.Update(dt, inputState2);
+        physics.UpdateBody(player2.GetBody(), world, dt);
+        player2.Update(dt, player2Animation.IsFinished());
+        player2Animation.Update(dt, player2.GetState());
+
         playerController.Update(dt, inputState);
         physics.UpdateBody(player.GetBody(), world, dt);
         player.Update(dt, playerAnimation.IsFinished());
         playerAnimation.Update(dt, player.GetState());
+
+        
+
 
         camera.Pos.x = player.GetPosition().x;
 
         backdrop.RenderLayers(spriteRenderer, camera);
 
         world.DrawTiles(spriteRenderer, camera);
+
+        spriteRenderer.Render(
+            player2Animation.GetCurrentSprite(),
+            glm::ivec2(player2Animation.GetCurrentFrame(), 0), 
+            !player2.IsFacingRight(),
+            camera,
+            player2.GetPosition() - player2Animation.GetFrameCenterOffset(),
+            player2Animation.GetFrameSize()
+        );
 
         spriteRenderer.Render(
             playerAnimation.GetCurrentSprite(),
@@ -156,6 +186,7 @@ int main()
             playerAnimation.GetFrameSize()
         );
 
+        
         glfwSwapBuffers(window);
 		glfwPollEvents();
     }

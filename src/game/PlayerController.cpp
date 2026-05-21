@@ -16,7 +16,7 @@
 
 void PlayerController::Update(float dt, InputState inputState)
 {
-    if (inputState.space)
+    if (inputState.ability)
     {
         m_player.Attack();
     }

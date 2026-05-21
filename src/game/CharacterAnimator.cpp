@@ -1,14 +1,14 @@
-#include "CharacterAnimation.hpp"
+#include "CharacterAnimator.hpp"
 
 
-CharacterAnimation::CharacterAnimation(CharacterState initState, AnimationSet animationSet) 
+CharacterAnimator::CharacterAnimator(CharacterState initState, AnimationSet animationSet) 
     : m_currentState(initState), 
       m_animationSet(std::move(animationSet)) 
 {
     m_currentFrame = m_animationSet.Clips.at(m_currentState).StartFrame;
 }
 
-void CharacterAnimation::Update(float dt, CharacterState characterState)
+void CharacterAnimator::Update(float dt, CharacterState characterState)
 {
     m_timeInCurrentFrame += dt;
 

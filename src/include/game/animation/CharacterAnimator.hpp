@@ -22,10 +22,10 @@ struct AnimationSet
     glm::vec2 FrameCenterOffset;
 };
 
-class CharacterAnimation
+class CharacterAnimator
 {
 public:
-    CharacterAnimation(CharacterState initState, AnimationSet animationSet);
+    CharacterAnimator(CharacterState initState, AnimationSet animationSet);
     void Update(float dt, CharacterState characterState);
 
     int GetCurrentFrame() const { return m_currentFrame; }

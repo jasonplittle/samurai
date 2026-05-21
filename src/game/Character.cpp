@@ -2,33 +2,11 @@
 
 #include <iostream>
 
-constexpr float jumpPeakTs = 0.3;
-constexpr float jumpPeakHeight = 64;
 
-constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
-constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
-
-constexpr int fastGrav = 3 * regGrav;
-
-const float jumpMidThreshUp = std::sqrt(0.25) * v0;
-const float jumpMidThreshDown = std::sqrt(0.15) * v0;
-
-constexpr float idleSpeed = 5;
-constexpr float walkSpeed = 90;
-constexpr float runSpeed = 150;
-
-constexpr float groundedAccel = 8;
-constexpr float groundedDeccel = 13;
-constexpr float defendDeccel = 20;
-constexpr float defendAccel = 0.8;
-
-// Todo Constants based on size
-
-
-Character::Character(glm::vec2 position, glm::vec2 size)
-    : m_state(CharacterState::Idle)
+Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine);
+    : m_stats(stats), m_stateMachine(stateMachine)
 {
-    m_body.Position = position;
+    m_body.Position = initPosition;
     m_body.Radii.y = size.y * 0.45f;
     m_body.Radii.x = size.x * 0.25f;
     m_body.UseGravity = true;
@@ -42,6 +20,25 @@ void Character::Jump()
     {
         m_state = CharacterState::JumpStart;
         m_body.Velocity.y = v0;
+    }
+}
+
+void Character::Attack()
+{
+    if (m_body.IsGrounded)
+    {
+        if (m_state != CharacterState::Attack2)
+        {
+            m_state = CharacterState::Attack1;
+        }
+        if (m_state == CharacterState::Attack1)
+        {
+            m_state = CharacterState::Attack2;
+        }
+        if (m_state == CharacterState::Attack2)
+        {
+            m_state = CharacterState::Attack3;
+        }
     }
 }
 
@@ -92,6 +89,11 @@ void Character::Update(float dt, bool animationFinished)
 {
     m_defendCooldownTimer += dt;
 
+    if (m_body.IsWalled && !m_body.IsGrounded)
+    {
+        m_state = CharacterState::WallContact;
+    }
+
     switch(m_state)
     {
         case CharacterState::Idle:
@@ -133,12 +135,6 @@ void Character::Update(float dt, bool animationFinished)
         }
         case CharacterState::Run:
         {
-
-            // if (m_body.Velocity.x == 0 && !m_body.IsWalled)
-            // {
-            //     m_state = CharacterState::Idle;
-            // }
-
             if (!m_body.IsGrounded)
             {
                 m_state = CharacterState::JumpMid;
@@ -151,7 +147,9 @@ void Character::Update(float dt, bool animationFinished)
 
             break;
         }
-        case CharacterState::Attack:
+        case CharacterState::Attack1:
+        case CharacterState::Attack2:
+        case CharacterState::Attack3:
         {
             if (animationFinished)
             {
@@ -207,3 +205,16 @@ void Character::Update(float dt, bool animationFinished)
         }
     }
 }
+
+
+// void Character::ChangeState(CharacterState newState)
+// {
+//     if (m_state == newState)
+//         return;
+
+//     OnExit(m_state);
+
+//     m_state = newState;
+
+//     OnEnter(m_state);
+// }

@@ -9,11 +9,11 @@
 
 struct InputState
 {
-    bool left;
-    bool right;
     bool up;
     bool down;
-    bool space;
+    bool left;
+    bool right;
+    bool ability;
 };
 
 class PlayerController
