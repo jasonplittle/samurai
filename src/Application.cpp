@@ -13,7 +13,7 @@
 #include "Input.hpp"
 #include "PlayerController.hpp"
 #include "Character.hpp"
-#include "CharacterAnimation.hpp"
+#include "CharacterAnimator.hpp"
 #include "SamuraiAnimationFactory.hpp"
 #include "ExecutionerAnimationFactory.hpp"
 #include "SpriteRenderer.hpp"
@@ -75,11 +75,9 @@ int main()
 
     Character player(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), glm::vec2(32, 32));
     PlayerController playerController(player);
-    CharacterAnimation playerAnimation(player.GetState(), SamuraiAnimationFactory::CreateSamuraiAnimations());
 
     Character player2(glm::vec2(VIRTUAL_SCEEEN.x * 0.5 + 50, VIRTUAL_SCEEEN.y), glm::vec2(48, 48));
     PlayerController player2Controller(player2);
-    CharacterAnimation player2Animation(player2.GetState(), ExecutionerAnimationFactory::CreateExecutionerAnimations());
     
     
 
@@ -151,13 +149,11 @@ int main()
 
         player2Controller.Update(dt, inputState2);
         physics.UpdateBody(player2.GetBody(), world, dt);
-        player2.Update(dt, player2Animation.IsFinished());
-        player2Animation.Update(dt, player2.GetState());
+        player2.Update(dt);
 
         playerController.Update(dt, inputState);
         physics.UpdateBody(player.GetBody(), world, dt);
-        player.Update(dt, playerAnimation.IsFinished());
-        playerAnimation.Update(dt, player.GetState());
+        player.Update(dt);
 
         
 

@@ -4,37 +4,16 @@
 
 #include "PhysicsSystem.hpp"
 #include "CharacterStateMachine.hpp"
-#include "ChacterStats.hpp"
-
-
-
-enum class ActionState
-{
-    None,
-    Attacking,
-    Defending,
-    Hurt,
-    Dead
-};
-
-enum class MovementState
-{
-    Idle,
-    Walk,
-    Run,
-    Jump,
-    Fall,
-    Float
-};
+#include "CharacterStats.hpp"
+#include "CharacterAnimator.hpp"
 
 
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine);
-    ~Character() = default;
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator);
 
-    void Update(float dt, bool animationFinished);
+    void Update(float dt);
 
     void AbilityPrimary();
     void AbilitySecondary();
@@ -44,19 +23,18 @@ public:
     void MoveDown();
     void Idle();
 
-
-    CharacterState GetState() const { return m_stateMachine.GetCurrentState(); }
-
-    KinematicBody& GetBody() { return m_body; }
-    glm::vec2 GetPosition() const { return m_body.Position; }
-    glm::vec2 GetSize() const { return glm::vec2(m_stats.Width, m_stats.Height); }
+    KinematicBody& Body() { return m_body; }
+    CharacterAnimator& Animator() { return m_animator; }
+    CharacterStateMachine& StateMachine() { return m_stateMachine; }
+    CharacterStats& Stats() { return m_stats; }
 
     bool IsFacingRight() { return m_isFacingRight; }
 
 private:
     KinematicBody m_body;
     CharacterStats m_stats;
-    ICharacterStateMachine m_stateMachine;
+    CharacterStateMachine m_stateMachine;
+    CharacterAnimator m_animator;
 
     bool m_isFacingRight;
     int m_health;

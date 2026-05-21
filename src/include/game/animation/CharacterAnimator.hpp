@@ -3,8 +3,34 @@
 #include <unordered_map>
 
 #include "Sprite.hpp"
-#include "Character.hpp"
 
+
+enum class Animation
+{
+    AirAttack,
+    Attack1,
+    Attack2,
+    Attack3,
+    Climbing,
+    Dash,
+    Death,
+    Defend,
+    HealingNoEffect,
+    Healing,
+    Hurt,
+    Idle,
+    JumpFall,
+    JumpStart,
+    JumpTransition,
+    Jump,
+    Run,
+    SpecialAttack,
+    Throw,
+    Walk,
+    WallContact,
+    WallJump,
+    WallSlide
+};
 
 struct AnimationClip
 {
@@ -17,19 +43,22 @@ struct AnimationClip
 
 struct AnimationSet
 {
-    std::unordered_map<CharacterState, AnimationClip> Clips;
+    std::unordered_map<Animation, AnimationClip> Clips;
     glm::vec2 FrameSize;
     glm::vec2 FrameCenterOffset;
 };
 
+
 class CharacterAnimator
 {
 public:
-    CharacterAnimator(CharacterState initState, AnimationSet animationSet);
-    void Update(float dt, CharacterState characterState);
+    CharacterAnimator(Animation initState, AnimationSet animationSet);
+
+    void Update(float dt);
+    void SetAnimation(Animation animation);
 
     int GetCurrentFrame() const { return m_currentFrame; }
-    const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentState).Sprite; }
+    const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentAnimation).Sprite; }
 
     bool IsFinished() const { return m_isFinished; }
 
@@ -37,7 +66,7 @@ public:
     glm::vec2 GetFrameCenterOffset() const { return m_animationSet.FrameCenterOffset; }
 
 private:
-    CharacterState m_currentState;
+    Animation m_currentAnimation;
     AnimationSet m_animationSet;
     int m_currentFrame;
     float m_timeInCurrentFrame;

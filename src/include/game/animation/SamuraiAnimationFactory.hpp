@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CharacterAnimation.hpp"
+#include "CharacterAnimator.hpp"
 
 
 class SamuraiAnimationFactory
@@ -12,7 +12,7 @@ public:
         set.FrameSize = glm::vec2(96, 96);
         set.FrameCenterOffset = glm::vec2(0, -16);
 
-        set.Clips[CharacterState::Idle] =
+        set.Clips[Animation::Idle] =
         {
             .StartFrame = 0,
             .FrameCount = 10,
@@ -20,7 +20,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Walk] =
+        set.Clips[Animation::Walk] =
         {
             .StartFrame = 0,
             .FrameCount = 12,
@@ -28,7 +28,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Run] =
+        set.Clips[Animation::Run] =
         {
             .StartFrame = 0,
             .FrameCount = 16,
@@ -36,7 +36,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/RUN.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Attack1] =
+        set.Clips[Animation::Attack1] =
         {
             .StartFrame = 0,
             .FrameCount = 7,
@@ -44,7 +44,7 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Attack2] =
+        set.Clips[Animation::Attack2] =
         {
             .StartFrame = 0,
             .FrameCount = 7,
@@ -52,7 +52,7 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 2.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Attack3] =
+        set.Clips[Animation::Attack3] =
         {
             .StartFrame = 0,
             .FrameCount = 6,
@@ -60,7 +60,7 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 3.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Defend] =
+        set.Clips[Animation::Defend] =
         {
             .StartFrame = 0,
             .FrameCount = 5,
@@ -68,7 +68,7 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", set.FrameSize)
         };
-        set.Clips[CharacterState::JumpStart] =
+        set.Clips[Animation::JumpStart] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
@@ -76,7 +76,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-START.png", set.FrameSize)
         };
-        set.Clips[CharacterState::JumpMid] =
+        set.Clips[Animation::JumpTransition] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
@@ -84,7 +84,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-TRANSITION.png", set.FrameSize)
         };
-        set.Clips[CharacterState::JumpFall] =
+        set.Clips[Animation::JumpFall] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
@@ -92,7 +92,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
         };
-        set.Clips[CharacterState::WallContact] =
+        set.Clips[Animation::WallContact] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
@@ -100,7 +100,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
         };
-        set.Clips[CharacterState::WallSlide] =
+        set.Clips[Animation::WallSlide] =
         {
             .StartFrame = 0,
             .FrameCount = 3,

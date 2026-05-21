@@ -1,14 +1,17 @@
 #pragma once
 
-#include "CharacterStats.hpp"
-
 #include <glm/glm.hpp>
+#include <memory>
+
+#include "Character.hpp"
+#include "SamuraiAnimationFactory.hpp"
+#include "SamuraiStateFactory.hpp"
 
 
-class SamuraiStatsFactory
+class SamuraiCharacterFactory
 {
 public:
-    static CharacterStats CreateSamuraiStats()
+    static std::unique_ptr<Character> CreateSamuraiCharacter(glm::vec2 initPos)
     {
         constexpr float jumpPeakTs = 0.3;
         constexpr float jumpPeakHeight = 64;
@@ -44,7 +47,13 @@ public:
             .WalkSpeed = walkSpeed,
             .RunSpeed = runSpeed  
         };
-        
-        return stats;
+
+
+        CharacterAnimator animator = CharacterAnimator(Animation::Idle, SamuraiAnimationFactory::CreateSamuraiAnimations());
+
+        CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
+
+        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, stateMachine, animator);
+        return samurai;
     }
 };

@@ -1,8 +1,6 @@
 #pragma once
 
-#pragma once
-
-#include "CharacterAnimation.hpp"
+#include "CharacterAnimator.hpp"
 
 
 class ExecutionerAnimationFactory
@@ -14,7 +12,7 @@ public:
         set.FrameSize = glm::vec2(130, 92);
         set.FrameCenterOffset = glm::vec2(0, -16);
 
-        set.Clips[CharacterState::Idle] =
+        set.Clips[Animation::Idle] =
         {
             .StartFrame = 0,
             .FrameCount = 12,
@@ -22,7 +20,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/executioner/IDLE.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Walk] =
+        set.Clips[Animation::Walk] =
         {
             .StartFrame = 0,
             .FrameCount = 12,
@@ -30,7 +28,7 @@ public:
             .Loop = true,
             .Sprite = std::make_unique<Sprite>("resources/executioner/WALK.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Attack1] =
+        set.Clips[Animation::Attack1] =
         {
             .StartFrame = 0,
             .FrameCount = 11,
@@ -38,7 +36,7 @@ public:
             .Loop = false,
             .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 1.png", set.FrameSize)
         };
-        set.Clips[CharacterState::Attack2] =
+        set.Clips[Animation::Attack2] =
         {
             .StartFrame = 0,
             .FrameCount = 8,

@@ -1,34 +1,37 @@
 #include "CharacterAnimator.hpp"
 
 
-CharacterAnimator::CharacterAnimator(CharacterState initState, AnimationSet animationSet) 
-    : m_currentState(initState), 
+CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet animationSet) 
+    : m_currentAnimation(initAnimation), 
       m_animationSet(std::move(animationSet)) 
 {
-    m_currentFrame = m_animationSet.Clips.at(m_currentState).StartFrame;
+    m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
 }
 
-void CharacterAnimator::Update(float dt, CharacterState characterState)
+void CharacterAnimator::SetAnimation(Animation animation)
 {
-    m_timeInCurrentFrame += dt;
-
-    if (characterState != m_currentState)
+    if (animation != m_currentAnimation)
     {
-        m_currentFrame = m_animationSet.Clips.at(characterState).StartFrame;
+        m_currentFrame = m_animationSet.Clips.at(animation).StartFrame;
         m_isFinished = false;
     }
 
-    m_currentState = characterState;
+    m_currentAnimation = animation;
+}
 
-    if (m_timeInCurrentFrame > m_animationSet.Clips.at(m_currentState).FrameDuration)
+void CharacterAnimator::Update(float dt)
+{
+    m_timeInCurrentFrame += dt;
+
+    if (m_timeInCurrentFrame <= m_animationSet.Clips.at(m_currentAnimation).FrameDuration)
     {
         m_currentFrame++;
 
-        if (m_currentFrame >= m_animationSet.Clips.at(m_currentState).FrameCount + m_animationSet.Clips.at(m_currentState).StartFrame)
+        if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount + m_animationSet.Clips.at(m_currentAnimation).StartFrame)
         {
-            if (m_animationSet.Clips.at(m_currentState).Loop)
+            if (m_animationSet.Clips.at(m_currentAnimation).Loop)
             {
-                m_currentFrame = m_animationSet.Clips.at(m_currentState).StartFrame;
+                m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
             }
             
             m_isFinished = true;
