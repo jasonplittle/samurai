@@ -1,7 +1,18 @@
 #pragma once
 
-#include "Character.hpp"
+#include "CharacterStateMachine.hpp"
 
+class Character;
+
+enum class StateID
+{
+    Idle,
+    Walk,
+    Run,
+    Jump,
+    Fall,
+    SwordCombo,
+};
 
 class CharacterState
 {

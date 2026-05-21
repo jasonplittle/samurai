@@ -14,35 +14,35 @@
     // Press down to increase gravity
     // Variable jump height
 
-void PlayerController::Update(float dt, InputState inputState)
+void PlayerController::Update(float dt, Character& player, InputState inputState)
 {
     if (inputState.ability)
     {
-        m_player.Attack();
+        player.AbilityPrimary();
     }
     if (inputState.up)
     {
-        m_player.Jump();
+        player.MoveUp();
     }
     if (inputState.left)
     {
         // std::cout << "Move" << std::endl;
-        m_player.MoveLeft();
+        player.MoveLeft();
     }
     if (inputState.right)
     {
         // std::cout << "Move" << std::endl;
-        m_player.MoveRight();
+        player.MoveRight();
     }
     if (!inputState.right && !inputState.left)
     {
         // std::cout << "Idle" << std::endl;
-        m_player.Idle();
+        player.Idle();
     }
     if (inputState.down)
     {
-        m_player.MoveDown();
-        m_player.Defend();
+        player.MoveDown();
+        player.AbilitySecondary();
     }
 }
 

@@ -15,13 +15,13 @@ public:
 
     void Update(float dt);
 
-    void AbilityPrimary();
-    void AbilitySecondary();
-    void MoveUp();
-    void MoveLeft();
-    void MoveRight();
-    void MoveDown();
-    void Idle();
+    void AbilityPrimary() {};
+    void AbilitySecondary() {};
+    void MoveUp() {};
+    void MoveLeft() {};
+    void MoveRight() {};
+    void MoveDown() {};
+    void Idle() {};
 
     KinematicBody& Body() { return m_body; }
     CharacterAnimator& Animator() { return m_animator; }

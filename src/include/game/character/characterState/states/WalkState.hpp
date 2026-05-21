@@ -2,32 +2,26 @@
 
 #include "CharacterState.hpp"
 
-
-class IdleState : public CharacterState
+class WalkState : public CharacterState
 {
 public:
     void Enter(Character& c) override
     {
-        c.Animator().Play(Animation::Idle);
+        c.Animator().Play(Animation::Walk);
     }
 
     void Update(Character& c, float dt) override
     {
-        float speed = std::abs(c.Body().Velocity.x);
-
         if (!c.Body().IsGrounded)
         {
-            // if (c.Stats())
-            // {
-                c.StateMachine().RequestState(StateID::Fall, c);
-            // }
-            
+            c.StateMachine().RequestState(StateID::Fall, c);
             return;
         }
 
+        float speed = std::abs(c.Body().Velocity.x);
         if (speed > c.Stats().WalkSpeed)
         {
-            c.StateMachine().RequestState(StateID::Walk, c);
+            c.StateMachine().RequestState(StateID::Run, c);
 
             return;
         }
@@ -35,6 +29,6 @@ public:
 
     StateID GetID() const override
     {
-        return StateID::Idle;
+        return StateID::Run;
     }
 };

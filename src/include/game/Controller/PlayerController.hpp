@@ -19,10 +19,8 @@ struct InputState
 class PlayerController
 {
 public:
-    PlayerController(Character& player) : m_player(player) {};
-    void Update(float dt, InputState inputState);
+    void Update(float dt, Character& player, InputState inputState);
 
 private:
-    Character& m_player;
 
 };

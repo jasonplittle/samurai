@@ -8,7 +8,7 @@ CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet anima
     m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
 }
 
-void CharacterAnimator::SetAnimation(Animation animation)
+void CharacterAnimator::Play(Animation animation)
 {
     if (animation != m_currentAnimation)
     {

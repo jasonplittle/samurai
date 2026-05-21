@@ -2,7 +2,7 @@
 
 
 Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator)
-    : m_stats(stats), m_stateMachine(stateMachine), m_animator(std::move(animator))
+    : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator))
 {
     m_body.Position = initPosition;
     m_body.Radii.y = m_stats.Height * 0.45f;
@@ -15,7 +15,7 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
 
 void Character::Update(float dt)
 {
-    m_stateMachine.Update(dt);
+    m_stateMachine.Update(*this, dt);
     m_animator.Update(dt);
 }
 

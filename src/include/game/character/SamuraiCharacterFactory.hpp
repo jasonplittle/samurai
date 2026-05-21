@@ -53,7 +53,7 @@ public:
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
 
-        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, stateMachine, animator);
+        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator));
         return samurai;
     }
 };

@@ -2,12 +2,32 @@
 
 #include "Character.hpp"
 #include "PlayerController.hpp"
-#include "CharacterAnimation.hpp"
 
 #include "World.hpp"
 #include "BackgroundParallax.hpp"
 
 #include "SpriteRenderer.hpp"
+
+
+struct Inputs
+{
+    bool up;
+    bool down;
+    bool left;
+    bool right;
+    bool space;
+
+    bool w;
+    bool s;
+    bool a;
+    bool d;
+    bool f;
+
+    bool lMouse;
+    bool rMouse;
+    glm::vec2 mousePos;
+};
+
 
 
 class Game
@@ -16,19 +36,19 @@ public:
     Game();
 
     void Init();
+    void ReadInput(glm::ivec2 windowSize, Inputs inputs);
     void Update(float dt);
     void Render();
 
 private:
-    Character m_player1;
-    PlayerController m_player1Controller;
+    std::unique_ptr<Character> m_player1;
+    PlayerController m_playerController;
     InputState m_player1Input;
-    CharacterAnimation m_player1Animator;
+
     
-    Character m_player2;
-    PlayerController m_player2Controller;
-    InputState m_player2Input;
-    CharacterAnimation m_player2Animator;
+    // Character m_player2;
+    // PlayerController m_player2Controller;
+    // InputState m_player2Input;
 
     PhysicsSystem m_physics;
 
@@ -37,6 +57,8 @@ private:
 
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;
+
+
 
 
 };

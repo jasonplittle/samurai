@@ -12,13 +12,15 @@ add_subdirectory(thirdparty/stb_image)
 add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/Application.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Character.cpp
-    ${CMAKE_SOURCE_DIR}/src/game/CharacterAnimation.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/CharacterAnimator.cpp
     ${CMAKE_SOURCE_DIR}/src/game/PlayerController.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Sprite.cpp
     ${CMAKE_SOURCE_DIR}/src/game/SpriteRenderer.cpp
     ${CMAKE_SOURCE_DIR}/src/game/BackgroundParallax.cpp
     ${CMAKE_SOURCE_DIR}/src/game/World.cpp
     ${CMAKE_SOURCE_DIR}/src/game/TileMap.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/Game.cpp
+
 
     ${CMAKE_SOURCE_DIR}/src/platform/Input.cpp
 
@@ -46,8 +48,11 @@ target_include_directories("${CMAKE_PROJECT_NAME}"
         ${CMAKE_SOURCE_DIR}/src/include/game/world
         ${CMAKE_SOURCE_DIR}/src/include/game/character
         ${CMAKE_SOURCE_DIR}/src/include/game/character/characterState
+        ${CMAKE_SOURCE_DIR}/src/include/game/character/characterState/states
         ${CMAKE_SOURCE_DIR}/src/include/game/animation
         ${CMAKE_SOURCE_DIR}/src/include/game/controller
+        ${CMAKE_SOURCE_DIR}/src/include/game/rendering
+
         ${CMAKE_SOURCE_DIR}/src/include/platform
         ${CMAKE_SOURCE_DIR}/src/renderer/include
         ${CMAKE_SOURCE_DIR}/thirdparty/glfw-3.4/include 

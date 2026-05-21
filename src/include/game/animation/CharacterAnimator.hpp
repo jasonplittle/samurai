@@ -55,7 +55,7 @@ public:
     CharacterAnimator(Animation initState, AnimationSet animationSet);
 
     void Update(float dt);
-    void SetAnimation(Animation animation);
+    void Play(Animation animation);
 
     int GetCurrentFrame() const { return m_currentFrame; }
     const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentAnimation).Sprite; }

@@ -3,6 +3,8 @@
 #include "Character.hpp"
 #include "IStateFactory.hpp"
 
+class Character;
+
 
 class CharacterStateMachine
 {
