@@ -16,34 +16,34 @@
 
 void PlayerController::Update(float dt, Character& player, InputState inputState)
 {
-    if (inputState.ability)
-    {
-        player.AbilityPrimary();
-    }
-    if (inputState.up)
-    {
-        player.MoveUp();
-    }
-    if (inputState.left)
-    {
-        // std::cout << "Move" << std::endl;
-        player.MoveLeft();
-    }
+    int moveX = 0;
+
     if (inputState.right)
     {
-        // std::cout << "Move" << std::endl;
-        player.MoveRight();
+        moveX = 1;
     }
-    if (!inputState.right && !inputState.left)
+
+    if (inputState.left)
     {
-        // std::cout << "Idle" << std::endl;
-        player.Idle();
+        moveX = -1;
     }
-    if (inputState.down)
+
+    if ((inputState.right && inputState.left))
     {
-        player.MoveDown();
-        player.AbilitySecondary();
+        moveX = 0;
     }
+
+
+    CharacterIntent intent
+    {
+        .Jump = inputState.up,
+        .Down = inputState.down,
+        .Primary = inputState.ability,
+        .Secondary = inputState.down,
+        .MoveX = moveX,
+    };
+
+    player.SetIntent(intent);
 }
 
 // void PlayerController::Update(float dt)

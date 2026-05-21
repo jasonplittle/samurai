@@ -7,18 +7,24 @@ class RunState : public CharacterState
 public:
     void Enter(Character& c) override
     {
-        c.Animator().Play(Animation::Walk);
+        std::cout << "Run state" << std::endl;
+        c.Animator().Play(Animation::Run);
+
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().AccelX = c.Stats().RunAccel;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
     {
+        float speed = std::abs(c.Body().Velocity.x);
+
         if (!c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Fall, c);
             return;
         }
 
-        float speed = std::abs(c.Body().Velocity.x);
         if (speed <= c.Stats().WalkSpeed)
         {
             c.StateMachine().RequestState(StateID::Walk, c);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "CharacterStateMachine.hpp"
 
 class Character;

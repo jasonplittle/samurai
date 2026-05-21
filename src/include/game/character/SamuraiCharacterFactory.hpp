@@ -44,8 +44,18 @@ public:
             .Width = 32,
             .Height = 32,
 
+
+            .IdleSpeed = idleSpeed,
             .WalkSpeed = walkSpeed,
-            .RunSpeed = runSpeed  
+            .RunSpeed = runSpeed,
+
+            .WalkAccel = 6,
+            .WalkDeccel = 8,
+
+            .RunAccel = 13,
+            .RunDeccel = 8,
+
+
         };
 
 

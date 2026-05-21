@@ -24,19 +24,19 @@ void CharacterAnimator::Update(float dt)
     m_timeInCurrentFrame += dt;
 
     if (m_timeInCurrentFrame <= m_animationSet.Clips.at(m_currentAnimation).FrameDuration)
+        return;
+
+    m_currentFrame++;
+
+    if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount + m_animationSet.Clips.at(m_currentAnimation).StartFrame)
     {
-        m_currentFrame++;
-
-        if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount + m_animationSet.Clips.at(m_currentAnimation).StartFrame)
+        if (m_animationSet.Clips.at(m_currentAnimation).Loop)
         {
-            if (m_animationSet.Clips.at(m_currentAnimation).Loop)
-            {
-                m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
-            }
-            
-            m_isFinished = true;
+            m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
         }
-
-        m_timeInCurrentFrame = 0;
+        
+        m_isFinished = true;
     }
+
+    m_timeInCurrentFrame = 0;
 }

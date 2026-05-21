@@ -4,8 +4,46 @@
 
 #include "PhysicsSystem.hpp"
 #include "CharacterStateMachine.hpp"
-#include "CharacterStats.hpp"
 #include "CharacterAnimator.hpp"
+
+
+struct CharacterIntent
+{
+    bool Jump, Down, Primary, Secondary;
+    int MoveX;
+};
+
+struct MovementProfile
+{
+    float TargetSpeedX;
+
+    float AccelX;
+    float DeccelX;
+
+    float AccelY;
+    float DeccelY;
+};
+
+struct CharacterStats
+{
+    int MaxHealth;
+
+    float MaxJumpVelocity;
+    float Gravity;
+
+    float Width;
+    float Height;
+
+    float IdleSpeed;
+    float WalkSpeed;
+    float RunSpeed;
+
+    float WalkAccel;
+    float WalkDeccel;
+
+    float RunAccel;
+    float RunDeccel;
+};
 
 
 class Character
@@ -15,18 +53,13 @@ public:
 
     void Update(float dt);
 
-    void AbilityPrimary() {};
-    void AbilitySecondary() {};
-    void MoveUp() {};
-    void MoveLeft() {};
-    void MoveRight() {};
-    void MoveDown() {};
-    void Idle() {};
+    void SetIntent(CharacterIntent intent) { m_currentIntent = intent; };
 
     KinematicBody& Body() { return m_body; }
     CharacterAnimator& Animator() { return m_animator; }
     CharacterStateMachine& StateMachine() { return m_stateMachine; }
     CharacterStats& Stats() { return m_stats; }
+    MovementProfile& Movement() { return m_movementProfile; }
 
     bool IsFacingRight() { return m_isFacingRight; }
 
@@ -35,6 +68,9 @@ private:
     CharacterStats m_stats;
     CharacterStateMachine m_stateMachine;
     CharacterAnimator m_animator;
+
+    CharacterIntent m_currentIntent;
+    MovementProfile m_movementProfile;
 
     bool m_isFacingRight;
     int m_health;

@@ -7,14 +7,30 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     m_body.Position = initPosition;
     m_body.Radii.y = m_stats.Height * 0.45f;
     m_body.Radii.x = m_stats.Width * 0.25f;
-    m_body.UseGravity = true;
-    m_body.Gravity = m_stats.Gravity;
+
+    m_movementProfile.AccelY = -m_stats.Gravity;
+
+    m_stateMachine.RequestState(StateID::Idle, *this);
 }
 
 
 
 void Character::Update(float dt)
 {
+    const float speedDif = (m_movementProfile.TargetSpeedX * m_currentIntent.MoveX) - m_body.Velocity.x;
+    m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
+
+    m_body.Acceleration.y = m_movementProfile.AccelY;
+    
+    if (m_currentIntent.MoveX > 0)
+    {
+        m_isFacingRight = true;
+    }
+    if (m_currentIntent.MoveX < 0)
+    {
+        m_isFacingRight = false;
+    }
+
     m_stateMachine.Update(*this, dt);
     m_animator.Update(dt);
 }

@@ -8,14 +8,19 @@ class FallState : public CharacterState
 public:
     void Enter(Character& c) override
     {
-        c.Animator().Play(Animation::Idle);
+        std::cout << "Fall state" << std::endl;
+        c.Animator().Play(Animation::JumpFall);
     }
 
     void Update(Character& c, float dt) override
     {
+        
+
         if (c.Body().IsGrounded)
         {
-            c.StateMachine().RequestState(StateID::Idle, c);
+            bool can = c.StateMachine().RequestState(StateID::Idle, c);
+
+            // std::cout << "Fall state: " << can << std::endl;
 
             return;
         }
@@ -23,6 +28,6 @@ public:
 
     StateID GetID() const override
     {
-        return StateID::Idle;
+        return StateID::Fall;
     }
 };

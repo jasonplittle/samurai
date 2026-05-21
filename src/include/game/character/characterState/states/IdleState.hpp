@@ -8,7 +8,12 @@ class IdleState : public CharacterState
 public:
     void Enter(Character& c) override
     {
+        std::cout << "Idle state" << std::endl;
         c.Animator().Play(Animation::Idle);
+
+        c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
+        c.Movement().AccelX = c.Stats().WalkAccel;
+        c.Movement().DeccelX = c.Stats().WalkDeccel;
     }
 
     void Update(Character& c, float dt) override
@@ -25,7 +30,7 @@ public:
             return;
         }
 
-        if (speed > c.Stats().WalkSpeed)
+        if (speed > c.Stats().IdleSpeed)
         {
             c.StateMachine().RequestState(StateID::Walk, c);
 

@@ -7,17 +7,12 @@
 #include <iostream>
 
 
-constexpr float BASE_GRAVITY = 128.f;
-
 
 struct KinematicBody
 {
-    bool UseGravity = false;
     bool IsGrounded = false;
     bool IsWalled = false;
     bool IsSolid = false;
-
-    float Gravity = BASE_GRAVITY;
 
     glm::vec2 Position = glm::vec2(0.f, 0.f);
     glm::vec2 Velocity = glm::vec2(0.f, 0.f);
@@ -32,11 +27,6 @@ class PhysicsSystem
 public:
     void UpdateBody(KinematicBody& body, World& world, float dt)
     {
-        if (body.UseGravity)
-        {
-            body.Acceleration.y = -body.Gravity;
-        }
-
         body.IsGrounded = false;
         body.IsWalled = false;
         body.Velocity += body.Acceleration * dt;
