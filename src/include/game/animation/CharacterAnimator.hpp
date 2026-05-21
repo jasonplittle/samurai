@@ -19,10 +19,9 @@ enum class Animation
     Healing,
     Hurt,
     Idle,
-    JumpFall,
-    JumpStart,
-    JumpTransition,
+    Fall,
     Jump,
+    Float,
     Run,
     SpecialAttack,
     Throw,
@@ -38,6 +37,7 @@ struct AnimationClip
     int FrameCount;
     float FrameDuration;
     bool Loop;
+    bool FlipX;
     std::unique_ptr<Sprite> Sprite;
 };
 
@@ -48,17 +48,21 @@ struct AnimationSet
     glm::vec2 FrameCenterOffset;
 };
 
+using AnimationMap = std::unordered_map<Animation, Animation>;
+
 
 class CharacterAnimator
 {
 public:
-    CharacterAnimator(Animation initState, AnimationSet animationSet);
+    CharacterAnimator(Animation initState, AnimationSet animationSet, AnimationMap animationMap);
 
     void Update(float dt);
     void Play(Animation animation);
 
     int GetCurrentFrame() const { return m_currentFrame; }
     const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentAnimation).Sprite; }
+
+    bool FlipX() const { return m_animationSet.Clips.at(m_currentAnimation).FlipX; }
 
     bool IsFinished() const { return m_isFinished; }
 
@@ -68,6 +72,8 @@ public:
 private:
     Animation m_currentAnimation;
     AnimationSet m_animationSet;
+    AnimationMap m_animationMap;
+
     int m_currentFrame;
     float m_timeInCurrentFrame;
 

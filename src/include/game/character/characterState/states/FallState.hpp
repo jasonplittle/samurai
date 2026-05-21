@@ -9,7 +9,7 @@ public:
     void Enter(Character& c) override
     {
         std::cout << "Fall state" << std::endl;
-        c.Animator().Play(Animation::JumpFall);
+        c.Animator().Play(Animation::Fall);
     }
 
     void Update(Character& c, float dt) override

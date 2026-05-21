@@ -54,12 +54,10 @@ public:
 
             .RunAccel = 13,
             .RunDeccel = 8,
-
-
         };
 
 
-        CharacterAnimator animator = CharacterAnimator(Animation::Idle, SamuraiAnimationFactory::CreateSamuraiAnimations());
+        CharacterAnimator animator = CharacterAnimator(Animation::Idle, SamuraiAnimationFactory::CreateSamuraiAnimations(), AnimationMap());
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
 

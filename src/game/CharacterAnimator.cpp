@@ -1,22 +1,30 @@
 #include "CharacterAnimator.hpp"
 
 
-CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet animationSet) 
+CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
     : m_currentAnimation(initAnimation), 
-      m_animationSet(std::move(animationSet)) 
+      m_animationSet(std::move(animationSet)),
+      m_animationMap(animationMap)
 {
     m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
 }
 
 void CharacterAnimator::Play(Animation animation)
 {
-    if (animation != m_currentAnimation)
+    Animation nextAnimation = animation;
+
+    if (auto it = m_animationMap.find(animation); it != m_animationMap.end())
     {
-        m_currentFrame = m_animationSet.Clips.at(animation).StartFrame;
+        nextAnimation = it->second;
+    }
+
+    if (nextAnimation != m_currentAnimation)
+    {
+        m_currentFrame = m_animationSet.Clips.at(nextAnimation).StartFrame;
         m_isFinished = false;
     }
 
-    m_currentAnimation = animation;
+    m_currentAnimation = nextAnimation;
 }
 
 void CharacterAnimator::Update(float dt)

@@ -45,10 +45,8 @@ private:
     PlayerController m_playerController;
     InputState m_player1Input;
 
-    
-    // Character m_player2;
-    // PlayerController m_player2Controller;
-    // InputState m_player2Input;
+    std::unique_ptr<Character> m_player2;
+    InputState m_player2Input;
 
     PhysicsSystem m_physics;
 

@@ -18,6 +18,7 @@ public:
             .FrameCount = 10,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", set.FrameSize)
         };
         set.Clips[Animation::Walk] =
@@ -26,6 +27,7 @@ public:
             .FrameCount = 12,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", set.FrameSize)
         };
         set.Clips[Animation::Run] =
@@ -34,6 +36,7 @@ public:
             .FrameCount = 16,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/RUN.png", set.FrameSize)
         };
         set.Clips[Animation::Attack1] =
@@ -42,6 +45,7 @@ public:
             .FrameCount = 7,
             .FrameDuration = 0.1f,
             .Loop = false,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
         };
         set.Clips[Animation::Attack2] =
@@ -50,6 +54,7 @@ public:
             .FrameCount = 7,
             .FrameDuration = 0.1f,
             .Loop = false,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 2.png", set.FrameSize)
         };
         set.Clips[Animation::Attack3] =
@@ -66,30 +71,34 @@ public:
             .FrameCount = 5,
             .FrameDuration = 0.1f,
             .Loop = false,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", set.FrameSize)
         };
-        set.Clips[Animation::JumpStart] =
+        set.Clips[Animation::Jump] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-START.png", set.FrameSize)
         };
-        set.Clips[Animation::JumpTransition] =
+        set.Clips[Animation::Float] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-TRANSITION.png", set.FrameSize)
         };
-        set.Clips[Animation::JumpFall] =
+        set.Clips[Animation::Fall] =
         {
             .StartFrame = 0,
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
         };
         set.Clips[Animation::WallContact] =
@@ -98,6 +107,7 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
         };
         set.Clips[Animation::WallSlide] =
@@ -106,6 +116,7 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
+            .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
         };
 
