@@ -12,6 +12,7 @@ enum class StateID
     Walk,
     Run,
     Jump,
+    Float,
     Fall,
     SwordCombo,
 };

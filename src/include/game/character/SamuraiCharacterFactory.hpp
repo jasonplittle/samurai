@@ -13,8 +13,8 @@ class SamuraiCharacterFactory
 public:
     static std::unique_ptr<Character> CreateSamuraiCharacter(glm::vec2 initPos)
     {
-        constexpr float jumpPeakTs = 0.3;
-        constexpr float jumpPeakHeight = 64;
+        constexpr float jumpPeakTs = 0.5;
+        constexpr float jumpPeakHeight = 128;
 
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
@@ -26,7 +26,7 @@ public:
 
         constexpr float idleSpeed = 5;
         constexpr float walkSpeed = 90;
-        constexpr float runSpeed = 150;
+        constexpr float runSpeed = 200;
 
         constexpr float groundedAccel = 8;
         constexpr float groundedDeccel = 13;
@@ -38,8 +38,10 @@ public:
         {
             .MaxHealth = 100,
             
-            .MaxJumpVelocity = v0,
+            .JumpVelocity = v0,
             .Gravity = regGrav,
+            .FallGravity = regGrav * 2,
+            .FastFallGravity = regGrav * 3,
 
             .Width = 32,
             .Height = 32,

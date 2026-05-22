@@ -31,6 +31,11 @@ void Character::Update(float dt)
         m_isFacingRight = false;
     }
 
+    if (m_currentIntent.Jump && m_stats.JumpVelocity == 0)
+    {
+        m_currentIntent.Jump = false;
+    }
+
     m_stateMachine.Update(*this, dt);
     m_animator.Update(dt);
 }
@@ -92,7 +97,7 @@ void Character::Update(float dt)
 //             if (std::abs(m_body.Velocity.x) > walkSpeed)
 //             {
 //                 m_state = CharacterState::Run;
-//             } 
+//             }
 
 //             break;
 //         }

@@ -28,8 +28,10 @@ struct CharacterStats
 {
     int MaxHealth;
 
-    float MaxJumpVelocity;
+    float JumpVelocity;
     float Gravity;
+    float FallGravity;
+    float FastFallGravity;
 
     float Width;
     float Height;
@@ -60,6 +62,7 @@ public:
     CharacterStateMachine& StateMachine() { return m_stateMachine; }
     CharacterStats& Stats() { return m_stats; }
     MovementProfile& Movement() { return m_movementProfile; }
+    CharacterIntent& Intent() { return m_currentIntent; }
 
     bool IsFacingRight() { return m_isFacingRight; }
 

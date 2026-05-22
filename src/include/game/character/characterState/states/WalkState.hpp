@@ -10,7 +10,7 @@ public:
         std::cout << "Walk state" << std::endl;
         c.Animator().Play(Animation::Walk);
 
-        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
         c.Movement().AccelX = c.Stats().WalkAccel;
         c.Movement().DeccelX = c.Stats().WalkDeccel;
     }
@@ -23,17 +23,23 @@ public:
 
         if (!c.Body().IsGrounded)
         {
-            c.StateMachine().RequestState(StateID::Fall, c);
+            c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
 
-        if (speed >= c.Stats().WalkSpeed && m_walkTimer >= k_walkTimeReq)
+        if (c.Intent().Jump)
+        {
+            c.StateMachine().RequestState(StateID::Jump, c);
+            return;
+        }
+
+        if (speed >= c.Stats().WalkSpeed - c.Stats().WalkSpeed * 0.1)
         {
             c.StateMachine().RequestState(StateID::Run, c);
             return;
         }
 
-        if (speed < c.Stats().IdleSpeed)
+        if (speed < c.Stats().IdleSpeed && !(c.Body().IsWalled && std::abs(c.Intent().MoveX) > 0))
         {
             c.StateMachine().RequestState(StateID::Idle, c);
             return;

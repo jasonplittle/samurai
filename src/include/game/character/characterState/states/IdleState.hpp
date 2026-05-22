@@ -22,18 +22,19 @@ public:
 
         if (!c.Body().IsGrounded)
         {
-            // if (c.Stats())
-            // {
-                c.StateMachine().RequestState(StateID::Fall, c);
-            // }
-            
+            c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
 
-        if (speed > c.Stats().IdleSpeed)
+        if (c.Intent().Jump)
+        {
+            c.StateMachine().RequestState(StateID::Jump, c);
+            return;
+        }
+
+        if (speed > c.Stats().IdleSpeed || (c.Body().IsWalled && std::abs(c.Intent().MoveX) > 0))
         {
             c.StateMachine().RequestState(StateID::Walk, c);
-
             return;
         }
     }

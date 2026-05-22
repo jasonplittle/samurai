@@ -21,7 +21,13 @@ public:
 
         if (!c.Body().IsGrounded)
         {
-            c.StateMachine().RequestState(StateID::Fall, c);
+            c.StateMachine().RequestState(StateID::Float, c);
+            return;
+        }
+
+        if (c.Intent().Jump)
+        {
+            c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
 

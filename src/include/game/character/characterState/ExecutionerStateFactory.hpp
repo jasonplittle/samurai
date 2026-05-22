@@ -2,6 +2,13 @@
 
 #include "IStateFactory.hpp"
 
+#include "IdleState.hpp"
+#include "WalkState.hpp"
+#include "RunState.hpp"
+#include "JumpState.hpp"
+#include "FloatState.hpp"
+#include "FallState.hpp"
+
 
 class ExecutionerStateFactory : public IStateFactory
 {
@@ -20,11 +27,14 @@ public:
             case StateID::Run:
                 return std::make_unique<RunState>();
 
+            case StateID::Jump:
+                return std::make_unique<JumpState>();
+
+            case StateID::Float:
+                return std::make_unique<FloatState>();
+
             case StateID::Fall:
                 return std::make_unique<FallState>();
-
-            // case StateID::SwordCombo:
-            //     return std::make_unique<SwordComboState>();
 
             default:
                 return nullptr;

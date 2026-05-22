@@ -14,7 +14,7 @@ public:
     static std::unique_ptr<Character> CreateExecutionerCharacter(glm::vec2 initPos)
     {
         constexpr float jumpPeakTs = 0.3;
-    constexpr float jumpPeakHeight = 64;
+        constexpr float jumpPeakHeight = 64;
 
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
@@ -29,8 +29,10 @@ public:
         {
             .MaxHealth = 100,
             
-            .MaxJumpVelocity = v0,
+            .JumpVelocity = 0,
             .Gravity = regGrav,
+            .FallGravity = regGrav,
+            .FastFallGravity = regGrav,
 
             .Width = 48,
             .Height = 48,
@@ -50,6 +52,7 @@ public:
 
         AnimationMap animationMap;
         animationMap[Animation::Fall] = Animation::Idle;
+        animationMap[Animation::Float] = Animation::Idle;
         animationMap[Animation::Run] = Animation::Walk;
 
 
