@@ -14,6 +14,7 @@ public:
         c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
         c.Movement().AccelX = c.Stats().WalkAccel;
         c.Movement().DeccelX = c.Stats().WalkDeccel;
+        c.Movement().AccelY = -c.Stats().Gravity;
     }
 
     void Update(Character& c, float dt) override

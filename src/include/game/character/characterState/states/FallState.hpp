@@ -10,8 +10,6 @@ public:
     {
         std::cout << "Fall state" << std::endl;
         c.Animator().Play(Animation::Fall);
-        
-        c.Movement().AccelY = -c.Stats().Gravity;
     }
 
     void Update(Character& c, float dt) override
@@ -19,6 +17,12 @@ public:
         if (c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+
+        if (c.Intent().Down)
+        {
+            c.Movement().AccelY = -c.Stats().FastFallGravity;
             return;
         }
     }

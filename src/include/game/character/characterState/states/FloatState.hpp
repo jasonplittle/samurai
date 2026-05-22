@@ -25,6 +25,12 @@ public:
             return;
         }
 
+        if (c.Intent().Down)
+        {
+            c.Movement().AccelY = -c.Stats().FastFallGravity;
+            c.StateMachine().RequestState(StateID::Fall, c);
+            return;
+        }
 
         if (c.Body().Velocity.y < -floatExitThreshFactor * c.Stats().JumpVelocity)
         {

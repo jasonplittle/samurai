@@ -24,14 +24,21 @@ public:
             return;
         }
 
-        if (!c.Intent().Jump)
-        {
-            c.Movement().AccelY = -c.Stats().FallGravity;
-        }
-
         if (c.Body().Velocity.y < floatEnterThreshFactor * c.Stats().JumpVelocity)
         {
             c.StateMachine().RequestState(StateID::Float, c);
+        }
+
+        if (!c.Intent().Jump)
+        {
+            c.Movement().AccelY = -c.Stats().FallGravity;
+            return;
+        }
+
+        if (c.Intent().Down)
+        {
+            c.Movement().AccelY = -c.Stats().FastFallGravity;
+            return;
         }
 
 

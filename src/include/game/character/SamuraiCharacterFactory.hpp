@@ -41,7 +41,7 @@ public:
             .JumpVelocity = v0,
             .Gravity = regGrav,
             .FallGravity = regGrav * 2,
-            .FastFallGravity = regGrav * 3,
+            .FastFallGravity = regGrav * 4,
 
             .Width = 32,
             .Height = 32,
