@@ -31,13 +31,13 @@ void Game::Init()
 
 void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
 {
-    m_player1Input.ability = inputs.space;
+    m_player1Input.primary = inputs.space;
     m_player1Input.up = inputs.up;
     m_player1Input.down = inputs.down;
     m_player1Input.left = inputs.left;
     m_player1Input.right = inputs.right;
 
-    m_player2Input.ability = inputs.f;
+    m_player2Input.primary = inputs.f;
     m_player2Input.up = inputs.w;
     m_player2Input.down = inputs.s;
     m_player2Input.left = inputs.a;
@@ -70,7 +70,7 @@ void Game::Update(float dt)
     m_player1->Update(dt);
     m_player2->Update(dt);
 
-    m_camera.Pos.x = m_player1->Body().Position.x;
+    m_camera.Pos.x = std::max(m_player1->Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
 }
 
 void Game::Render()

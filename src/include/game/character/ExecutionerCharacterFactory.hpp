@@ -46,8 +46,6 @@ public:
 
             .RunAccel = 3,
             .RunDeccel = 5,
-
-
         };
 
         AnimationMap animationMap;
@@ -55,12 +53,14 @@ public:
         animationMap[Animation::Float] = Animation::Idle;
         animationMap[Animation::Run] = Animation::Walk;
 
+        AbilitySet abilities = AbilitySet();
+
 
         CharacterAnimator animator = CharacterAnimator(Animation::Idle, ExecutionerAnimationFactory::CreateExecutionerAnimations(), animationMap);
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ExecutionerStateFactory>());
 
-        std::unique_ptr<Character> executioner = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator));
+        std::unique_ptr<Character> executioner = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities));
         return executioner;
     }
 };

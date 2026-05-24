@@ -38,7 +38,7 @@ void PlayerController::Update(float dt, Character& player, InputState inputState
     {
         .Jump = inputState.up,
         .Down = inputState.down,
-        .Primary = inputState.ability,
+        .Primary = inputState.primary,
         .Secondary = inputState.down,
         .MoveX = moveX,
     };

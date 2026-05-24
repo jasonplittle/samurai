@@ -14,23 +14,31 @@ static glm::ivec2 worldToGrid(int x, int y)
     return glm::ivec2(gridX, gridY);
 }
 
+// void World::CreateDefaultWorld()
+// {
+//     const int floorLevel = 4;
+//     const int leftWall = 0;
+//     const int rightWall = 19;
+
+//     for (int x = 0; x < WORLD_GRID.x; x++)
+//     {
+//         m_tileMap.AddTile(x, floorLevel);
+//     }
+
+//     for (int y = 0; y < WORLD_GRID.y; y++)
+//     {
+//         m_tileMap.AddTile(leftWall, y);
+//         m_tileMap.AddTile(rightWall, y);
+//     }
+//     m_tileMap.AddTile(1, 0);
+// }
+
 void World::CreateDefaultWorld()
 {
-    const int floorLevel = 4;
-    const int leftWall = 0;
-    const int rightWall = 19;
-
     for (int x = 0; x < WORLD_GRID.x; x++)
     {
-        m_tileMap.AddTile(x, floorLevel);
+        m_tileMap.AddTile(x, 0);
     }
-
-    for (int y = 0; y < WORLD_GRID.y; y++)
-    {
-        m_tileMap.AddTile(leftWall, y);
-        m_tileMap.AddTile(rightWall, y);
-    }
-    m_tileMap.AddTile(1, 0);
 }
 
 int World::WorldYToTileTopY(int worldY) const

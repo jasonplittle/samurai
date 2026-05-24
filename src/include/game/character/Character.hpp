@@ -5,6 +5,7 @@
 #include "PhysicsSystem.hpp"
 #include "CharacterStateMachine.hpp"
 #include "CharacterAnimator.hpp"
+#include "AbilitySet.hpp"
 
 
 struct CharacterIntent
@@ -51,7 +52,7 @@ struct CharacterStats
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator);
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, AbilitySet abilities);
 
     void Update(float dt);
 
@@ -74,6 +75,8 @@ private:
 
     CharacterIntent m_currentIntent;
     MovementProfile m_movementProfile;
+    
+    AbilitySet m_abilities;
 
     bool m_isFacingRight;
     int m_health;

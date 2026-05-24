@@ -13,7 +13,7 @@ struct InputState
     bool down;
     bool left;
     bool right;
-    bool ability;
+    bool primary;
 };
 
 class PlayerController

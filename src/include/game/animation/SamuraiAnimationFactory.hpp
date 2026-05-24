@@ -108,7 +108,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = true,
             .FlipX = false,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", set.FrameSize)
         };
         set.Clips[Animation::WallSlide] =
         {
@@ -117,7 +117,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = true,
             .FlipX = false,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", set.FrameSize)
         };
 
         return set;

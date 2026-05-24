@@ -14,7 +14,7 @@ enum class StateID
     Jump,
     Float,
     Fall,
-    SwordCombo,
+    Attacking,
 };
 
 class CharacterState
