@@ -37,8 +37,16 @@ void Character::Update(float dt)
 
     if (m_currentIntent.Primary)
     {
-        m_abilities.RequestAbility(*this, AbilitySlot::Primary);
+        if (m_body.IsGrounded)
+        {
+            m_abilities.RequestAbility(*this, AbilitySlot::Primary);
+        }
+        else
+        {
+            m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
+        }
     }
+
 
     m_animator.Update(dt);
     m_abilities.Update(*this, dt);

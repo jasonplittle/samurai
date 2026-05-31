@@ -119,6 +119,15 @@ public:
             .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", set.FrameSize)
         };
+        set.Clips[Animation::AirAttack] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 6,
+            .FrameDuration = 0.1f,
+            .Loop = false,
+            .FlipX = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/Air ATTACK.png", set.FrameSize)
+        };
 
         return set;
     }

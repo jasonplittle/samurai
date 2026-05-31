@@ -79,7 +79,6 @@ public:
             if (world.IsSolid(x, bodyBottom))
             {
                 body.Position.y = world.WorldYToTileTopY(bodyBottom) + body.Radii.y;
-                std::cout << bodyBottom << " " << body.Radii.y << std::endl;
                 body.Velocity.y = 0;
                 body.IsGrounded = true;
                 return true;

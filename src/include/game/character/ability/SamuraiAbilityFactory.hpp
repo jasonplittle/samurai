@@ -3,6 +3,7 @@
 #include "IAbilityFactory.hpp"
 
 #include "SamuraiSlashCombo.hpp"
+#include "SamuraiAirAttack.hpp"
 
 
 class SamuraiAbilityFactory : public IAbilityFactory
@@ -13,7 +14,10 @@ public:
         switch (slot)
         {
             case AbilitySlot::Primary:
-                return std::make_unique<SamuraiSlashComboAbility>();
+                return std::make_unique<SamuraiSlashCombo>();
+
+            case AbilitySlot::AirPrimary:
+                return std::make_unique<SamuraiAirAttack>();
 
             default:
                 return nullptr;

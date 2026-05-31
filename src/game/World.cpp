@@ -44,10 +44,6 @@ void World::CreateDefaultWorld()
 int World::WorldYToTileTopY(int worldY) const
 {
     glm::ivec2 pos = worldToGrid(0, worldY);
-    if (pos.y == 3)
-    {
-        std::cout << "Hello" << std::endl;
-    }
     return (pos.y * TILE_SIZE) + TILE_SIZE;
 }
 

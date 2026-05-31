@@ -3,7 +3,7 @@
 #include "IAbility.hpp"
 
 
-class SamuraiSlashComboAbility : public IAbility
+class SamuraiSlashCombo : public IAbility
 {
 public:
     bool CanActivate(Character& c) const override
@@ -19,8 +19,6 @@ public:
 
     void Activate(Character& c) override
     {
-        std::cout << "Activate " << m_attackPhase << std::endl;
-
         if (m_attackPhase == 0)
         {
             m_isActive = true;
@@ -58,8 +56,6 @@ public:
 
         if (c.Animator().IsFinished())
         {
-            // std::cout << "Activate " << m_attackPhase << std::endl;
-
             if (!m_nextPhaseRequesed)
             {
                 m_isActive = false;
