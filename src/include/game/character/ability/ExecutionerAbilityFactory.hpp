@@ -2,7 +2,7 @@
 
 #include "IAbilityFactory.hpp"
 
-#include "SamuraiSlashCombo.hpp"
+#include "ExecutionerCleaveCombo.hpp"
 
 
 class ExecutionerAbilityFactory : public IAbilityFactory
@@ -12,6 +12,9 @@ public:
     {
         switch (slot)
         {
+            case AbilitySlot::Primary:
+                return std::make_unique<ExecutionerCleaveCombo>();
+
             default:
                 return nullptr;
         }

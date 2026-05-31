@@ -8,6 +8,7 @@
 #include "JumpState.hpp"
 #include "FloatState.hpp"
 #include "FallState.hpp"
+#include "AttackState.hpp"
 
 
 class ExecutionerStateFactory : public IStateFactory
@@ -34,6 +35,9 @@ public:
 
             case StateID::Fall:
                 return std::make_unique<FallState>();
+
+            case StateID::Attacking:
+                return std::make_unique<AttackState>();
 
             default:
                 return nullptr;

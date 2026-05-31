@@ -3,7 +3,7 @@
 #include "CharacterState.hpp"
 
 
-class AttackingState : public CharacterState
+class AttackState : public CharacterState
 {
 public:
     void Enter(Character& c) override
