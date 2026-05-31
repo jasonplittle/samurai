@@ -20,6 +20,7 @@ public:
 
         if (m_current->IsFinished())
         {
+            std::cout << "finished" << std::endl;
             m_activeSlot.reset();
             return;
         }
@@ -30,7 +31,12 @@ public:
     void RequestAbility(Character& c, AbilitySlot slot)
     {
         if (m_activeSlot.has_value() && slot == m_activeSlot.value())
+        {
+            m_current->Activate(c);
+
             return;
+        }
+            
 
         if (m_current)
         {

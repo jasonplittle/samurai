@@ -40,7 +40,7 @@ void Character::Update(float dt)
         m_abilities.RequestAbility(*this, AbilitySlot::Primary);
     }
 
+    m_animator.Update(dt);
     m_abilities.Update(*this, dt);
     m_stateMachine.Update(*this, dt);
-    m_animator.Update(dt);
 }

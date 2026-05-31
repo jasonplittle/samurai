@@ -19,31 +19,74 @@ public:
 
     void Activate(Character& c) override
     {
-        m_isActive = true;
-        c.Animator().Play(Animation::Attack1);
-        c.StateMachine().RequestState(StateID::Attacking, c);  
+        std::cout << "Activate " << m_attackPhase << std::endl;
 
+        if (m_attackPhase == 0)
+        {
+            m_isActive = true;
+            c.Animator().Play(Animation::Attack1);
+            c.StateMachine().RequestState(StateID::Attacking, c);
+            m_attackPhase = 1;
+        }
+
+        if (m_attackPhase == 1 && m_timeInPhase > 0.6)
+        {
+            m_attackPhase = 2;
+            m_timeInPhase = 0.f;
+            m_nextPhaseRequesed = true;
+        }
+
+        if (m_attackPhase == 2 && m_timeInPhase > 0.6)
+        {
+            m_attackPhase = 3;
+            m_timeInPhase = 0.f;
+            m_nextPhaseRequesed = true;
+        }
 
         // SpawnHitbox(c);
-
-        
     }
 
     void Update(Character& c, float dt) override
     {
-        m_activatedDelta += dt;
-        if (c.Animator().IsFinished() || !c.StateMachine().CheckState(StateID::Attacking))
+        m_timeInPhase += dt;
+
+        if (!c.StateMachine().CheckState(StateID::Attacking))
         {
             m_isActive = false;
-            c.StateMachine().RequestState(StateID::Idle, c);
+            return;
         }
 
+        if (c.Animator().IsFinished())
+        {
+            // std::cout << "Activate " << m_attackPhase << std::endl;
+
+            if (!m_nextPhaseRequesed)
+            {
+                m_isActive = false;
+                c.StateMachine().RequestState(StateID::Idle, c);
+                return;
+            }
+
+            if (m_attackPhase == 2)
+            {
+                c.Animator().Play(Animation::Attack2);
+                m_timeInPhase = 0.f;
+                m_nextPhaseRequesed = false;
+            }
+
+            if (m_attackPhase == 3)
+            {
+                c.Animator().Play(Animation::Attack3);
+                m_timeInPhase = 0.f;
+                m_nextPhaseRequesed = false;
+            }
+        }        
     }
 
 private:
-    float m_activatedDelta = 0.0f;
     int m_attackPhase = 0;
+    float m_timeInPhase = 0.0f;
+    bool m_nextPhaseRequesed = false;
 
     // Move stats
-
 };

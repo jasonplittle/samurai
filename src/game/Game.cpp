@@ -79,20 +79,20 @@ void Game::Render()
     m_world.DrawTiles(m_renderer, m_camera);
 
     m_renderer.Render(
-        m_player1->Animator().GetCurrentSprite(),
-        glm::ivec2(m_player1->Animator().GetCurrentFrame(), 0), 
-        !m_player1->IsFacingRight() ^ m_player1->Animator().FlipX(),
-        m_camera,
-        m_player1->Body().Position - m_player1->Animator().GetFrameCenterOffset(),
-        m_player1->Animator().GetFrameSize()
-    );
-
-    m_renderer.Render(
         m_player2->Animator().GetCurrentSprite(),
         glm::ivec2(m_player2->Animator().GetCurrentFrame(), 0), 
         !m_player2->IsFacingRight() ^ m_player2->Animator().FlipX(),
         m_camera,
         m_player2->Body().Position - m_player2->Animator().GetFrameCenterOffset(),
         m_player2->Animator().GetFrameSize()
+    );
+
+    m_renderer.Render(
+        m_player1->Animator().GetCurrentSprite(),
+        glm::ivec2(m_player1->Animator().GetCurrentFrame(), 0), 
+        !m_player1->IsFacingRight() ^ m_player1->Animator().FlipX(),
+        m_camera,
+        m_player1->Body().Position - m_player1->Animator().GetFrameCenterOffset(),
+        m_player1->Animator().GetFrameSize()
     );
 }
