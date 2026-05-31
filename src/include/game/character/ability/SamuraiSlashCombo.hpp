@@ -1,3 +1,5 @@
+#pragma once
+
 #include "IAbility.hpp"
 
 
@@ -17,26 +19,23 @@ public:
 
     void Activate(Character& c) override
     {
-        c.StateMachine().RequestState(StateID::Attacking, c);
+        m_isActive = true;
         c.Animator().Play(Animation::Attack1);
+        c.StateMachine().RequestState(StateID::Attacking, c);  
 
 
         // SpawnHitbox(c);
+
+        
     }
 
     void Update(Character& c, float dt) override
     {
         m_activatedDelta += dt;
-        if (c.Animator().IsFinished())
+        if (c.Animator().IsFinished() || !c.StateMachine().CheckState(StateID::Attacking))
         {
-            if (c.Intent().Primary)
-            {
-                c.Animator().Play(Animation::Attack3);
-            }
-            else
-            {
-                c.StateMachine().RequestState(StateID::Idle, c);
-            }
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::Idle, c);
         }
 
     }

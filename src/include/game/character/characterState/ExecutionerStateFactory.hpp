@@ -13,8 +13,7 @@
 class ExecutionerStateFactory : public IStateFactory
 {
 public:
-    std::unique_ptr<CharacterState>
-    Create(StateID id) override
+    std::unique_ptr<CharacterState> Create(StateID id) override
     {
         switch (id)
         {

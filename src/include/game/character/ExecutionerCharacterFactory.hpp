@@ -6,6 +6,7 @@
 #include "Character.hpp"
 #include "ExecutionerAnimationFactory.hpp"
 #include "ExecutionerStateFactory.hpp"
+#include "ExecutionerAbilityFactory.hpp"
 
 
 class ExecutionerCharacterFactory
@@ -53,8 +54,8 @@ public:
         animationMap[Animation::Float] = Animation::Idle;
         animationMap[Animation::Run] = Animation::Walk;
 
-        AbilitySet abilities = AbilitySet();
-
+        
+        CharacterAbilities abilities = CharacterAbilities(std::make_unique<ExecutionerAbilityFactory>());
 
         CharacterAnimator animator = CharacterAnimator(Animation::Idle, ExecutionerAnimationFactory::CreateExecutionerAnimations(), animationMap);
 

@@ -8,6 +8,5 @@
 class IStateFactory
 {
 public:
-    virtual std::unique_ptr<CharacterState>
-    Create(StateID id) = 0;
+    virtual std::unique_ptr<CharacterState> Create(StateID id) = 0;
 };

@@ -42,6 +42,11 @@ public:
         return true;
     }
 
+    bool CheckState(StateID state)
+    {
+        return state == m_current->GetID();
+    }
+
 private:
     void ChangeState(StateID next, Character& c)
     {

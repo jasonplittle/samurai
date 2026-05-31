@@ -1,7 +1,7 @@
 #include "Character.hpp"
 
 
-Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, AbilitySet abilities)
+Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, CharacterAbilities abilities)
     : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities))
 {
     m_body.Position = initPosition;
@@ -37,7 +37,7 @@ void Character::Update(float dt)
 
     if (m_currentIntent.Primary)
     {
-        m_abilities.ActivateSlot(AbilitySlot::Primary, *this);
+        m_abilities.RequestAbility(*this, AbilitySlot::Primary);
     }
 
     m_abilities.Update(*this, dt);

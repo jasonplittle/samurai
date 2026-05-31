@@ -16,10 +16,14 @@ public:
 
     virtual void Update(Character& c, float dt) {}
 
-    virtual void Cancel(Character& c) {}
+    virtual void Cancel(Character& c) { m_isActive = false; }
 
     virtual bool IsFinished() const
     {
-        return true;
+        return !m_isActive;
     }
+
+protected:
+    bool m_isActive = true;
+
 };

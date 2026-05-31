@@ -6,7 +6,7 @@
 #include "Character.hpp"
 #include "SamuraiAnimationFactory.hpp"
 #include "SamuraiStateFactory.hpp"
-#include "SamuraiSlashCombo.hpp"
+#include "SamuraiAbilityFactory.hpp"
 
 
 class SamuraiCharacterFactory
@@ -59,10 +59,8 @@ public:
             .RunDeccel = 8,
         };
 
-        // std::unique_ptr<SamuraiSlashComboAbility> slashAbility = std::make_unique<SamuraiSlashComboAbility>();
 
-        AbilitySet abilities = AbilitySet();
-        abilities.AddAbility(AbilitySlot::Primary, std::make_unique<SamuraiSlashComboAbility>());
+        CharacterAbilities abilities = CharacterAbilities(std::make_unique<SamuraiAbilityFactory>());
 
         CharacterAnimator animator = CharacterAnimator(Animation::Idle, SamuraiAnimationFactory::CreateSamuraiAnimations(), AnimationMap());
 
