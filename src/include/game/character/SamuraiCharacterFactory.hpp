@@ -46,6 +46,8 @@ public:
 
             .Width = 32,
             .Height = 32,
+            .RadiusX = 8,
+            .RadiusY = 14,
 
 
             .IdleSpeed = idleSpeed,

@@ -5,8 +5,8 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities))
 {
     m_body.Position = initPosition;
-    m_body.Radii.y = m_stats.Height * 0.45f;
-    m_body.Radii.x = m_stats.Width * 0.25f;
+    m_body.Radii.x = m_stats.RadiusX;
+    m_body.Radii.y = m_stats.RadiusY;
 
     m_movementProfile.AccelY = -m_stats.Gravity;
 

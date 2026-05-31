@@ -20,7 +20,6 @@ public:
 
         if (m_current->IsFinished())
         {
-            std::cout << "finished" << std::endl;
             m_activeSlot.reset();
             return;
         }
@@ -36,7 +35,6 @@ public:
 
             return;
         }
-            
 
         if (m_current)
         {

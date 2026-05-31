@@ -37,6 +37,8 @@ public:
 
             .Width = 48,
             .Height = 48,
+            .RadiusX = 12,
+            .RadiusY = 22,
 
             .IdleSpeed = 5,
             .WalkSpeed = 30,

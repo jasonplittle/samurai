@@ -36,6 +36,8 @@ struct CharacterStats
 
     float Width;
     float Height;
+    float RadiusX;
+    float RadiusY;
 
     float IdleSpeed;
     float WalkSpeed;
