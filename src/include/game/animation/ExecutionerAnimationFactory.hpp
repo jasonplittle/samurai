@@ -55,7 +55,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/HURT.png", set.FrameSize)
+            .Sprite = std::make_unique<Sprite>("resources/executioner/HURT.png", set.FrameSize)
         };
         set.Clips[Animation::Death] =
         {

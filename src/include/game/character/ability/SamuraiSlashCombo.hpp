@@ -25,36 +25,17 @@ public:
             c.Animator().Play(Animation::Attack1);
             c.StateMachine().RequestState(StateID::Attacking, c);
             m_attackPhase = 1;
+            m_hitboxSpawned = false;
         }
 
         if (m_attackPhase == 1)
         {
-            static bool done = false;
-            if (!done && m_timeInPhase > 0.2)
-            {
-                Hitbox hitbox = 
-                {
-                    .PositionOffset = glm::vec2(8, 0),
-                    .Radii = glm::vec2(8, 16),
-
-                    .Damage = 1.f,
-                    .Knockback = 1.f,
-
-                    .Instigator = &c,
-
-                    .Lifetime = 0.2,
-                };
-
-                c.GameplayContext().SpawnHitbox(hitbox);
-
-                done = true;
-            }
-
             if (m_timeInPhase > 0.6)
             {
                 m_attackPhase = 2;
                 m_timeInPhase = 0.f;
                 m_nextPhaseRequesed = true;
+                m_hitboxSpawned = false;
             }
         }
 
@@ -63,9 +44,8 @@ public:
             m_attackPhase = 3;
             m_timeInPhase = 0.f;
             m_nextPhaseRequesed = true;
+            m_hitboxSpawned = false;
         }
-
-        // SpawnHitbox(c);
     }
 
     void Update(Character& c, float dt) override
@@ -76,6 +56,14 @@ public:
         {
             m_isActive = false;
             return;
+        }
+
+        if (m_attackPhase == 1)
+        {
+            if (!m_hitboxSpawned && m_timeInPhase > 0.2)
+            {
+                spawnHitbox(c);
+            }
         }
 
         if (c.Animator().IsFinished())
@@ -104,9 +92,32 @@ public:
     }
 
 private:
+    void spawnHitbox(Character& c)
+    {
+        Hitbox hitbox = 
+        {
+            .PositionOffset = glm::vec2(8, 0),
+            .Radii = glm::vec2(8, 16),
+
+            .Damage = 1.f,
+            .Knockback = 1.f,
+
+            .Instigator = &c,
+
+            .Lifetime = 0.2,
+        };
+
+        c.GameplayContext().SpawnHitbox(hitbox);
+
+        m_hitboxSpawned = true;
+    }
+
+private:
     int m_attackPhase = 0;
     float m_timeInPhase = 0.0f;
     bool m_nextPhaseRequesed = false;
+    bool m_hitboxSpawned = false;
+
 
     // Move stats
 };

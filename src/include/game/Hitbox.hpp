@@ -3,6 +3,9 @@
 #include <glm/glm.hpp>
 #include <unordered_set>
 
+#include <iostream>
+
+
 class Character;
 
 

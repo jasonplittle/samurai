@@ -29,13 +29,15 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
         if (!Intersects(hitbox.Bounds(), Hurtbox()))
             continue;
 
-        bool hit = true;            
+        hit = true;
+        
+        hitbox.HitTargets.insert(this);
     }
 
     if (hit)
     {
+        std::cout << "hit" << std::endl;
         m_stateMachine.RequestState(StateID::Hurt, *this);
-
     }
     else
     {
