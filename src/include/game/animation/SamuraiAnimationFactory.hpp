@@ -74,6 +74,15 @@ public:
             .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", set.FrameSize)
         };
+        set.Clips[Animation::Hurt] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 4,
+            .FrameDuration = 0.1f,
+            .Loop = false,
+            .FlipX = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/HURT.png", set.FrameSize)
+        };
         set.Clips[Animation::Jump] =
         {
             .StartFrame = 0,

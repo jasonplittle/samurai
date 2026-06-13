@@ -8,6 +8,8 @@
 
 #include "SpriteRenderer.hpp"
 
+#include "IGameplayContext.hpp"
+
 
 struct Inputs
 {
@@ -29,8 +31,7 @@ struct Inputs
 };
 
 
-
-class Game
+class Game : public IGameplayContext
 {
 public:
     Game();
@@ -40,10 +41,20 @@ public:
     void Update(float dt);
     void Render();
 
+    virtual void SpawnHitbox(const Hitbox& hitbox) override
+    {
+        m_hitboxes.push_back(hitbox);
+    }
+
+private:
+    void updateHitboxes(float dt);
+
 private:
     std::unique_ptr<Character> m_player1;
     PlayerController m_playerController;
     InputState m_player1Input;
+
+    std::vector<Hitbox> m_hitboxes;
 
     std::unique_ptr<Character> m_player2;
     InputState m_player2Input;
@@ -55,8 +66,4 @@ private:
 
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;
-
-
-
-
 };

@@ -4,7 +4,9 @@
 
 #include "CharacterStateMachine.hpp"
 
+
 class Character;
+
 
 enum class StateID
 {
@@ -15,7 +17,9 @@ enum class StateID
     Float,
     Fall,
     Attacking,
+    Hurt,
 };
+
 
 class CharacterState
 {

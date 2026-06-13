@@ -9,6 +9,7 @@
 #include "FloatState.hpp"
 #include "FallState.hpp"
 #include "AttackState.hpp"
+#include "HurtState.hpp"
 
 
 class SamuraiStateFactory : public IStateFactory
@@ -39,6 +40,9 @@ public:
 
             case StateID::Attacking:
                 return std::make_unique<AttackState>();
+
+            case StateID::Hurt:
+                return std::make_unique<HurtState>();
 
             default:
                 return nullptr;

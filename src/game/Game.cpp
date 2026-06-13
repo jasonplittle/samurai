@@ -9,12 +9,12 @@
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 
 Game::Game() 
-    :    
+    :
     m_world(ForestTilesetFactory::CreateTileSet()), 
     m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y))
 {
-    m_player1 = SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y));
-    m_player2 = ExecutionerCharacterFactory::CreateExecutionerCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5 + 50, VIRTUAL_SCEEEN.y));
+    m_player1 = SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this);
+    m_player2 = ExecutionerCharacterFactory::CreateExecutionerCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5 + 50, VIRTUAL_SCEEEN.y), *this);
 
     m_camera =
     {
@@ -24,10 +24,12 @@ Game::Game()
     };
 }
 
+
 void Game::Init()
 {
     m_world.CreateDefaultWorld();
 }
+
 
 void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
 {
@@ -59,6 +61,7 @@ void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
     }
 }
 
+
 void Game::Update(float dt)
 {
     m_playerController.Update(dt, *m_player1, m_player1Input);
@@ -67,11 +70,14 @@ void Game::Update(float dt)
     m_physics.UpdateBody(m_player1->Body(), m_world, dt);
     m_physics.UpdateBody(m_player2->Body(), m_world, dt);
 
-    m_player1->Update(dt);
-    m_player2->Update(dt);
+    m_player1->Update(dt, m_hitboxes);
+    m_player2->Update(dt, m_hitboxes);
+
+    updateHitboxes(dt);
 
     m_camera.Pos.x = std::max(m_player1->Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
 }
+
 
 void Game::Render()
 {
@@ -95,4 +101,22 @@ void Game::Render()
         m_player1->Body().Position - m_player1->Animator().GetFrameCenterOffset(),
         m_player1->Animator().GetFrameSize()
     );
+}
+
+
+void Game::updateHitboxes(float dt)
+{
+    for (auto it = m_hitboxes.begin(); it != m_hitboxes.end(); )
+    {
+        it->Lifetime -= dt;
+
+        if (it->Lifetime <= 0.0)
+        {
+            it = m_hitboxes.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }

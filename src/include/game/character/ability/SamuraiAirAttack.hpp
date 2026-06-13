@@ -42,7 +42,7 @@ public:
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Float, c);
             return;
-        }        
+        }
     }
 
 private:

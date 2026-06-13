@@ -6,6 +6,8 @@
 #include "CharacterStateMachine.hpp"
 #include "CharacterAnimator.hpp"
 #include "CharacterAbilities.hpp"
+#include "IGameplayContext.hpp"
+#include "Hitbox.hpp"
 
 
 struct CharacterIntent
@@ -13,6 +15,7 @@ struct CharacterIntent
     bool Jump, Down, Primary, Secondary;
     int MoveX;
 };
+
 
 struct MovementProfile
 {
@@ -24,6 +27,7 @@ struct MovementProfile
     float AccelY;
     float DeccelY;
 };
+
 
 struct CharacterStats
 {
@@ -54,9 +58,9 @@ struct CharacterStats
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, CharacterAbilities abilities);
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
 
-    void Update(float dt);
+    void Update(float dt, std::vector<Hitbox>& hitboxes);
 
     void SetIntent(CharacterIntent intent) { m_currentIntent = intent; };
 
@@ -66,8 +70,12 @@ public:
     CharacterStats& Stats() { return m_stats; }
     MovementProfile& Movement() { return m_movementProfile; }
     CharacterIntent& Intent() { return m_currentIntent; }
+    IGameplayContext& GameplayContext() { return m_gameplayContext; }
+    Rect Hurtbox() const;
 
     bool IsFacingRight() { return m_isFacingRight; }
+
+    
 
 private:
     KinematicBody m_body;
@@ -79,6 +87,8 @@ private:
     MovementProfile m_movementProfile;
     
     CharacterAbilities m_abilities;
+
+    IGameplayContext& m_gameplayContext;
 
     bool m_isFacingRight;
     int m_health;
