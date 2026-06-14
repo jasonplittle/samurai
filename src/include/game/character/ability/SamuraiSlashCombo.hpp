@@ -11,9 +11,6 @@ public:
         if (!c.Body().IsGrounded)
             return false;
 
-        // if (c.IsStunned())
-        //     return false;
-
         return true;
     }
 
@@ -66,6 +63,22 @@ public:
             }
         }
 
+        if (m_attackPhase == 2)
+        {
+            if (!m_hitboxSpawned && m_timeInPhase > 0.3)
+            {
+                spawnHitbox(c);
+            }
+        }
+
+        if (m_attackPhase == 3)
+        {
+            if (!m_hitboxSpawned && m_timeInPhase > 0.2)
+            {
+                spawnHitbox(c);
+            }
+        }
+
         if (c.Animator().IsFinished())
         {
             if (!m_nextPhaseRequesed)
@@ -98,12 +111,9 @@ private:
         {
             .PositionOffset = glm::vec2(24, 0),
             .Radii = glm::vec2(16, 16),
-
             .Damage = 1.f,
             .Knockback = 1.f,
-
             .Instigator = &c,
-
             .Lifetime = 0.2,
         };
 
