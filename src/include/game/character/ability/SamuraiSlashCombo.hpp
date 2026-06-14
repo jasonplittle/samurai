@@ -60,7 +60,7 @@ public:
 
         if (m_attackPhase == 1)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.2)
+            if (!m_hitboxSpawned && m_timeInPhase > 0.4)
             {
                 spawnHitbox(c);
             }
@@ -96,8 +96,8 @@ private:
     {
         Hitbox hitbox = 
         {
-            .PositionOffset = glm::vec2(8, 0),
-            .Radii = glm::vec2(8, 16),
+            .PositionOffset = glm::vec2(24, 0),
+            .Radii = glm::vec2(16, 16),
 
             .Damage = 1.f,
             .Knockback = 1.f,

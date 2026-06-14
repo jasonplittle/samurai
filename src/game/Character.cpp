@@ -80,7 +80,8 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 
 Rect Character::Hurtbox() const
 {
-    return Rect{
+    return Rect 
+    {
         m_body.Position.x - m_body.Radii.x,
         m_body.Position.y - m_body.Radii.y,
         m_body.Position.x + m_body.Radii.x,
