@@ -137,6 +137,24 @@ public:
             .FlipX = false,
             .Sprite = std::make_unique<Sprite>("resources/samurai/Air ATTACK.png", set.FrameSize)
         };
+        set.Clips[Animation::Death] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 9,
+            .FrameDuration = 0.2f,
+            .Loop = false,
+            .FlipX = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", set.FrameSize)
+        };
+        set.Clips[Animation::Dead] =
+        {
+            .StartFrame = 8,
+            .FrameCount = 9,
+            .FrameDuration = 0.2f,
+            .Loop = true,
+            .FlipX = false,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", set.FrameSize)
+        };
 
         return set;
     }

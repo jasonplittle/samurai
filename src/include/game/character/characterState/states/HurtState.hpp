@@ -16,7 +16,14 @@ public:
     {
         if (c.Animator().IsFinished())
         {
-            c.StateMachine().RequestState(StateID::Idle, c);
+            if (c.Health() <= 0.0)
+            {
+                c.StateMachine().RequestState(StateID::Death, c);
+            }
+            else
+            {
+                c.StateMachine().RequestState(StateID::Idle, c);
+            }
         }
     }
 

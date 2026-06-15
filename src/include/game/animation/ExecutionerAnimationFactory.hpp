@@ -64,7 +64,16 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 2.png", set.FrameSize)
+            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
+        };
+        set.Clips[Animation::Dead] =
+        {
+            .StartFrame = 10,
+            .FrameCount = 11,
+            .FrameDuration = 0.1f,
+            .Loop = true,
+            .FlipX = true,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
         };
 
         return set;

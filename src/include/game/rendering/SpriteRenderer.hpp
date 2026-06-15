@@ -32,6 +32,19 @@ public:
         OrthographicCamera camera,
         glm::vec2 modelPos, 
         glm::vec2 modelSize
+    ) const
+    {
+        Render(sprite, spriteCellCoords, flipX, camera, modelPos, modelSize, 1.0f);
+    }
+
+    void Render(
+        const Sprite& sprite, 
+        glm::vec2 spriteCellCoords, 
+        bool flipX,
+        OrthographicCamera camera,
+        glm::vec2 modelPos, 
+        glm::vec2 modelSize,
+        float opacity
     ) const;
 
 private:

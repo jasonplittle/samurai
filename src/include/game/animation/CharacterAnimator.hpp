@@ -14,6 +14,7 @@ enum class Animation
     Climbing,
     Dash,
     Death,
+    Dead,
     Defend,
     HealingNoEffect,
     Healing,

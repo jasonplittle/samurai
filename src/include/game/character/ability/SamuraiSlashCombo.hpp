@@ -111,8 +111,8 @@ private:
         {
             .PositionOffset = glm::vec2(24, 0),
             .Radii = glm::vec2(16, 16),
-            .Damage = 1.f,
-            .Knockback = 1.f,
+            .Damage = 15.f * m_attackPhase,
+            .Knockback = 500.f,
             .Instigator = &c,
             .Lifetime = 0.2,
         };

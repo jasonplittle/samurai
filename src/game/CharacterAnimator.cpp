@@ -36,7 +36,7 @@ void CharacterAnimator::Update(float dt)
 
     m_currentFrame++;
 
-    if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount + m_animationSet.Clips.at(m_currentAnimation).StartFrame)
+    if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount - m_animationSet.Clips.at(m_currentAnimation).StartFrame)
     {
         if (m_animationSet.Clips.at(m_currentAnimation).Loop)
         {

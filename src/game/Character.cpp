@@ -8,6 +8,8 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     m_body.Radii.x = m_stats.RadiusX;
     m_body.Radii.y = m_stats.RadiusY;
 
+    m_health = m_stats.MaxHealth;
+
     m_movementProfile.AccelY = -m_stats.Gravity;
 
     m_stateMachine.RequestState(StateID::Idle, *this);
@@ -32,43 +34,53 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
         hit = true;
         
         hitbox.HitTargets.insert(this);
+
+        // Knockback
+        glm::vec2 direction = glm::normalize(m_body.Position - hitbox.Instigator->Body().Position);
+        direction.y *= 0.5;
+        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass);
+
+        // Damage
+        bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
+        m_health -= hitbox.Damage * (crit ? 1.4 : 1);
     }
 
     if (hit)
     {
-        std::cout << "hit" << std::endl;
         m_stateMachine.RequestState(StateID::Hurt, *this);
     }
     else
     {
         const float speedDif = (m_movementProfile.TargetSpeedX * m_currentIntent.MoveX) - m_body.Velocity.x;
         m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
-
         m_body.Acceleration.y = m_movementProfile.AccelY;
 
-        if (m_currentIntent.MoveX > 0)
+        if (IsAlive())
         {
-            m_isFacingRight = true;
-        }
-        if (m_currentIntent.MoveX < 0)
-        {
-            m_isFacingRight = false;
-        }
-
-        if (m_currentIntent.Jump && m_stats.JumpVelocity == 0)
-        {
-            m_currentIntent.Jump = false;
-        }
-
-        if (m_currentIntent.Primary)
-        {
-            if (m_body.IsGrounded)
+            if (m_currentIntent.MoveX > 0)
             {
-                m_abilities.RequestAbility(*this, AbilitySlot::Primary);
+                m_isFacingRight = true;
             }
-            else
+            if (m_currentIntent.MoveX < 0)
             {
-                m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
+                m_isFacingRight = false;
+            }
+
+            if (m_currentIntent.Jump && m_stats.JumpVelocity == 0)
+            {
+                m_currentIntent.Jump = false;
+            }
+
+            if (m_currentIntent.Primary)
+            {
+                if (m_body.IsGrounded)
+                {
+                    m_abilities.RequestAbility(*this, AbilitySlot::Primary);
+                }
+                else
+                {
+                    m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
+                }
             }
         }
     }

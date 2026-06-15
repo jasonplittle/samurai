@@ -29,6 +29,7 @@ public:
         CharacterStats stats
         {
             .MaxHealth = 100,
+            .Mass = 10,
             
             .JumpVelocity = 0,
             .Gravity = regGrav,

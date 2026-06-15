@@ -18,6 +18,8 @@ enum class StateID
     Fall,
     Attacking,
     Hurt,
+    Death,
+    Dead
 };
 
 

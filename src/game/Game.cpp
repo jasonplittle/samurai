@@ -8,7 +8,7 @@
 
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 
-Game::Game() 
+Game::Game()
     :
     m_world(ForestTilesetFactory::CreateTileSet()), 
     m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y))
@@ -122,7 +122,8 @@ void Game::Render()
         !m_player2->IsFacingRight() ^ m_player2->Animator().FlipX(),
         m_camera,
         m_player2->Body().Position - m_player2->Animator().GetFrameCenterOffset(),
-        m_player2->Animator().GetFrameSize()
+        m_player2->Animator().GetFrameSize(),
+        m_player2->DeathDecay()
     );
 
     m_renderer.Render(
@@ -131,7 +132,8 @@ void Game::Render()
         !m_player1->IsFacingRight() ^ m_player1->Animator().FlipX(),
         m_camera,
         m_player1->Body().Position - m_player1->Animator().GetFrameCenterOffset(),
-        m_player1->Animator().GetFrameSize()
+        m_player1->Animator().GetFrameSize(),
+        m_player1->DeathDecay()
     );
 
     

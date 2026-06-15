@@ -36,7 +36,8 @@ void SpriteRenderer::Render(
     bool flipX, 
     OrthographicCamera camera, 
     glm::vec2 modelPos, 
-    glm::vec2 modelSize
+    glm::vec2 modelSize,
+    float opacity
 ) const {
     Renderer renderer;
 
@@ -55,7 +56,7 @@ void SpriteRenderer::Render(
     
     m_shader->Bind();
     m_shader->SetUniformMat4f("u_MVP", mvp);
-    m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
+    m_shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, opacity);
     m_shader->SetUniform4f("u_UV", uv.x, uv.y, uv.z, uv.w);
 
     sprite.GetTexture().Bind();

@@ -32,6 +32,7 @@ struct MovementProfile
 struct CharacterStats
 {
     int MaxHealth;
+    int Mass;
 
     float JumpVelocity;
     float Gravity;
@@ -75,7 +76,9 @@ public:
 
     bool IsFacingRight() { return m_isFacingRight; }
 
-    
+    float Health() { return m_health; }
+    bool IsAlive() { return m_health >= 0.0; }
+    float& DeathDecay() { return m_deathDecay; }
 
 private:
     KinematicBody m_body;
@@ -91,5 +94,7 @@ private:
     IGameplayContext& m_gameplayContext;
 
     bool m_isFacingRight;
-    int m_health;
+    float m_health;
+    bool m_isAlive = true;
+    float m_deathDecay = 1.0;
 };
