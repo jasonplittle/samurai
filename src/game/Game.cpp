@@ -4,6 +4,7 @@
 #include "ExecutionerCharacterFactory.hpp"
 #include "ForestTilesetFactory.hpp"
 #include "ForestBackdropParallaxFactory.hpp"
+#include "ForestPropsetFactory.hpp"
 
 
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
@@ -11,7 +12,8 @@ constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 Game::Game()
     :
     m_world(ForestTilesetFactory::CreateTileSet()), 
-    m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y))
+    m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
+    m_props(ForestPropsetFactory::CreatePropset())
 {
     m_player1 = SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this);
     m_player2 = ExecutionerCharacterFactory::CreateExecutionerCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5 + 50, VIRTUAL_SCEEEN.y), *this);
@@ -51,6 +53,11 @@ void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
         (((windowSize.y - inputs.mousePos.y) / (windowSize.y / VIRTUAL_SCEEEN.y)) - (m_camera.Size.y * 0.5) + m_camera.Pos.y) 
     };
 
+    if (inputs.t)
+    {
+        m_props.AddProp(mouseWorldPos.x, m_world);
+    }
+
     if (inputs.lMouse)
     {
         m_world.ShowTile(true, mouseWorldPos.x, mouseWorldPos.y);
@@ -81,8 +88,10 @@ void Game::Update(float dt)
 
 void Game::Render()
 {
-    m_background.RenderLayers(m_renderer, m_camera);
+    m_background.DrawLayers(m_renderer, m_camera);
+    m_props.DrawProps(m_renderer, m_camera);
     m_world.DrawTiles(m_renderer, m_camera);
+    
 
     // std::unique_ptr<Sprite> spr = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32));
 

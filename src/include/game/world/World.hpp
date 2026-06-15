@@ -30,6 +30,8 @@ public:
     int WorldXToTileRightX(int worldX) const;
     int WorldXToTileLeftX(int worldX) const;
 
+    int WorldXToGroundY(int worldX) const;
+
     void CreateDefaultWorld();
 
 private:

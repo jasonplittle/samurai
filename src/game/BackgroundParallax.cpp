@@ -9,7 +9,7 @@ BackgroundParallax::BackgroundParallax(ParallaxLayers parallaxLayers)
 {}
 
 
-void BackgroundParallax::RenderLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera)
+void BackgroundParallax::DrawLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera)
 {
     for (auto& layer : m_parallaxLayers.set)
     {

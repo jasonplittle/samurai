@@ -13,8 +13,8 @@ public:
 
         c.Movement().TargetSpeedX = 0;
         c.Movement().AccelY = -c.Stats().Gravity;
-        c.Movement().AccelX = c.Stats().RunAccel;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
+        c.Movement().AccelX = 0;
+        c.Movement().DeccelX = 30;
     }
 
     virtual void Update(Character& c, float dt) override

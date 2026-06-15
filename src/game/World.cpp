@@ -65,6 +65,17 @@ int World::WorldXToTileLeftX(int worldX) const
     return pos.x * TILE_SIZE;
 }
 
+int World::WorldXToGroundY(int worldX) const
+{
+    for (int tileY = WORLD_GRID.y - 1; tileY >= 0; --tileY)
+    {
+        if (IsSolid(worldX, tileY * TILE_SIZE))
+            return (tileY * TILE_SIZE) + TILE_SIZE;
+    }
+
+    return 0;
+}
+
 bool World::IsSolid(int worldX, int worldY) const
 {
     glm::ivec2 pos = worldToGrid(worldX, worldY);

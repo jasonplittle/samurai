@@ -27,7 +27,7 @@ class BackgroundParallax
 {
 public:
     BackgroundParallax(ParallaxLayers parallaxLayers);
-    void RenderLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera);
+    void DrawLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera);
 
 private:
     ParallaxLayers m_parallaxLayers;

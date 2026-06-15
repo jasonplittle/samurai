@@ -80,6 +80,8 @@ int main()
         inputs.s = Input::Instance().IsKeyPressed(window, GLFW_KEY_S);
         inputs.f = Input::Instance().IsKeyPressed(window, GLFW_KEY_F);
 
+        inputs.t = Input::Instance().IsKeyPressed(window, GLFW_KEY_T);
+
         inputs.lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         inputs.rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
         inputs.mousePos = Input::Instance().GetCursorPos(window);

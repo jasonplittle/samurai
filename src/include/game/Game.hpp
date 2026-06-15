@@ -5,6 +5,7 @@
 
 #include "World.hpp"
 #include "BackgroundParallax.hpp"
+#include "Props.hpp"
 
 #include "SpriteRenderer.hpp"
 
@@ -24,6 +25,8 @@ struct Inputs
     bool a;
     bool d;
     bool f;
+
+    bool t;
 
     bool lMouse;
     bool rMouse;
@@ -63,6 +66,7 @@ private:
 
     World m_world;
     BackgroundParallax m_background;
+    Props m_props;
 
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;
