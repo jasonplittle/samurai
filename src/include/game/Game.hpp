@@ -2,7 +2,8 @@
 
 #include "Character.hpp"
 #include "PlayerController.hpp"
-#include "MobController.hpp"
+
+#include "MobManager.hpp"
 
 #include "World.hpp"
 #include "BackgroundParallax.hpp"
@@ -21,13 +22,8 @@ struct Inputs
     bool right;
     bool space;
 
-    bool w;
-    bool s;
-    bool a;
-    bool d;
-    bool f;
-
     bool t;
+    bool m;
 
     bool lMouse;
     bool rMouse;
@@ -58,12 +54,9 @@ private:
     PlayerController m_playerController;
     InputState m_playerInput;
 
-    std::unique_ptr<MobController> m_mobController;
-    std::shared_ptr<Character> m_mob;
+    MobManager m_mobManager;
     
     std::vector<Hitbox> m_hitboxes;
-    
-    // InputState m_player2Input;
 
     PhysicsSystem m_physics;
 

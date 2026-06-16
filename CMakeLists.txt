@@ -23,7 +23,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/Game.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Hitbox.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Props.cpp
-    
+    ${CMAKE_SOURCE_DIR}/src/game/MobManager.cpp
 
 
     ${CMAKE_SOURCE_DIR}/src/platform/Input.cpp

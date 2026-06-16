@@ -25,7 +25,7 @@ struct KinematicBody
 class PhysicsSystem
 {
 public:
-    void UpdateBody(KinematicBody& body, World& world, float dt)
+    void UpdateBody(KinematicBody& body, const World& world, float dt)
     {
         body.IsGrounded = false;
         body.IsWalled = false;
@@ -38,7 +38,7 @@ public:
         CollideX(body, world);
     }
 
-    bool CollideX(KinematicBody& body, World& world)
+    bool CollideX(KinematicBody& body, const World& world)
     {
         int bodyTop = body.Position.y + body.Radii.y;
         int bodyBottom = body.Position.y - body.Radii.y;
@@ -67,7 +67,7 @@ public:
         return false;
     }
 
-    bool CollideY(KinematicBody& body, World& world)
+    bool CollideY(KinematicBody& body, const World& world)
     {
         int bodyTop = body.Position.y + body.Radii.y;
         int bodyBottom = body.Position.y - body.Radii.y;

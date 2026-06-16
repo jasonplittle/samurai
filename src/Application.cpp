@@ -74,13 +74,14 @@ int main()
         inputs.down = Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN);
         inputs.space = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
 
-        inputs.a = Input::Instance().IsKeyPressed(window, GLFW_KEY_A);
-        inputs.d = Input::Instance().IsKeyPressed(window, GLFW_KEY_D);
-        inputs.w = Input::Instance().IsKeyPressed(window, GLFW_KEY_W);
-        inputs.s = Input::Instance().IsKeyPressed(window, GLFW_KEY_S);
-        inputs.f = Input::Instance().IsKeyPressed(window, GLFW_KEY_F);
+        // inputs.a = Input::Instance().IsKeyPressed(window, GLFW_KEY_A);
+        // inputs.d = Input::Instance().IsKeyPressed(window, GLFW_KEY_D);
+        // inputs.w = Input::Instance().IsKeyPressed(window, GLFW_KEY_W);
+        // inputs.s = Input::Instance().IsKeyPressed(window, GLFW_KEY_S);
+        // inputs.f = Input::Instance().IsKeyPressed(window, GLFW_KEY_F);
 
         inputs.t = Input::Instance().IsKeyPressed(window, GLFW_KEY_T);
+        inputs.m = Input::Instance().IsKeyPressed(window, GLFW_KEY_M);
 
         inputs.lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         inputs.rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
