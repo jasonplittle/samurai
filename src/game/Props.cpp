@@ -1,34 +1,52 @@
 #include "Props.hpp"
+#include "Hitbox.hpp"
 
 #include <iostream>
 
-Props::Props(PropSet propSet) : m_propSet(std::move(propSet))
-{}
+
+Props::Props(PropSet propSet) : m_propSet(std::move(propSet)) {}
 
 
 void Props::AddProp(int worldX, const World& world)
 {
-    Prop prop;
+    Prop newProp;
 
     if (worldX % 3 == 0)
-        prop.Id = PropId::Tree1;
+        newProp.Id = PropId::Tree1;
     else if (worldX % 2 == 1)
-        prop.Id = PropId::Tree2;
+        newProp.Id = PropId::Tree2;
     else
-        prop.Id = PropId::Tree3;
+        newProp.Id = PropId::Tree3;
 
     int worldY = world.WorldXToGroundY(worldX);
 
-    prop.Position = glm::vec2(worldX, worldY);
+    newProp.Position = glm::vec2(worldX, worldY);
 
     for (auto& prop : m_props)
     {
-        if (prop.Position.x == worldX && prop.Position.y == worldY)
+        Rect rec1 =
+        {
+            .Left = prop.Position.x - (m_propSet.Set[prop.Id].Size.x / 2),
+            .Top = prop.Position.y,
+            .Right = prop.Position.x + (m_propSet.Set[prop.Id].Size.x / 2),
+            .Bottom = prop.Position.y + (m_propSet.Set[prop.Id].Size.y)
+        };
+
+        Rect rec2 =
+        {
+            .Left = newProp.Position.x - (m_propSet.Set[newProp.Id].Size.x / 2),
+            .Top = newProp.Position.y,
+            .Right = newProp.Position.x + (m_propSet.Set[newProp.Id].Size.x / 2),
+            .Bottom = newProp.Position.y + (m_propSet.Set[newProp.Id].Size.y),
+        };
+
+        if (Intersects(rec1, rec2))
             return;
     }
 
-    m_props.push_back(prop);
+    m_props.push_back(newProp);
 }
+
 
 void Props::DrawProps(SpriteRenderer& renderer, OrthographicCamera camera)
 {
