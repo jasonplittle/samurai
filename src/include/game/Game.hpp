@@ -2,6 +2,7 @@
 
 #include "Character.hpp"
 #include "PlayerController.hpp"
+#include "MobController.hpp"
 
 #include "World.hpp"
 #include "BackgroundParallax.hpp"
@@ -53,14 +54,16 @@ private:
     void updateHitboxes(float dt);
 
 private:
-    std::unique_ptr<Character> m_player1;
+    std::unique_ptr<Character> m_player;
     PlayerController m_playerController;
-    InputState m_player1Input;
+    InputState m_playerInput;
 
+    std::unique_ptr<MobController> m_mobController;
+    std::shared_ptr<Character> m_mob;
+    
     std::vector<Hitbox> m_hitboxes;
-
-    std::unique_ptr<Character> m_player2;
-    InputState m_player2Input;
+    
+    // InputState m_player2Input;
 
     PhysicsSystem m_physics;
 

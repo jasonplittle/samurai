@@ -12,6 +12,15 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
 
     m_movementProfile.AccelY = -m_stats.Gravity;
 
+    CharacterIntent m_currentIntent
+    {
+        .Jump = false,
+        .Down = false,
+        .Primary = false,
+        .Secondary = false,
+        .MoveX = 0,
+    };
+
     m_stateMachine.RequestState(StateID::Idle, *this);
 }
 
