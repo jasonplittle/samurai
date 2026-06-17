@@ -55,7 +55,7 @@ private:
             m_current->Exit(c);
         }
 
-        m_current = m_stateFactory->Create(next);
+        m_current = m_stateFactory->Create(next); // Check if null ptr return false;
 
         m_current->Enter(c);
     }
