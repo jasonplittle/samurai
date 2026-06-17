@@ -12,8 +12,8 @@ public:
         c.Animator().Play(Animation::WallJump);
 
         c.Body().Velocity.y = 0;
-        c.Body().Velocity.x = c.Stats().JumpVelocity * (c.IsFacingRight() ? -1 : 1);
-        std::cout << c.Body().Velocity.x << std::endl;
+        c.Body().Velocity.x = c.Stats().JumpVelocity * (c.IsFacingRight() ? 1 : -1);
+        // c.Body().Velocity.y = c.Stats().JumpVelocity * 0.25;
         c.Movement().AccelY = -c.Stats().WallSlideGravity;
     }
 
@@ -24,13 +24,6 @@ public:
         if (c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Idle, c);
-            return;
-        }
-
-        if (c.Intent().Down)
-        {
-            c.Movement().AccelY = -c.Stats().FastFallGravity;
-            c.StateMachine().RequestState(StateID::Fall, c);
             return;
         }
 
@@ -55,6 +48,6 @@ public:
 
 private:
     float m_jumpTimer = 0.0f;
-    float m_wallReconnectTime = 0.2f;
+    float m_wallReconnectTime = 0.1f;
 
 };

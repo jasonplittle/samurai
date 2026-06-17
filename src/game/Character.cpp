@@ -66,18 +66,39 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 
         if (IsAlive())
         {
-            if (m_currentIntent.MoveX > 0)
+            if (m_body.IsWalled && !m_body.IsGrounded)
             {
-                m_isFacingRight = true;
+                if (m_currentIntent.MoveX > 0)
+                {
+                    m_isFacingRight = false;
+                }
+                if (m_currentIntent.MoveX < 0)
+                {
+                    m_isFacingRight = true;
+                }
             }
-            if (m_currentIntent.MoveX < 0)
+            else
             {
-                m_isFacingRight = false;
+                if (m_currentIntent.MoveX > 0)
+                {
+                    m_isFacingRight = true;
+                }
+                if (m_currentIntent.MoveX < 0)
+                {
+                    m_isFacingRight = false;
+                }    
             }
+
+            
 
             if (m_currentIntent.Jump && m_stats.JumpVelocity == 0)
             {
                 m_currentIntent.Jump = false;
+            }
+
+            if (m_currentIntent.Down)
+            {
+                m_abilities.RequestAbility(*this, AbilitySlot::Down);
             }
 
             if (m_currentIntent.Primary)

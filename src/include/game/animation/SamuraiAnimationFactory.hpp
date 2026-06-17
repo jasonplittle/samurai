@@ -128,8 +128,8 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
-            .FlipX = true,
-            .FrameCenterOffset = glm::vec2(-10, -16),
+            .FlipX = false,
+            .FrameCenterOffset = glm::vec2(0, -16),
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", set.FrameSize)
         };
         set.Clips[Animation::WallSlide] =
@@ -138,8 +138,8 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = true,
-            .FlipX = true,
-            .FrameCenterOffset = glm::vec2(-10, -16),
+            .FlipX = false,
+            .FrameCenterOffset = glm::vec2(0, -16),
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", set.FrameSize)
         };
         set.Clips[Animation::WallJump] =
@@ -148,7 +148,7 @@ public:
             .FrameCount = 3,
             .FrameDuration = 0.1f,
             .Loop = false,
-            .FlipX = true,
+            .FlipX = false,
             .FrameCenterOffset = glm::vec2(0, -16),
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALL JUMP.png", set.FrameSize)
         };

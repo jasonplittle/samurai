@@ -32,7 +32,6 @@ public:
         if (m_activeSlot.has_value() && slot == m_activeSlot.value())
         {
             m_current->Activate(c);
-
             return;
         }
 

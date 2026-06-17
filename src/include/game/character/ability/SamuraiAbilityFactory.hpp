@@ -4,6 +4,7 @@
 
 #include "SamuraiSlashCombo.hpp"
 #include "SamuraiAirAttack.hpp"
+#include "SamuraiSlam.hpp"
 
 
 class SamuraiAbilityFactory : public IAbilityFactory
@@ -18,6 +19,9 @@ public:
 
             case AbilitySlot::AirPrimary:
                 return std::make_unique<SamuraiAirAttack>();
+
+            case AbilitySlot::Down:
+                return std::make_unique<SamuraiSlam>();
 
             default:
                 return nullptr;

@@ -37,12 +37,6 @@ public:
             return;
         }
 
-        if (c.Intent().Down)
-        {
-            c.Movement().AccelY = -c.Stats().FastFallGravity;
-            return;
-        }
-
         if (c.Intent().Jump && m_slideTimer > m_wallJumpTime)
         {
             c.StateMachine().RequestState(StateID::WallJump, c);
@@ -51,7 +45,7 @@ public:
 
         if (!c.Body().IsWalled && m_slideTimer > m_wallFallTime)
         {
-            c.StateMachine().RequestState(StateID::Idle, c);
+            c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
     }
@@ -66,7 +60,7 @@ private:
     float m_fastSlideThresh = -100.f;
 
     float m_slideTimer = 0.0f;
-    float m_wallJumpTime = 0.2f;
+    float m_wallJumpTime = 0.1f;
     float m_wallFallTime = 0.3f;
 
 };

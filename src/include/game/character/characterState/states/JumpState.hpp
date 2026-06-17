@@ -40,20 +40,10 @@ public:
             c.Movement().AccelY = -c.Stats().FallGravity;
             return;
         }
-
-        if (c.Intent().Down)
-        {
-            c.Movement().AccelY = -c.Stats().FastFallGravity;
-            return;
-        }
-
-
-
-
     }
 
     StateID GetID() const override
     {
-        return StateID::Fall;
+        return StateID::Jump;
     }
 };

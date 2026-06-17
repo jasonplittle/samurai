@@ -25,13 +25,6 @@ public:
             return;
         }
 
-        if (c.Intent().Down)
-        {
-            c.Movement().AccelY = -c.Stats().FastFallGravity;
-            c.StateMachine().RequestState(StateID::Fall, c);
-            return;
-        }
-
         if (c.Body().IsWalled && c.Stats().CanWallSlide)
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
