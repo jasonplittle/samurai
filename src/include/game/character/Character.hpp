@@ -53,6 +53,9 @@ struct CharacterStats
 
     float RunAccel;
     float RunDeccel;
+
+    bool CanWallSlide;
+    float WallSlideGravity;
 };
 
 

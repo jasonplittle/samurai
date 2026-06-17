@@ -57,7 +57,7 @@ public:
 
             if (world.IsSolid(bodyRight, y))
             {
-                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
+                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x - 0.01;
                 body.Velocity.x = 0;
                 body.IsWalled = true;
                 return true;

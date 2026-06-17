@@ -32,6 +32,7 @@ enum class Animation
     WallSlide
 };
 
+
 struct AnimationClip
 {
     int StartFrame;
@@ -39,15 +40,17 @@ struct AnimationClip
     float FrameDuration;
     bool Loop;
     bool FlipX;
+    glm::vec2 FrameCenterOffset;
     std::unique_ptr<Sprite> Sprite;
 };
+
 
 struct AnimationSet
 {
     std::unordered_map<Animation, AnimationClip> Clips;
     glm::vec2 FrameSize;
-    glm::vec2 FrameCenterOffset;
 };
+
 
 using AnimationMap = std::unordered_map<Animation, Animation>;
 
@@ -68,7 +71,7 @@ public:
     bool IsFinished() const { return m_isFinished; }
 
     glm::vec2 GetFrameSize() const { return m_animationSet.FrameSize; }
-    glm::vec2 GetFrameCenterOffset() const { return m_animationSet.FrameCenterOffset; }
+    glm::vec2 GetFrameCenterOffset() const { return m_animationSet.Clips.at(m_currentAnimation).FrameCenterOffset; }
 
 private:
     Animation m_currentAnimation;

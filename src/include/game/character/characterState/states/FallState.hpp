@@ -25,6 +25,12 @@ public:
             c.Movement().AccelY = -c.Stats().FastFallGravity;
             return;
         }
+
+        if (c.Body().IsWalled && c.Stats().CanWallSlide)
+        {
+            c.StateMachine().RequestState(StateID::WallSlide, c);
+            return;
+        }
     }
 
     StateID GetID() const override

@@ -23,8 +23,8 @@ public:
     {
         if (!m_current)
         {
-            ChangeState(next, c);
-            return true;
+            bool changed = ChangeState(next, c);
+            return changed;
         }
 
         if (m_current->GetID() == next)
@@ -37,9 +37,9 @@ public:
             return false;
         }
 
-        ChangeState(next, c);
+        bool changed = ChangeState(next, c);
 
-        return true;
+        return changed;
     }
 
     bool CheckState(StateID state)
@@ -48,7 +48,7 @@ public:
     }
 
 private:
-    void ChangeState(StateID next, Character& c)
+    bool ChangeState(StateID next, Character& c)
     {
         if (m_current)
         {
@@ -57,7 +57,11 @@ private:
 
         m_current = m_stateFactory->Create(next); // Check if null ptr return false;
 
+        if (!m_current) return false;
+
         m_current->Enter(c);
+
+        return true;
     }
 
 private:

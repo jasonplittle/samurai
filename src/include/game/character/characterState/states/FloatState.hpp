@@ -32,6 +32,12 @@ public:
             return;
         }
 
+        if (c.Body().IsWalled && c.Stats().CanWallSlide)
+        {
+            c.StateMachine().RequestState(StateID::WallSlide, c);
+            return;
+        }
+
         if (c.Body().Velocity.y < -floatExitThreshFactor * c.Stats().JumpVelocity)
         {
             c.StateMachine().RequestState(StateID::Fall, c);

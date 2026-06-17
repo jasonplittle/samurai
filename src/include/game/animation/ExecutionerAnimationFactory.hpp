@@ -10,7 +10,7 @@ public:
     {
         AnimationSet set;
         set.FrameSize = glm::vec2(130, 92);
-        set.FrameCenterOffset = glm::vec2(0, -4);
+        glm::vec2 standardFrameCenterOffset = glm::vec2(0, -4);
 
         set.Clips[Animation::Idle] =
         {
@@ -19,6 +19,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = true,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/IDLE.png", set.FrameSize)
         };
         set.Clips[Animation::Walk] =
@@ -28,6 +29,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = true,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/WALK.png", set.FrameSize)
         };
         set.Clips[Animation::Attack1] =
@@ -37,6 +39,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 1.png", set.FrameSize)
         };
         set.Clips[Animation::Attack2] =
@@ -46,6 +49,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 2.png", set.FrameSize)
         };
         set.Clips[Animation::Hurt] =
@@ -55,6 +59,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/HURT.png", set.FrameSize)
         };
         set.Clips[Animation::Death] =
@@ -64,6 +69,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
         };
         set.Clips[Animation::Dead] =
@@ -73,6 +79,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = true,
             .FlipX = true,
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
         };
 

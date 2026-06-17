@@ -19,7 +19,9 @@ enum class StateID
     Attacking,
     Hurt,
     Death,
-    Dead
+    Dead,
+    WallSlide,
+    WallJump,
 };
 
 

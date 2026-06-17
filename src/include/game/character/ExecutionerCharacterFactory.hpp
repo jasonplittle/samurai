@@ -20,11 +20,6 @@ public:
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
 
-        constexpr int fastGrav = 3 * regGrav;
-
-        const float jumpMidThreshUp = std::sqrt(0.25) * v0;
-        const float jumpMidThreshDown = std::sqrt(0.15) * v0;
-
 
         CharacterStats stats
         {
@@ -50,6 +45,9 @@ public:
 
             .RunAccel = 3,
             .RunDeccel = 5,
+
+            .CanWallSlide = false,
+            .WallSlideGravity = 0,
         };
 
         AnimationMap animationMap;
