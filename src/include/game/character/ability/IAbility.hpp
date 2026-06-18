@@ -14,6 +14,8 @@ public:
 
     virtual void Activate(Character& c) = 0;
 
+    virtual void Trigger(Character& c) {};
+
     virtual void Update(Character& c, float dt) {}
 
     virtual void Cancel(Character& c) { m_isActive = false; }

@@ -11,9 +11,6 @@ public:
         if (c.Body().IsGrounded)
             return false;
 
-        // if (c.IsStunned())
-        //     return false;
-
         return true;
     }
 
@@ -21,9 +18,11 @@ public:
     {
         m_isActive = true;
         c.Animator().Play(Animation::AirAttack);
-        c.StateMachine().RequestState(StateID::Attacking, c);
-
-        // c.Movement().AccelY = 0;
+        c.StateMachine().RequestState(StateID::Attacking, c);        
+        c.Body().Velocity.y = 0;
+        c.Movement().AccelY = 0;
+        c.Movement().TargetSpeedX = 0;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override

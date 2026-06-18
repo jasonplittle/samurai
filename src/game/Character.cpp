@@ -15,48 +15,40 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     m_stateMachine.RequestState(StateID::Idle, *this);
 }
 
+void Character::Motor()
+{
+    const float speedDif = (m_movementProfile.TargetSpeedX * ((m_currentIntent.MoveX > 0) - (m_currentIntent.MoveX < 0))) - m_body.Velocity.x;
+    m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
+    m_body.Acceleration.y = m_movementProfile.AccelY;
+}
+
 
 void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 {
-    // std::cout << m_currentIntent.Jump.Pressed << std::endl;
-
-
     bool hit = applyHitboxes(hitboxes);
     
-
     if (hit)
     {
         m_stateMachine.RequestState(StateID::Hurt, *this);
     }
     else
     {
-        const float speedDif = (m_movementProfile.TargetSpeedX * ((m_currentIntent.MoveX > 0) - (m_currentIntent.MoveX < 0))) - m_body.Velocity.x;
-        m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
-        m_body.Acceleration.y = m_movementProfile.AccelY;
+        // Motor();
 
         if (IsAlive())
         {
-            if (m_body.IsWalled && !m_body.IsGrounded)
+            if (m_currentIntent.MoveX > 0)
             {
-                if (m_currentIntent.MoveX > 0)
-                {
-                    m_isFacingRight = false;
-                }
-                if (m_currentIntent.MoveX < 0)
-                {
-                    m_isFacingRight = true;
-                }
+                m_isFacingRight = true;
             }
-            else
+            if (m_currentIntent.MoveX < 0)
             {
-                if (m_currentIntent.MoveX > 0)
-                {
-                    m_isFacingRight = true;
-                }
-                if (m_currentIntent.MoveX < 0)
-                {
-                    m_isFacingRight = false;
-                }    
+                m_isFacingRight = false;
+            }
+
+            if (m_currentIntent.Dash)
+            {
+                m_abilities.RequestAbility(*this, AbilitySlot::Dash);
             }
 
             if (m_currentIntent.Down.Pressed)

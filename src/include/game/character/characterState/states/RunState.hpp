@@ -18,6 +18,7 @@ public:
 
     void Update(Character& c, float dt) override
     {
+        c.Motor();
         float speed = std::abs(c.Body().Velocity.x);
 
         if (!c.Body().IsGrounded)

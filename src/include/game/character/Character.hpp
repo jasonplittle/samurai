@@ -25,6 +25,7 @@ struct CharacterIntent
     InputButton Down;
     InputButton Primary;
     InputButton Secondary;
+    bool Dash = false;
 };
 
 
@@ -48,6 +49,7 @@ struct CharacterStats
     bool CanJump;
     float JumpVelocity;
     float Gravity;
+    float FloatGravity;
     float FallGravity;
     float FastFallGravity;
 
@@ -92,6 +94,7 @@ public:
     Rect Hurtbox() const;
 
     bool IsFacingRight() { return m_isFacingRight; }
+    void Motor();
 
     float Health() { return m_health; }
     bool IsAlive() { return m_health >= 0.0; }

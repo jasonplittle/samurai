@@ -182,6 +182,16 @@ public:
             .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", set.FrameSize)
         };
+        set.Clips[Animation::Dash] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 8,
+            .FrameDuration = 0.2f,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DASH.png", set.FrameSize)
+        };
 
         return set;
     }

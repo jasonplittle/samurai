@@ -3,7 +3,7 @@
 #include "IAbility.hpp"
 
 
-class SamuraiSlam : public IAbility
+class SamuraiDive : public IAbility
 {
 public:
     bool CanActivate(Character& c) const override
@@ -20,6 +20,10 @@ public:
         c.Animator().Play(Animation::Fall);
         c.StateMachine().RequestState(StateID::Attacking, c);
         c.Movement().AccelY = -c.Stats().FastFallGravity;
+        if (c.Body().Velocity.y > 0)
+        {
+            c.Body().Velocity.y = 0;
+        }
     }
 
     void Update(Character& c, float dt) override

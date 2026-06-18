@@ -2,7 +2,9 @@
 
 #include "CharacterState.hpp"
 
+
 const float floatEnterThreshFactor = std::sqrt(0.25);
+
 
 class JumpState : public CharacterState
 {
@@ -24,7 +26,7 @@ public:
             return;
         }
 
-        if (c.Body().IsWalled && c.Stats().CanWallSlide)
+        if (c.Stats().CanWallSlide && c.Body().IsWalled)
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
             return;

@@ -26,7 +26,7 @@ public:
         const float jumpMidThreshDown = std::sqrt(0.15) * v0;
 
         constexpr float idleSpeed = 5;
-        constexpr float walkSpeed = 90;
+        constexpr float walkSpeed = 120;
         constexpr float runSpeed = 200;
 
         constexpr float groundedAccel = 8;
@@ -43,8 +43,9 @@ public:
             .CanJump = true,
             .JumpVelocity = v0,
             .Gravity = regGrav,
-            .FallGravity = regGrav * 2,
-            .FastFallGravity = regGrav * 4,
+            .FloatGravity = regGrav,
+            .FallGravity = regGrav * 3,
+            .FastFallGravity = regGrav * 6,
 
             .Width = 32,
             .Height = 32,

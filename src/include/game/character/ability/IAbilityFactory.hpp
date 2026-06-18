@@ -9,7 +9,7 @@ enum class AbilitySlot
     Primary,
     AirPrimary,
     Secondary,
-    Movement,
+    Dash,
     Down
 };
 

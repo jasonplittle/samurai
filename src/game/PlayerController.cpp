@@ -18,23 +18,23 @@ void PlayerController::Update(float dt)
 {
     CharacterIntent intent = {};
 
-    if (m_input.DoublePressed(Action::MoveLeft))
-    {
-        intent.MoveX -= 2.0f;
-    } 
-    else if (m_input.Held(Action::MoveLeft))
+    
+    if (m_input.Held(Action::MoveLeft))
     {
         intent.MoveX -= 1.0f;
     }
 
-    if (m_input.DoublePressed(Action::MoveRight))
-    {
-        intent.MoveX += 2.0f;
-    }
-    else if (m_input.Held(Action::MoveRight))
+    if (m_input.Held(Action::MoveRight))
     {
         intent.MoveX += 1.0f;
     }
+
+    if (m_input.DoublePressed(Action::MoveLeft) || m_input.DoublePressed(Action::MoveRight))
+    {
+        intent.Dash = true;
+    }
+
+    
 
     InputButton jump = 
     {

@@ -16,15 +16,15 @@ public:
 
     void Activate(Character& c) override
     {
-        if (m_attackPhase == 0)
-        {
-            m_isActive = true;
-            c.Animator().Play(Animation::Attack1);
-            c.StateMachine().RequestState(StateID::Attacking, c);
-            m_attackPhase = 1;
-            m_hitboxSpawned = false;
-        }
+        m_isActive = true;
+        c.Animator().Play(Animation::Attack1);
+        c.StateMachine().RequestState(StateID::Attacking, c);
+        m_attackPhase = 1;
+        m_hitboxSpawned = false;
+    }
 
+    void Trigger(Character& c) override
+    {
         if (m_attackPhase == 1)
         {
             if (m_timeInPhase > 0.6)
