@@ -19,25 +19,30 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        float speed = std::abs(c.Body().Velocity.x);
-
         if (!c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
 
-        if (c.Intent().Jump)
+        if (c.Stats().CanJump && c.Intent().Jump.Held)
         {
             c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
 
-        if (speed > c.Stats().IdleSpeed || (c.Body().IsWalled && std::abs(c.Intent().MoveX) > 0))
+        if (std::abs(c.Intent().MoveX) > 1.f)
+        {
+            c.StateMachine().RequestState(StateID::Run, c);
+            return;
+        }
+        else if (std::abs(c.Intent().MoveX) > 0.f)
         {
             c.StateMachine().RequestState(StateID::Walk, c);
             return;
         }
+
+        
     }
 
     StateID GetID() const override

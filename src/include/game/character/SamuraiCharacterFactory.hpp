@@ -40,6 +40,7 @@ public:
             .MaxHealth = 100,
             .Mass = 2,
             
+            .CanJump = true,
             .JumpVelocity = v0,
             .Gravity = regGrav,
             .FallGravity = regGrav * 2,

@@ -2,6 +2,7 @@
 
 #include "CharacterState.hpp"
 
+
 class RunState : public CharacterState
 {
 public:
@@ -25,16 +26,16 @@ public:
             return;
         }
 
-        if (c.Intent().Jump)
+        if (c.Intent().Jump.Held)
         {
             c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
 
-        if (speed <= c.Stats().WalkSpeed)
+        if (speed <= c.Stats().WalkSpeed) // && speed check
         {
-            c.StateMachine().RequestState(StateID::Walk, c);
-
+            std::cout << c.Intent().MoveX << std::endl;
+            c.StateMachine().RequestState(StateID::Idle, c);
             return;
         }
     }

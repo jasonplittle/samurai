@@ -35,7 +35,7 @@ public:
             c.StateMachine().RequestState(StateID::Float, c);
         }
 
-        if (!c.Intent().Jump)
+        if (c.Intent().Jump.Released)
         {
             c.Movement().AccelY = -c.Stats().FallGravity;
             return;

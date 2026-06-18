@@ -12,16 +12,11 @@
 #include "SpriteRenderer.hpp"
 
 #include "IGameplayContext.hpp"
+#include "GameInput.hpp"
 
 
-struct Inputs
+struct Inputs // For sandbox only
 {
-    bool up;
-    bool down;
-    bool left;
-    bool right;
-    bool space;
-
     bool t;
     bool m;
 
@@ -34,7 +29,7 @@ struct Inputs
 class Game : public IGameplayContext
 {
 public:
-    Game();
+    Game(GameInput& gameInput);
 
     void Init();
     void ReadInput(glm::ivec2 windowSize, Inputs inputs);
@@ -50,9 +45,8 @@ private:
     void updateHitboxes(float dt);
 
 private:
-    std::unique_ptr<Character> m_player;
+    std::shared_ptr<Character> m_player;
     PlayerController m_playerController;
-    InputState m_playerInput;
 
     MobManager m_mobManager;
     

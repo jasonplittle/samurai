@@ -37,7 +37,7 @@ public:
             return;
         }
 
-        if (c.Intent().Jump && m_slideTimer > m_wallJumpTime)
+        if (c.Intent().Jump.Pressed && m_slideTimer > m_wallJumpTime)
         {
             c.StateMachine().RequestState(StateID::WallJump, c);
             return;

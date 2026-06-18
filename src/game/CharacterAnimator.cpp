@@ -1,5 +1,7 @@
 #include "CharacterAnimator.hpp"
 
+#include <iostream>
+
 
 CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
     : m_currentAnimation(initAnimation), 

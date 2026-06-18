@@ -5,22 +5,17 @@
 #include <queue>
 #include <vector>
 
+#include "GameInput.hpp"
 #include "Character.hpp"
 
-struct InputState
-{
-    bool up;
-    bool down;
-    bool left;
-    bool right;
-    bool primary;
-};
 
 class PlayerController
 {
 public:
-    void Update(float dt, Character& player, InputState inputState);
+    PlayerController(std::shared_ptr<Character> player, GameInput& input) : m_player(player), m_input(input) {}
+    void Update(float dt);
 
 private:
-
+    std::shared_ptr<Character> m_player;
+    GameInput& m_input;
 };

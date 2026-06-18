@@ -41,22 +41,22 @@ CharacterIntent MobController::updateIdle(float dt)
 {
     m_idleTimer += dt;
 
-    int moveX = 0;
+    float moveX = 0.f;
 
     if (m_idleTimer > 2.0f)
     {
         m_state = MobState::Patrol;
-        moveX = m_mob->IsFacingRight() ? -1 : 1;
+        moveX = m_mob->IsFacingRight() ? -1.f : 1.f;
         m_idleTimer = 0;
     }
 
     CharacterIntent intent
     {
-        .Jump = false,
-        .Down = false,
-        .Primary = false,
-        .Secondary = false,
         .MoveX = moveX,
+        .Jump = InputButton{false, false, false},
+        .Down = InputButton{false, false, false},
+        .Primary = InputButton{false, false, false},
+        .Secondary = InputButton{false, false, false},
     };
 
     return intent;
@@ -66,7 +66,7 @@ CharacterIntent MobController::updatePatrol(float dt)
 {
     m_patrolTimer += dt;
 
-    int moveX = m_mob->IsFacingRight() ? 1 : -1;
+    float moveX = m_mob->IsFacingRight() ? 1.f : -1.f;
 
     if (m_patrolTimer > 5.0f)
     {
@@ -76,11 +76,11 @@ CharacterIntent MobController::updatePatrol(float dt)
 
     CharacterIntent intent
     {
-        .Jump = false,
-        .Down = false,
-        .Primary = false,
-        .Secondary = false,
         .MoveX = moveX,
+        .Jump = InputButton{false, false, false},
+        .Down = InputButton{false, false, false},
+        .Primary = InputButton{false, false, false},
+        .Secondary = InputButton{false, false, false},
     };
 
     return intent;
@@ -88,14 +88,14 @@ CharacterIntent MobController::updatePatrol(float dt)
 
 CharacterIntent MobController::updateAttack(float dt, Character& player, float distance)
 {
-    int moveX = player.Body().Position.x < m_mob->Body().Position.x ? -1 : 1;
+    float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -2.f : 2.f;
     bool attack = false;
 
-    if (distance < 10.f)
+    if (distance < 30.f)
     {
         moveX = 0;
     }
-    else if (distance < 40.f) // Use mob range stat
+    else if (distance < m_mob->Stats().PrimaryAttackRange)
     {
         attack = true;
     }
@@ -106,11 +106,11 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
 
     CharacterIntent intent
     {
-        .Jump = false,
-        .Down = false,
-        .Primary = attack,
-        .Secondary = false,
         .MoveX = moveX,
+        .Jump = InputButton{false, false, false},
+        .Down = InputButton{false, false, false},
+        .Primary = InputButton{attack, false, false},
+        .Secondary = InputButton{false, false, false},
     };
 
     return intent;

@@ -10,10 +10,21 @@
 #include "Hitbox.hpp"
 
 
+struct InputButton
+{
+    bool Pressed = false;
+    bool Released = false;
+    bool Held = false;
+};
+
 struct CharacterIntent
 {
-    bool Jump, Down, Primary, Secondary;
-    int MoveX;
+    float MoveX = 0.f;
+
+    InputButton Jump;
+    InputButton Down;
+    InputButton Primary;
+    InputButton Secondary;
 };
 
 
@@ -34,6 +45,7 @@ struct CharacterStats
     int MaxHealth;
     int Mass;
 
+    bool CanJump;
     float JumpVelocity;
     float Gravity;
     float FallGravity;
@@ -56,6 +68,8 @@ struct CharacterStats
 
     bool CanWallSlide;
     float WallSlideGravity;
+
+    float PrimaryAttackRange;
 };
 
 
@@ -82,6 +96,9 @@ public:
     float Health() { return m_health; }
     bool IsAlive() { return m_health >= 0.0; }
     float& DeathDecay() { return m_deathDecay; }
+
+private:
+    bool applyHitboxes(std::vector<Hitbox>& hitboxes);
 
 private:
     KinematicBody m_body;

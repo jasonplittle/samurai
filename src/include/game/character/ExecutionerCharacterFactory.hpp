@@ -26,6 +26,7 @@ public:
             .MaxHealth = 100,
             .Mass = 10,
             
+            .CanJump = false,
             .JumpVelocity = 0,
             .Gravity = regGrav,
             .FallGravity = regGrav,
@@ -48,6 +49,8 @@ public:
 
             .CanWallSlide = false,
             .WallSlideGravity = 0,
+
+            .PrimaryAttackRange = 60.f
         };
 
         AnimationMap animationMap;

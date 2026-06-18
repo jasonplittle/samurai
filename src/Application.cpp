@@ -12,6 +12,62 @@
 #include "Input.hpp"
 #include "Game.hpp"
 
+#include "GameInput.hpp"
+
+
+ActionMap getKeyBinds()
+{
+    ActionMap actionMap;
+
+    actionMap.Bind(
+        Action::MoveLeft,
+        GLFW_KEY_A);
+
+    actionMap.Bind(
+        Action::MoveRight,
+        GLFW_KEY_D);
+
+    actionMap.Bind(
+        Action::Jump,
+        GLFW_KEY_W);
+
+    actionMap.Bind(
+        Action::Down,
+        GLFW_KEY_S);
+
+    actionMap.Bind(
+        Action::Primary,
+        GLFW_KEY_SPACE);
+
+    actionMap.Bind(
+        Action::Secondary,
+        GLFW_KEY_F);
+
+    return actionMap;
+}
+
+
+void KeyCallback(
+    GLFWwindow* window,
+    int key,
+    int scancode,
+    int action,
+    int mods)
+{
+    auto* input = static_cast<InputSystem*>(glfwGetWindowUserPointer(window));
+
+    if (!input) return;
+
+    if (action == GLFW_PRESS)
+    {
+        input->OnKeyPressed(key);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        input->OnKeyReleased(key);
+    }
+}
+
 
 int main()
 {
@@ -55,7 +111,13 @@ int main()
 
     Inputs inputs;
 
-    Game game;
+    InputSystem input;
+    glfwSetWindowUserPointer(window, &input);
+    glfwSetKeyCallback(window, KeyCallback);
+
+    GameInput gameInput(input, getKeyBinds());
+
+    Game game(gameInput);
     game.Init();
     
     while (!glfwWindowShouldClose(window))
@@ -68,21 +130,12 @@ int main()
         dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        inputs.left = Input::Instance().IsKeyPressed(window, GLFW_KEY_LEFT);
-        inputs.right = Input::Instance().IsKeyPressed(window, GLFW_KEY_RIGHT);
-        inputs.up = Input::Instance().IsKeyPressed(window, GLFW_KEY_UP);
-        inputs.down = Input::Instance().IsKeyPressed(window, GLFW_KEY_DOWN);
-        inputs.space = Input::Instance().IsKeyPressed(window, GLFW_KEY_SPACE);
-
-        // inputs.a = Input::Instance().IsKeyPressed(window, GLFW_KEY_A);
-        // inputs.d = Input::Instance().IsKeyPressed(window, GLFW_KEY_D);
-        // inputs.w = Input::Instance().IsKeyPressed(window, GLFW_KEY_W);
-        // inputs.s = Input::Instance().IsKeyPressed(window, GLFW_KEY_S);
-        // inputs.f = Input::Instance().IsKeyPressed(window, GLFW_KEY_F);
+        input.BeginFrame(dt);
+        
+        glfwPollEvents();
 
         inputs.t = Input::Instance().IsKeyPressed(window, GLFW_KEY_T);
         inputs.m = Input::Instance().IsKeyPressed(window, GLFW_KEY_M);
-
         inputs.lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
         inputs.rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
         inputs.mousePos = Input::Instance().GetCursorPos(window);
@@ -92,9 +145,7 @@ int main()
         game.Render();
 
         glfwSwapBuffers(window);
-		glfwPollEvents();
     }
-
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

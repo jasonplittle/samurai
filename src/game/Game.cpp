@@ -9,12 +9,13 @@
 
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 
-Game::Game()
+Game::Game(GameInput& gameInput)
     :
     m_world(ForestTilesetFactory::CreateTileSet()), 
     m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
     m_props(ForestPropsetFactory::CreatePropset()),
-    m_player(std::move(SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this)))
+    m_player(std::move(SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this))),
+    m_playerController(m_player, gameInput)
 {
     m_camera =
     {
@@ -33,13 +34,6 @@ void Game::Init()
 
 void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
 {
-    m_playerInput.primary = inputs.space;
-    m_playerInput.up = inputs.up;
-    m_playerInput.down = inputs.down;
-    m_playerInput.left = inputs.left;
-    m_playerInput.right = inputs.right;
-
-
     glm::vec2 mouseWorldPos = 
     {
         (inputs.mousePos.x / (windowSize.x / VIRTUAL_SCEEEN.x)) - (m_camera.Size.x * 0.5) + m_camera.Pos.x, 
@@ -69,7 +63,7 @@ void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
 
 void Game::Update(float dt)
 {
-    m_playerController.Update(dt, *m_player, m_playerInput);
+    m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
     m_player->Update(dt, m_hitboxes);
 

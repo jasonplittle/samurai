@@ -12,47 +12,17 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
 
     m_movementProfile.AccelY = -m_stats.Gravity;
 
-    CharacterIntent m_currentIntent
-    {
-        .Jump = false,
-        .Down = false,
-        .Primary = false,
-        .Secondary = false,
-        .MoveX = 0,
-    };
-
     m_stateMachine.RequestState(StateID::Idle, *this);
 }
 
 
 void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 {
-    bool hit = false;
+    // std::cout << m_currentIntent.Jump.Pressed << std::endl;
 
-    for (auto& hitbox : hitboxes)
-    {
-        if (this == hitbox.Instigator)
-            continue;
 
-        if (hitbox.HitTargets.find(this) != hitbox.HitTargets.end())
-            continue;
-
-        if (!Intersects(hitbox.Bounds(), Hurtbox()))
-            continue;
-
-        hit = true;
-        
-        hitbox.HitTargets.insert(this);
-
-        // Knockback
-        glm::vec2 direction = glm::normalize(m_body.Position - hitbox.Instigator->Body().Position);
-        direction.y *= 0.5;
-        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass);
-
-        // Damage
-        bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
-        m_health -= hitbox.Damage * (crit ? 1.4 : 1);
-    }
+    bool hit = applyHitboxes(hitboxes);
+    
 
     if (hit)
     {
@@ -60,7 +30,7 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
     }
     else
     {
-        const float speedDif = (m_movementProfile.TargetSpeedX * m_currentIntent.MoveX) - m_body.Velocity.x;
+        const float speedDif = (m_movementProfile.TargetSpeedX * ((m_currentIntent.MoveX > 0) - (m_currentIntent.MoveX < 0))) - m_body.Velocity.x;
         m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
         m_body.Acceleration.y = m_movementProfile.AccelY;
 
@@ -89,19 +59,12 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
                 }    
             }
 
-            
-
-            if (m_currentIntent.Jump && m_stats.JumpVelocity == 0)
-            {
-                m_currentIntent.Jump = false;
-            }
-
-            if (m_currentIntent.Down)
+            if (m_currentIntent.Down.Pressed)
             {
                 m_abilities.RequestAbility(*this, AbilitySlot::Down);
             }
 
-            if (m_currentIntent.Primary)
+            if (m_currentIntent.Primary.Pressed)
             {
                 if (m_body.IsGrounded)
                 {
@@ -118,6 +81,39 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
     m_animator.Update(dt);
     m_abilities.Update(*this, dt);
     m_stateMachine.Update(*this, dt);
+}
+
+
+bool Character::applyHitboxes(std::vector<Hitbox>& hitboxes)
+{
+    bool hit = false;
+
+    for (auto& hitbox : hitboxes)
+    {
+        if (this == hitbox.Instigator)
+            continue;
+
+        if (hitbox.HitTargets.find(this) != hitbox.HitTargets.end())
+            continue;
+
+        if (!Intersects(hitbox.Bounds(), Hurtbox()))
+            continue;
+
+        hit = true;
+        
+        hitbox.HitTargets.insert(this);
+
+        // Knockback
+        glm::vec2 direction = glm::normalize(m_body.Position - hitbox.Instigator->Body().Position);
+        direction.y *= 0.5;
+        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass);
+
+        // Damage
+        bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
+        m_health -= hitbox.Damage * (crit ? 1.4 : 1);
+    }
+
+    return hit;
 }
 
 Rect Character::Hurtbox() const

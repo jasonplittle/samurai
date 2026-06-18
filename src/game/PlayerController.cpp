@@ -14,36 +14,61 @@
     // Press down to increase gravity
     // Variable jump height
 
-void PlayerController::Update(float dt, Character& player, InputState inputState)
+void PlayerController::Update(float dt)
 {
-    int moveX = 0;
+    CharacterIntent intent = {};
 
-    if (inputState.right)
+    if (m_input.DoublePressed(Action::MoveLeft))
     {
-        moveX = 1;
+        intent.MoveX -= 2.0f;
+    } 
+    else if (m_input.Held(Action::MoveLeft))
+    {
+        intent.MoveX -= 1.0f;
     }
 
-    if (inputState.left)
+    if (m_input.DoublePressed(Action::MoveRight))
     {
-        moveX = -1;
+        intent.MoveX += 2.0f;
+    }
+    else if (m_input.Held(Action::MoveRight))
+    {
+        intent.MoveX += 1.0f;
     }
 
-    if ((inputState.right && inputState.left))
+    InputButton jump = 
     {
-        moveX = 0;
-    }
-
-
-    CharacterIntent intent
-    {
-        .Jump = inputState.up,
-        .Down = inputState.down,
-        .Primary = inputState.primary,
-        .Secondary = inputState.down,
-        .MoveX = moveX,
+        .Pressed = m_input.Pressed(Action::Jump),
+        .Released = m_input.Released(Action::Jump),
+        .Held = m_input.Held(Action::Jump),
     };
+    intent.Jump = jump;
 
-    player.SetIntent(intent);
+    InputButton down = 
+    {
+        .Pressed = m_input.Pressed(Action::Down),
+        .Released = m_input.Released(Action::Down),
+        .Held = m_input.Held(Action::Down),
+    };
+    intent.Down = down;
+
+    InputButton primary = 
+    {
+        .Pressed = m_input.Pressed(Action::Primary),
+        .Released = m_input.Released(Action::Primary),
+        .Held = m_input.Held(Action::Primary),
+    };
+    intent.Primary = primary;
+
+    InputButton secondary = 
+    {
+        .Pressed = m_input.Pressed(Action::Secondary),
+        .Released = m_input.Released(Action::Secondary),
+        .Held = m_input.Held(Action::Secondary),
+    };    
+    intent.Secondary = secondary;
+
+    m_player->SetIntent(intent);
 }
 
 // void PlayerController::Update(float dt)
