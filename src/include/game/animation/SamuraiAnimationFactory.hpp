@@ -169,7 +169,7 @@ public:
             .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = false,
-            .FrameCenterOffset = glm::vec2(0, -16),
+            .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/samurai/WALL JUMP.png", set.FrameSize)
         };
         set.Clips[Animation::AirAttack] =

@@ -25,6 +25,7 @@ public:
 
         c.Body().Velocity.y = 0;
         c.Movement().AccelY = -c.Stats().WallSlideGravity;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
@@ -35,6 +36,12 @@ public:
         if (c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+
+        if (c.Intent().Jump.Pressed)
+        {
+            c.StateMachine().RequestState(StateID::WallJump, c);
             return;
         }
 
@@ -54,7 +61,7 @@ public:
             else if (c.Intent().MoveX < 0)
             {
                 c.Movement().AccelX = c.Stats().RunAccel;
-                c.Movement().DeccelX = c.Stats().RunDeccel;
+                
                 c.Movement().TargetSpeedX = c.Stats().RunSpeed;
                 c.Body().Velocity.x = -50;
                 c.StateMachine().RequestState(StateID::Float, c);
@@ -78,7 +85,6 @@ public:
             else if (c.Intent().MoveX > 0)
             {
                 c.Movement().AccelX = c.Stats().RunAccel;
-                c.Movement().DeccelX = c.Stats().RunDeccel;
                 c.Movement().TargetSpeedX = c.Stats().RunSpeed;
                 c.Body().Velocity.x = 50;
                 c.StateMachine().RequestState(StateID::Float, c);

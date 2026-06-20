@@ -61,7 +61,6 @@ public:
                 body.Velocity.x = 0;
                 body.Walled = 1;
                 return true;
-                
             }
         }
         return false;
