@@ -12,7 +12,7 @@ public:
         c.Animator().Play(Animation::Death);
 
         c.Movement().AccelY = -c.Stats().Gravity;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
+        c.Movement().DeccelX = 30;
     }
 
     void Update(Character& c, float dt) override

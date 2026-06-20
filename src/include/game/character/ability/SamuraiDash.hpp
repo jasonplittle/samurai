@@ -8,7 +8,10 @@ class SamuraiDash : public IAbility
 public:
     bool CanActivate(Character& c) const override
     {
-        if (c.Body().IsGrounded)
+        if (c.StateMachine().CheckState(StateID::Death))
+            return false;
+
+        if (!c.Body().IsGrounded)
             return true;
 
         return true;
@@ -25,7 +28,7 @@ public:
         c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;
         c.Body().Velocity.x = 200 * c.Intent().MoveX;
         c.Movement().DeccelX = c.Stats().RunDeccel;
-        c.Movement().AccelY = -c.Stats().Gravity;
+        c.Movement().AccelY = 0;
     }
 
     void Update(Character& c, float dt) override

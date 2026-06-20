@@ -63,6 +63,8 @@ public:
 
             .CanWallSlide = true,
             .WallSlideGravity = regGrav / 6.f,
+
+            .CanRun = true,
         };
 
 

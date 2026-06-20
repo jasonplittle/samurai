@@ -42,32 +42,17 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
     }
     else
     {
-        // Motor();
+        if (m_currentIntent.Dash)
+            m_abilities.RequestAbility(*this, AbilitySlot::Dash);
 
-        if (IsAlive())
-        {
-            if (m_currentIntent.Dash)
-            {
-                m_abilities.RequestAbility(*this, AbilitySlot::Dash);
-            }
+        if (m_currentIntent.Down.Pressed)
+            m_abilities.RequestAbility(*this, AbilitySlot::Down);
 
-            if (m_currentIntent.Down.Pressed)
-            {
-                m_abilities.RequestAbility(*this, AbilitySlot::Down);
-            }
+        if (m_currentIntent.Primary.Pressed && m_body.IsGrounded)
+            m_abilities.RequestAbility(*this, AbilitySlot::Primary);
 
-            if (m_currentIntent.Primary.Pressed)
-            {
-                if (m_body.IsGrounded)
-                {
-                    m_abilities.RequestAbility(*this, AbilitySlot::Primary);
-                }
-                else
-                {
-                    m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
-                }
-            }
-        }
+        if (m_currentIntent.Primary.Pressed && !m_body.IsGrounded)
+            m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
     }
 
     m_animator.Update(dt);

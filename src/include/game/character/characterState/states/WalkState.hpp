@@ -28,7 +28,7 @@ public:
             c.StateMachine().RequestState(StateID::Idle, c);
             return;
         }
-        else if (speed > c.Stats().WalkSpeed * 0.9)
+        else if (speed > c.Stats().WalkSpeed * 0.9 && c.Stats().CanRun)
         {
             c.StateMachine().RequestState(StateID::Run, c);
             return;

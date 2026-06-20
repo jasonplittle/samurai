@@ -75,6 +75,8 @@ struct CharacterStats
     float WallSlideGravity;
 
     float PrimaryAttackRange;
+
+    bool CanRun = false;
 };
 
 
