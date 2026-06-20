@@ -17,7 +17,7 @@ protected:
             return true;
         }
 
-        if (c.Stats().CanWallSlide && c.Body().IsWalled)
+        if (c.Stats().CanWallSlide && c.Body().Walled != 0)
         {
             c.Movement().DoubleJumpUsed = false;
             c.StateMachine().RequestState(StateID::WallSlide, c);

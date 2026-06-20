@@ -27,9 +27,11 @@ enum class Animation
     SpecialAttack,
     Throw,
     Walk,
-    WallContact,
+    WallContactLeft,
+    WallContactRight,
     WallJump,
-    WallSlide
+    WallSlideLeft,
+    WallSlideRight
 };
 
 

@@ -11,7 +11,7 @@
 struct KinematicBody
 {
     bool IsGrounded = false;
-    bool IsWalled = false;
+    int Walled = 0;
     bool IsSolid = false;
 
     glm::vec2 Position = glm::vec2(0.f, 0.f);
@@ -28,7 +28,7 @@ public:
     void UpdateBody(KinematicBody& body, const World& world, float dt)
     {
         body.IsGrounded = false;
-        body.IsWalled = false;
+        body.Walled = 0;
         body.Velocity += body.Acceleration * dt;
 
         body.Position.y += body.Velocity.y * dt;
@@ -51,15 +51,15 @@ public:
             {
                 body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
                 body.Velocity.x = 0;
-                body.IsWalled = true;
+                body.Walled = -1;
                 return true;
             }
 
             if (world.IsSolid(bodyRight, y))
             {
-                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x - 0.01;
+                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
                 body.Velocity.x = 0;
-                body.IsWalled = true;
+                body.Walled = 1;
                 return true;
                 
             }

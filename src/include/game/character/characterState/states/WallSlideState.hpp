@@ -8,8 +8,20 @@ class WallSlideState : public CharacterState
 public:
     void Enter(Character& c) override
     {
-        std::cout << "Wall slide state" << std::endl;
-        c.Animator().Play(Animation::WallContact);
+        std::cout << "Wall state" << std::endl;
+
+        if (c.Body().Walled == 1)
+        {
+            c.Animator().Play(Animation::WallContactRight);
+            c.IsFacingRight() = false;
+            c.Movement().AccelX = 1;
+        }
+        else if (c.Body().Walled == -1)
+        {
+            c.Animator().Play(Animation::WallContactLeft);
+            c.IsFacingRight() = true;
+            c.Movement().AccelX = -1;
+        }
 
         c.Body().Velocity.y = 0;
         c.Movement().AccelY = -c.Stats().WallSlideGravity;
@@ -17,19 +29,8 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        m_slideTimer += dt;
-
-        if (c.Body().Velocity.y < m_fastSlideThresh && !m_fastSlide)
-        {
-            m_fastSlide = true;
-            c.Animator().Play(Animation::WallSlide);
-        }
-
-        if (c.Body().Velocity.y >= m_fastSlideThresh && m_fastSlide)
-        {
-            m_fastSlide = false;
-            c.Animator().Play(Animation::WallContact);
-        }
+        c.Body().Acceleration.x = c.Movement().AccelX;
+        c.Body().Acceleration.y = c.Movement().AccelY;
 
         if (c.Body().IsGrounded)
         {
@@ -37,30 +38,57 @@ public:
             return;
         }
 
-        if (c.Intent().Jump.Pressed && m_slideTimer > m_wallJumpTime)
+        if (c.Body().Walled == 1)
         {
-            c.StateMachine().RequestState(StateID::WallJump, c);
-            return;
+            if (c.Intent().MoveX > 0)
+            {
+                c.Animator().Play(Animation::WallContactRight);
+                c.Movement().AccelY = 0;
+                c.Body().Velocity.y = 0;
+            }
+            else if (c.Intent().MoveX == 0)
+            {
+                c.Animator().Play(Animation::WallSlideRight);
+                c.Movement().AccelY = -c.Stats().WallSlideGravity;
+            }
+            else if (c.Intent().MoveX < 0)
+            {
+                c.Movement().AccelX = c.Stats().RunAccel;
+                c.Movement().DeccelX = c.Stats().RunDeccel;
+                c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+                c.Body().Velocity.x = -50;
+                c.StateMachine().RequestState(StateID::Float, c);
+                return;
+            }
         }
 
-        if (!c.Body().IsWalled && m_slideTimer > m_wallFallTime)
+        if (c.Body().Walled == -1)
         {
-            c.StateMachine().RequestState(StateID::Float, c);
-            return;
-        }
+            if (c.Intent().MoveX < 0)
+            {
+                c.Animator().Play(Animation::WallContactLeft);
+                c.Movement().AccelY = 0;
+                c.Body().Velocity.y = 0;
+            }
+            else if (c.Intent().MoveX == 0)
+            {
+                c.Animator().Play(Animation::WallSlideLeft);
+                c.Movement().AccelY = -c.Stats().WallSlideGravity;
+            }
+            else if (c.Intent().MoveX > 0)
+            {
+                c.Movement().AccelX = c.Stats().RunAccel;
+                c.Movement().DeccelX = c.Stats().RunDeccel;
+                c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+                c.Body().Velocity.x = 50;
+                c.StateMachine().RequestState(StateID::Float, c);
+                return;
+            }
+        }        
     }
 
     StateID GetID() const override
     {
         return StateID::WallSlide;
     }
-
-private:
-    bool m_fastSlide = false;
-    float m_fastSlideThresh = -100.f;
-
-    float m_slideTimer = 0.0f;
-    float m_wallJumpTime = 0.1f;
-    float m_wallFallTime = 0.3f;
-
 };

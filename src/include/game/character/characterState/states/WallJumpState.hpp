@@ -27,7 +27,7 @@ public:
             return;
         }
 
-        if (c.Body().IsWalled && m_jumpTimer > m_wallReconnectTime)
+        if (c.Body().Walled && m_jumpTimer > m_wallReconnectTime)
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
             return;

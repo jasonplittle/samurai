@@ -50,7 +50,6 @@ public:
             .RadiusX = 8,
             .RadiusY = 14,
 
-
             .IdleSpeed = idleSpeed,
             .WalkSpeed = walkSpeed,
             .RunSpeed = runSpeed,

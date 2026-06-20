@@ -12,7 +12,7 @@ public:
             return false;
 
         if (!c.Body().IsGrounded)
-            return true;
+            return false;
 
         return true;
     }
@@ -25,6 +25,7 @@ public:
         c.Animator().Play(Animation::Dash);
         c.StateMachine().RequestState(StateID::Dash, c);
         
+        c.IsFacingRight() = c.Intent().MoveX > 0;
         c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;
         c.Body().Velocity.x = 200 * c.Intent().MoveX;
         c.Movement().DeccelX = c.Stats().RunDeccel;
