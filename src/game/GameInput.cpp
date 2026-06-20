@@ -12,6 +12,7 @@ void InputSystem::BeginFrame(float dt)
     {
         state.Pressed = false;
         state.Released = false;
+        state.DoublePressed = false;
 
         if (state.Down)
         {
@@ -20,7 +21,6 @@ void InputSystem::BeginFrame(float dt)
         else
         {
             state.HeldTime = 0.0f;
-            state.DoublePressed = false;
         }
     }
 }

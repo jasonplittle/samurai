@@ -16,9 +16,11 @@ public:
 
     void Activate(Character& c) override
     {
+        std::cout << "Air attack ability" << std::endl;
+
         m_isActive = true;
         c.Animator().Play(Animation::AirAttack);
-        c.StateMachine().RequestState(StateID::Attacking, c);        
+        c.StateMachine().RequestState(StateID::Attacking, c);
         c.Body().Velocity.y = 0;
         c.Movement().AccelY = 0;
         c.Movement().TargetSpeedX = 0;

@@ -185,8 +185,8 @@ public:
         set.Clips[Animation::Dash] =
         {
             .StartFrame = 0,
-            .FrameCount = 8,
-            .FrameDuration = 0.2f,
+            .FrameCount = 4,
+            .FrameDuration = 0.1f,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,

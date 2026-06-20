@@ -11,9 +11,9 @@
 #include "AttackState.hpp"
 #include "HurtState.hpp"
 #include "DeathState.hpp"
-#include "DeadState.hpp"
 #include "WallSlideState.hpp"
 #include "WallJumpState.hpp"
+#include "DashState.hpp"
 
 
 class SamuraiStateFactory : public IStateFactory
@@ -51,14 +51,14 @@ public:
             case StateID::Death:
                 return std::make_unique<DeathState>();
 
-            case StateID::Dead:
-                return std::make_unique<DeadState>();
-
             case StateID::WallSlide:
                 return std::make_unique<WallSlideState>();
 
             case StateID::WallJump:
                 return std::make_unique<WallJumpState>();
+
+            case StateID::Dash:
+                return std::make_unique<DashState>();
 
             default:
                 return nullptr;

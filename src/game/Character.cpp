@@ -20,6 +20,15 @@ void Character::Motor()
     const float speedDif = (m_movementProfile.TargetSpeedX * ((m_currentIntent.MoveX > 0) - (m_currentIntent.MoveX < 0))) - m_body.Velocity.x;
     m_body.Acceleration.x = speedDif * (std::abs(m_currentIntent.MoveX) > 0 ? m_movementProfile.AccelX : m_movementProfile.DeccelX);
     m_body.Acceleration.y = m_movementProfile.AccelY;
+
+    if (m_currentIntent.MoveX > 0)
+    {
+        m_isFacingRight = true;
+    }
+    if (m_currentIntent.MoveX < 0)
+    {
+        m_isFacingRight = false;
+    }
 }
 
 
@@ -37,15 +46,6 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 
         if (IsAlive())
         {
-            if (m_currentIntent.MoveX > 0)
-            {
-                m_isFacingRight = true;
-            }
-            if (m_currentIntent.MoveX < 0)
-            {
-                m_isFacingRight = false;
-            }
-
             if (m_currentIntent.Dash)
             {
                 m_abilities.RequestAbility(*this, AbilitySlot::Dash);

@@ -14,16 +14,13 @@ class SamuraiCharacterFactory
 public:
     static std::unique_ptr<Character> CreateSamuraiCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
     {
-        constexpr float jumpPeakTs = 0.5;
-        constexpr float jumpPeakHeight = 128;
+        constexpr float jumpPeakTs = 0.4;
+        constexpr float jumpPeakHeight = 96;
 
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
 
         constexpr float fastGrav = 3 * regGrav;
-
-        const float jumpMidThreshUp = std::sqrt(0.25) * v0;
-        const float jumpMidThreshDown = std::sqrt(0.15) * v0;
 
         constexpr float idleSpeed = 5;
         constexpr float walkSpeed = 120;
@@ -41,6 +38,7 @@ public:
             .Mass = 2,
             
             .CanJump = true,
+            .CanDoubleJump = true,
             .JumpVelocity = v0,
             .Gravity = regGrav,
             .FloatGravity = regGrav,

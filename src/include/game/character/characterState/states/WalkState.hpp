@@ -1,8 +1,10 @@
 #pragma once
 
 #include "CharacterState.hpp"
+#include "Grounded.hpp"
 
-class WalkState : public CharacterState
+
+class WalkState : public CharacterState, public Grounded
 {
 public:
     void Enter(Character& c) override
@@ -17,30 +19,18 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        c.Motor();
+        bool exit = GroundedUpdate(c, dt);
+        if (exit) return;
+
         float speed = std::abs(c.Body().Velocity.x);
-
-        if (!c.Body().IsGrounded)
-        {
-            c.StateMachine().RequestState(StateID::Float, c);
-            return;
-        }
-
-        if (c.Intent().Jump.Held)
-        {
-            c.StateMachine().RequestState(StateID::Jump, c);
-            return;
-        }
-
-        if (std::abs(c.Intent().MoveX) > 1.f)
-        {
-            c.StateMachine().RequestState(StateID::Run, c);
-            return;
-        }
-
         if (speed < c.Stats().IdleSpeed)
         {
             c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+        else if (speed > c.Stats().WalkSpeed * 0.9)
+        {
+            c.StateMachine().RequestState(StateID::Run, c);
             return;
         }
     }

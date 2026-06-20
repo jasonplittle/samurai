@@ -20,42 +20,32 @@ public:
 
         m_isActive = true;
         c.Animator().Play(Animation::Dash);
-        c.StateMachine().RequestState(StateID::Attacking, c);
-    
-        c.Body().Velocity.x = 100 * c.IsFacingRight() ? -1 : 1;
+        c.StateMachine().RequestState(StateID::Dash, c);
+        
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;
+        c.Body().Velocity.x = 200 * c.Intent().MoveX;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
+        c.Movement().AccelY = -c.Stats().Gravity;
     }
 
     void Update(Character& c, float dt) override
     {
-        // if (!c.StateMachine().CheckState(StateID::Attacking))
-        // {
-        //     m_isActive = false;
-        //     return;
-        // }
+        const float speedDif = c.Movement().TargetSpeedX - c.Body().Velocity.x;
+        c.Body().Acceleration.x = speedDif * c.Movement().DeccelX;
+        c.Body().Acceleration.y = c.Movement().AccelY;
+
+        if (!c.StateMachine().CheckState(StateID::Dash))
+        {
+            m_isActive = false;
+            return;
+        }
 
         if(c.Animator().IsFinished())
         {
             m_isActive = false;
-            c.StateMachine().RequestState(StateID::Idle, c);
+            c.StateMachine().RequestState(StateID::Run, c);
             return;
         }
-
-
     }
 
-private:
-    void spawnHitbox(Character& c)
-    {
-        Hitbox hitbox = 
-        {
-            .PositionOffset = glm::vec2(0, -16),
-            .Radii = glm::vec2(10, 3),
-            .Damage = 3.f,
-            .Knockback = 100.f,
-            .Instigator = &c,
-            .Lifetime = 0.2,
-        };
-
-        c.GameplayContext().SpawnHitbox(hitbox);
-    }
 };

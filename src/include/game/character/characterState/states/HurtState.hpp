@@ -14,6 +14,8 @@ public:
 
     void Update(Character& c, float dt) override
     {
+        c.Motor();
+
         if (c.Animator().IsFinished())
         {
             if (c.Health() <= 0.0)

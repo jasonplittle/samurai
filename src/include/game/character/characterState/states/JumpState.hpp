@@ -1,12 +1,10 @@
 #pragma once
 
 #include "CharacterState.hpp"
+#include "AirBourne.hpp"
 
 
-const float floatEnterThreshFactor = std::sqrt(0.25);
-
-
-class JumpState : public CharacterState
+class JumpState : public CharacterState, public AirBourne
 {
 public:
     void Enter(Character& c) override
@@ -20,26 +18,12 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        if (c.Body().IsGrounded)
-        {
-            c.StateMachine().RequestState(StateID::Idle, c);
-            return;
-        }
+        bool exit = AirBourneUpdate(c, dt);
+        if (exit) return;
 
-        if (c.Stats().CanWallSlide && c.Body().IsWalled)
-        {
-            c.StateMachine().RequestState(StateID::WallSlide, c);
-            return;
-        }
-
-        if (c.Body().Velocity.y < floatEnterThreshFactor * c.Stats().JumpVelocity)
+        if (c.Body().Velocity.y < std::sqrt(0.15) * c.Stats().JumpVelocity)
         {
             c.StateMachine().RequestState(StateID::Float, c);
-        }
-
-        if (c.Intent().Jump.Released)
-        {
-            c.Movement().AccelY = -c.Stats().FallGravity;
             return;
         }
     }

@@ -1,12 +1,10 @@
 #pragma once
 
 #include "CharacterState.hpp"
-
-// const float floatEnterThreshFactor = std::sqrt(0.25);
-const float floatExitThreshFactor = std::sqrt(0.15);
+#include "AirBourne.hpp"
 
 
-class FloatState : public CharacterState
+class FloatState : public CharacterState, public AirBourne
 {
 public:
     void Enter(Character& c) override
@@ -14,26 +12,25 @@ public:
         std::cout << "Float state" << std::endl;
         c.Animator().Play(Animation::Float);
 
-        c.Movement().AccelY = -c.Stats().FallGravity;
+        c.Movement().AccelY = -c.Stats().Gravity;
     }
 
     void Update(Character& c, float dt) override
     {
-        if (c.Body().IsGrounded)
+        bool exit = AirBourneUpdate(c, dt);
+        if (exit) return;
+
+        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
         {
-            c.StateMachine().RequestState(StateID::Idle, c);
+            c.Movement().DoubleJumpUsed = true;
+            c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
 
-        if (c.Body().IsWalled && c.Stats().CanWallSlide)
-        {
-            c.StateMachine().RequestState(StateID::WallSlide, c);
-            return;
-        }
-
-        if (c.Body().Velocity.y < -floatExitThreshFactor * c.Stats().JumpVelocity)
+        if (c.Body().Velocity.y < 0 && c.Animator().IsFinished())
         {
             c.StateMachine().RequestState(StateID::Fall, c);
+            return;
         }
     }
 

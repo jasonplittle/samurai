@@ -38,6 +38,8 @@ struct MovementProfile
 
     float AccelY;
     float DeccelY;
+
+    bool DoubleJumpUsed = true;
 };
 
 
@@ -47,6 +49,7 @@ struct CharacterStats
     int Mass;
 
     bool CanJump;
+    bool CanDoubleJump = false;
     float JumpVelocity;
     float Gravity;
     float FloatGravity;
@@ -93,7 +96,7 @@ public:
     IGameplayContext& GameplayContext() { return m_gameplayContext; }
     Rect Hurtbox() const;
 
-    bool IsFacingRight() { return m_isFacingRight; }
+    bool& IsFacingRight() { return m_isFacingRight; }
     void Motor();
 
     float Health() { return m_health; }

@@ -11,7 +11,6 @@
 #include "AttackState.hpp"
 #include "HurtState.hpp"
 #include "DeathState.hpp"
-#include "DeadState.hpp"
 
 
 class ExecutionerStateFactory : public IStateFactory
@@ -47,9 +46,6 @@ public:
             
             case StateID::Death:
                 return std::make_unique<DeathState>();
-
-            case StateID::Dead:
-                return std::make_unique<DeadState>();
 
             default:
                 return nullptr;
