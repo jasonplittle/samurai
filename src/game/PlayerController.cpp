@@ -52,6 +52,14 @@ void PlayerController::Update(float dt)
     };
     intent.Down = down;
 
+    InputButton defend = 
+    {
+        .Pressed = m_input.Pressed(Action::Down),
+        .Released = m_input.Released(Action::Down),
+        .Held = m_input.Held(Action::Down),
+    };
+    intent.Defend = defend;
+
     InputButton primary = 
     {
         .Pressed = m_input.Pressed(Action::Primary),

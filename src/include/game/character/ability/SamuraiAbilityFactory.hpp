@@ -6,6 +6,7 @@
 #include "SamuraiAirAttack.hpp"
 #include "SamuraiDive.hpp"
 #include "SamuraiDash.hpp"
+#include "SamuraiDefend.hpp"
 
 
 
@@ -27,6 +28,9 @@ public:
 
             case AbilitySlot::Dash:
                 return std::make_unique<SamuraiDash>();
+
+            case AbilitySlot::Defend:
+                return std::make_unique<SamuraiDefend>();
 
             default:
                 return nullptr;

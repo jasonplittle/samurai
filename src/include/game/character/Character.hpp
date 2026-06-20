@@ -23,6 +23,7 @@ struct CharacterIntent
 
     InputButton Jump;
     InputButton Down;
+    InputButton Defend;
     InputButton Primary;
     InputButton Secondary;
     bool Dash = false;
@@ -102,6 +103,7 @@ public:
     void Motor();
 
     float Health() { return m_health; }
+    float& Defence() { return m_defence; }
     bool IsAlive() { return m_health >= 0.0; }
     float& DeathDecay() { return m_deathDecay; }
 
@@ -123,6 +125,7 @@ private:
 
     bool m_isFacingRight;
     float m_health;
+    float m_defence = 0.0;
     bool m_isAlive = true;
     float m_deathDecay = 1.0;
 };

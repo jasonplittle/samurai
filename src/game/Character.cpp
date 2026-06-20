@@ -48,6 +48,9 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
         if (m_currentIntent.Down.Pressed)
             m_abilities.RequestAbility(*this, AbilitySlot::Down);
 
+        if (m_currentIntent.Defend.Pressed)
+            m_abilities.RequestAbility(*this, AbilitySlot::Defend);
+
         if (m_currentIntent.Primary.Pressed && m_body.IsGrounded)
             m_abilities.RequestAbility(*this, AbilitySlot::Primary);
 
@@ -76,18 +79,18 @@ bool Character::applyHitboxes(std::vector<Hitbox>& hitboxes)
         if (!Intersects(hitbox.Bounds(), Hurtbox()))
             continue;
 
-        hit = true;
+        bool hitboxDefended = m_defence * 100.f >= hitbox.Damage;
+        if (!hit && !hitboxDefended) hit = true;
         
         hitbox.HitTargets.insert(this);
 
-        // Knockback
         glm::vec2 direction = glm::normalize(m_body.Position - hitbox.Instigator->Body().Position);
         direction.y *= 0.5;
-        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass);
+        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass) * (hitboxDefended ? m_defence : 1.0f);
 
         // Damage
         bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
-        m_health -= hitbox.Damage * (crit ? 1.4 : 1);
+        m_health -= hitbox.Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
     }
 
     return hit;

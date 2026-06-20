@@ -10,6 +10,8 @@ public:
     {
         std::cout << "Hurt state" << std::endl;
         c.Animator().Play(Animation::Hurt);
+
+        c.Movement().AccelY = -c.Stats().FallGravity;
     }
 
     void Update(Character& c, float dt) override

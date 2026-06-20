@@ -6,7 +6,7 @@ void MobController::Update(float dt, Character& player, const World& world)
 {
     float distance = glm::length(m_mob->Body().Position - player.Body().Position);
 
-    if (distance < 200.f)
+    if (distance < 200.f && player.IsAlive())
     {
         m_state = MobState::Attack;
     }
@@ -100,6 +100,11 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
         attack = true;
     }
     else if (distance > 200.f)
+    {
+        m_state = MobState::Patrol;
+    }
+
+    if (!player.IsAlive())
     {
         m_state = MobState::Patrol;
     }

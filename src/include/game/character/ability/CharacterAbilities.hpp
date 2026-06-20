@@ -35,18 +35,17 @@ public:
             return;
         }
 
+        m_next = m_abilityFactory->CreateAbility(slot);
+        if (!m_next || !m_next->CanActivate(c))
+            return;
+
         if (m_current)
-        {
-            m_current->Cancel(c);    
-        }
+            m_current->Cancel(c);
 
-        m_current = m_abilityFactory->CreateAbility(slot);
-
-        if (m_current && m_current->CanActivate(c))
-        {
-            m_current->Activate(c);
-            m_activeSlot.emplace(slot);
-        }
+        m_current = std::move(m_next);
+        m_next = nullptr;
+        m_current->Activate(c);
+        m_activeSlot.emplace(slot);
     }
 
     void CancelAbility(Character& c)
@@ -61,5 +60,6 @@ public:
 private:
     std::optional<AbilitySlot> m_activeSlot;
     std::unique_ptr<IAbility> m_current;
+    std::unique_ptr<IAbility> m_next;
     std::unique_ptr<IAbilityFactory> m_abilityFactory;
 };

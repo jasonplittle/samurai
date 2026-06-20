@@ -10,7 +10,8 @@ enum class AbilitySlot
     AirPrimary,
     Secondary,
     Dash,
-    Down
+    Down,
+    Defend
 };
 
 
