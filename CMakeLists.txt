@@ -52,8 +52,8 @@ target_include_directories("${CMAKE_PROJECT_NAME}"
         ${CMAKE_SOURCE_DIR}/src/include/game
         ${CMAKE_SOURCE_DIR}/src/include/game/world
         ${CMAKE_SOURCE_DIR}/src/include/game/character
-        ${CMAKE_SOURCE_DIR}/src/include/game/character/characterState
-        ${CMAKE_SOURCE_DIR}/src/include/game/character/characterState/states
+        ${CMAKE_SOURCE_DIR}/src/include/game/character/state
+        ${CMAKE_SOURCE_DIR}/src/include/game/character/state/states
         ${CMAKE_SOURCE_DIR}/src/include/game/character/ability
         ${CMAKE_SOURCE_DIR}/src/include/game/animation
         ${CMAKE_SOURCE_DIR}/src/include/game/controller

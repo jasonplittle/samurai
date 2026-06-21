@@ -9,7 +9,7 @@ public:
     static TileSet CreateTileSet()
     {
         TileSet tileSet;
-        tileSet.Sprite = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32), glm::vec4(1.f, 1.f, 1.f, 1.f));
+        tileSet.Sprite = std::make_unique<Sprite>("resources/world/ForestTileset.png", glm::vec2(32, 32), glm::vec4(1.f, 1.f, 1.f, 1.f));
 
         // In sprite-sheet order. Top-left to bottom-right.
 

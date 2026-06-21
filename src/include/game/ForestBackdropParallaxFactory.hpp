@@ -14,10 +14,10 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.1f,
+                .ParallaxFactor = 0.25f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/3.png", glm::vec2(320, 180))
+                .Sprite = std::make_unique<Sprite>("resources/background/forest/3.png", glm::vec2(320, 180))
             }
         );
 
@@ -25,10 +25,10 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.3f,
+                .ParallaxFactor = 0.5f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/2.png", glm::vec2(320, 180))
+                .Sprite = std::make_unique<Sprite>("resources/background/forest/2.png", glm::vec2(320, 180))
             }
         );
 
@@ -36,10 +36,10 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.6f,
+                .ParallaxFactor = 0.8f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/1.png", glm::vec2(320, 180))
+                .Sprite = std::make_unique<Sprite>("resources/background/forest/1.png", glm::vec2(320, 180))
             }
         );
 
