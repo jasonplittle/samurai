@@ -47,13 +47,15 @@ public:
         
     }
 
-    // Dash in air.
+    // Dash in air. Seperate ability. Move backwards after left bug
     // Double jump always
     // Cancel attack after timer
     // Stop flying
     // Twitter
     // Ledges
     // Dive landing hiccup. Becasue of defend
+    // Wall jump vs disconnect then jump
+
 
     void Update(Character& c, float dt) override
     {

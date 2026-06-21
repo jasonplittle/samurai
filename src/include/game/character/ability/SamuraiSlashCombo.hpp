@@ -47,10 +47,12 @@ public:
 
     void Update(Character& c, float dt) override
     {
+        m_timer += dt;
         m_timeInPhase += dt;
 
-        if (std::abs(c.Intent().MoveX) > 0)
+        if (std::abs(c.Intent().MoveX) > 0 && m_timer > k_cancelTime)
         {
+            m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
             return;
         }
@@ -129,6 +131,8 @@ private:
     }
 
 private:
+    float m_timer = 0.0;
+    const float k_cancelTime = 0.1;
     int m_attackPhase = 0;
     float m_timeInPhase = 0.0f;
     bool m_nextPhaseRequesed = false;
