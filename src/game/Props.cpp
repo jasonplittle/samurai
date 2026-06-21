@@ -11,12 +11,88 @@ void Props::AddProp(int worldX, const World& world)
 {
     Prop newProp;
 
-    if (worldX % 3 == 0)
-        newProp.Id = PropId::Tree1;
-    else if (worldX % 2 == 1)
-        newProp.Id = PropId::Tree2;
-    else
-        newProp.Id = PropId::Tree3;
+    switch (worldX % 24)
+    {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            newProp.Id = PropId::Tree1;
+            newProp.Type = PropType::Tree;
+            break;
+
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+            newProp.Id = PropId::Tree2;
+            newProp.Type = PropType::Tree;
+            break;
+
+        case 9:
+        case 10:
+        case 11:
+        case 12:
+            newProp.Id = PropId::Tree3;
+            newProp.Type = PropType::Tree;
+            break;
+
+        case 13:
+            newProp.Id = PropId::Bush1;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 14:
+            newProp.Id = PropId::Bush2;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 15:
+            newProp.Id = PropId::Bush3;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 16:
+            newProp.Id = PropId::Bush4;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 17:
+            newProp.Id = PropId::Bush5;
+            newProp.Type = PropType::Bush;
+            break;
+        
+        case 18:
+            newProp.Id = PropId::Bush6;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 19:
+            newProp.Id = PropId::Bush7;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 20:
+            newProp.Id = PropId::Lamp;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 21:
+            newProp.Id = PropId::Torii;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 22:
+            newProp.Id = PropId::Well;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 23:
+            newProp.Id = PropId::Flag;
+            newProp.Type = PropType::Object;
+            break;
+    }   
 
     int worldY = world.WorldXToGroundY(worldX);
 
@@ -40,7 +116,7 @@ void Props::AddProp(int worldX, const World& world)
             .Bottom = newProp.Position.y + (m_propSet.Set[newProp.Id].Size.y),
         };
 
-        if (Intersects(rec1, rec2))
+        if (Intersects(rec1, rec2) && (prop.Type == newProp.Type || (prop.Type != PropType::Bush && newProp.Type != PropType::Bush)))
             return;
     }
 

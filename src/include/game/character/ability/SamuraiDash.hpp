@@ -58,6 +58,8 @@ public:
     // Speed up animation.
     // Get frame count from animator. Better than timing for logic. 
     // Ground dash. Cancel/enter sprint if pressing right.
+    // Air acceleration
+    // Stop multiple air attacks
 
 
     void Update(Character& c, float dt) override

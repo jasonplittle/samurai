@@ -26,6 +26,8 @@ public:
         c.Body().Velocity.y = 0;
         c.Movement().AccelY = -c.Stats().WallSlideGravity;
         c.Movement().DeccelX = c.Stats().RunDeccel;
+
+        c.Movement().DoubleJumpUsed = false;
     }
 
     void Update(Character& c, float dt) override

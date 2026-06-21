@@ -35,7 +35,46 @@ public:
         CollideY(body, world);
 
         body.Position.x += body.Velocity.x * dt;
+        DetectWalls(body, world);
         CollideX(body, world);
+
+        
+    }
+
+    void DetectWalls(KinematicBody& body, const World& world)
+    {
+        int bodyTop    = body.Position.y + body.Radii.y;
+        int bodyBottom = body.Position.y - body.Radii.y;
+        int bodyLeft   = body.Position.x - body.Radii.x;
+        int bodyRight  = body.Position.x + body.Radii.x;
+
+        int sampleCount = 0;
+
+        int leftHits = 0;
+        int rightHits = 0;
+
+        for (int y = bodyBottom; y <= bodyTop; ++y)
+        {
+            ++sampleCount;
+
+            if (world.IsSolid(bodyLeft, y))
+                ++leftHits;
+
+            if (world.IsSolid(bodyRight, y))
+                ++rightHits;
+        }
+
+        body.Walled = 0;
+
+        if (leftHits > 0)
+        {
+            body.Walled = (leftHits == sampleCount) ? -2 : -1;
+        }
+
+        if (rightHits > 0)
+        {
+            body.Walled = (rightHits == sampleCount) ? 2 : 1;
+        }
     }
 
     bool CollideX(KinematicBody& body, const World& world)
@@ -51,7 +90,7 @@ public:
             {
                 body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
                 body.Velocity.x = 0;
-                body.Walled = -1;
+                // body.Walled = -1;
                 return true;
             }
 
@@ -59,7 +98,7 @@ public:
             {
                 body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
                 body.Velocity.x = 0;
-                body.Walled = 1;
+                // body.Walled = 1;
                 return true;
             }
         }

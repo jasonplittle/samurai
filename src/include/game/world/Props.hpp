@@ -8,7 +8,25 @@ enum class PropId
 {
     Tree1,
     Tree2,
-    Tree3
+    Tree3,
+    Bush1,
+    Bush2,
+    Bush3,
+    Bush4,
+    Bush5,
+    Bush6,
+    Bush7,
+    Lamp,
+    Well,
+    Torii,
+    Flag,
+};
+
+enum class PropType
+{
+    Tree,
+    Bush,
+    Object,
 };
 
 
@@ -16,6 +34,7 @@ struct Prop
 {
     glm::vec2 Position;
     PropId Id;
+    PropType Type;
 };
 
 
