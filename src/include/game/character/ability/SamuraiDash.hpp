@@ -48,13 +48,16 @@ public:
     }
 
     // Dash in air. Seperate ability. Move backwards after left bug
-    // Double jump always
+    // Double jump always. Done
     // Cancel attack after timer
     // Stop flying
     // Twitter
     // Ledges
     // Dive landing hiccup. Becasue of defend
     // Wall jump vs disconnect then jump
+    // Speed up animation.
+    // Get frame count from animator. Better than timing for logic. 
+    // Ground dash. Cancel/enter sprint if pressing right.
 
 
     void Update(Character& c, float dt) override

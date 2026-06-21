@@ -27,7 +27,7 @@ public:
     {
         if (m_attackPhase == 1)
         {
-            if (m_timeInPhase > 0.6)
+            if (m_timeInPhase > 0.5)
             {
                 m_attackPhase = 2;
                 m_timeInPhase = 0.f;
@@ -36,7 +36,7 @@ public:
             }
         }
 
-        if (m_attackPhase == 2 && m_timeInPhase > 0.6)
+        if (m_attackPhase == 2 && m_timeInPhase > 0.5)
         {
             m_attackPhase = 3;
             m_timeInPhase = 0.f;

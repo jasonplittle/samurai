@@ -14,7 +14,7 @@ constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 Game::Game(GameInput& gameInput)
     :
     m_world(ForestTilesetFactory::CreateTileSet()), 
-    m_background(FeudalJapanBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
+    m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
     m_props(ForestPropsetFactory::CreatePropset()),
     m_player(std::move(SamuraiCharacterFactory::CreateSamuraiCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this))),
     m_playerController(m_player, gameInput)
