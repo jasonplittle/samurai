@@ -20,7 +20,7 @@ protected:
         if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
         {
             c.Movement().DoubleJumpUsed = true;
-            c.StateMachine().RequestState(StateID::Jump, c);
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
             return true;
         }
 

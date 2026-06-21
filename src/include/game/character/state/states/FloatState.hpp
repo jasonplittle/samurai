@@ -12,7 +12,7 @@ public:
         std::cout << "Float state" << std::endl;
         c.Animator().Play(Animation::Float);
 
-        c.Movement().AccelY = -c.Stats().Gravity * 0.6;
+        c.Movement().AccelY = -c.Stats().FloatGravity;
     }
 
     void Update(Character& c, float dt) override

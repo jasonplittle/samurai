@@ -21,7 +21,8 @@ enum class StateID
     Death,
     WallSlide,
     WallJump,
-    Dash
+    Dash,
+    DoubleJump,
 };
 
 

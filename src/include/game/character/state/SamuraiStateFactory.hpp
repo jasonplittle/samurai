@@ -14,6 +14,7 @@
 #include "WallSlideState.hpp"
 #include "WallJumpState.hpp"
 #include "DashState.hpp"
+#include "DoubleJumpState.hpp"
 
 
 class SamuraiStateFactory : public IStateFactory
@@ -59,6 +60,9 @@ public:
 
             case StateID::Dash:
                 return std::make_unique<DashState>();
+
+            case StateID::DoubleJump:
+                return std::make_unique<DoubleJumpState>();
 
             default:
                 return nullptr;

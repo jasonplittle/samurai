@@ -29,6 +29,7 @@ public:
             .CanJump = false,
             .JumpVelocity = 0,
             .Gravity = regGrav,
+            .FloatGravity = regGrav,
             .FallGravity = regGrav,
             .FastFallGravity = regGrav,
 

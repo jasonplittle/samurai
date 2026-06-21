@@ -41,7 +41,7 @@ public:
             .CanDoubleJump = true,
             .JumpVelocity = v0,
             .Gravity = regGrav,
-            .FloatGravity = regGrav,
+            .FloatGravity = regGrav * 0.65,
             .FallGravity = regGrav * 1.8,
             .FastFallGravity = regGrav * 4.5,
 

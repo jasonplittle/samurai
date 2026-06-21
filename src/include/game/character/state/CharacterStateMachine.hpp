@@ -27,6 +27,11 @@ public:
             return changed;
         }
 
+        if (m_current->GetID() == next)
+        {
+            return true;
+        }
+
         if (!m_current->CanTransitionTo(next, c))
         {
             return false;
@@ -39,7 +44,10 @@ public:
 
     bool CheckState(StateID state)
     {
-        return state == m_current->GetID();
+        if (m_current)
+            return state == m_current->GetID();
+
+        return false;
     }
 
 private:
