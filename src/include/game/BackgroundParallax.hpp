@@ -32,6 +32,6 @@ public:
 private:
     ParallaxLayers m_parallaxLayers;
 
-    const float k_parallaxGlobalScale = 0.5f;
+    const float k_parallaxGlobalScale = 0.6f;
 
 };

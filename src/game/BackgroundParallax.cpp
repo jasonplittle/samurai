@@ -13,7 +13,7 @@ void BackgroundParallax::DrawLayers(const SpriteRenderer& spriteRenderer, Orthog
 {
     for (auto& layer : m_parallaxLayers.set)
     {
-        float parallaxX = camera.Pos.x * layer.ParallaxFactor * k_parallaxGlobalScale;
+        float parallaxX = -camera.Pos.x + (camera.Pos.x * layer.ParallaxFactor * k_parallaxGlobalScale);
         float offset = fmod(-parallaxX, layer.Width);
 
         float baseX = offset + (std::floor((camera.Pos.x - offset) / layer.Width) * layer.Width);
