@@ -12,7 +12,9 @@ enum class Action
     Down,
 
     Primary,
-    Secondary
+    Secondary,
+
+    Slow
 };
 
 

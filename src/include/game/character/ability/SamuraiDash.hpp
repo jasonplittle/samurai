@@ -11,8 +11,8 @@ public:
         if (c.StateMachine().CheckState(StateID::Death))
             return false;
 
-        if (!c.Body().IsGrounded)
-            return false;
+        // if (!c.Body().IsGrounded)
+        //     return false;
 
         return true;
     }
@@ -22,15 +22,36 @@ public:
         std::cout << "Dash ability" << std::endl;
 
         m_isActive = true;
-        c.Animator().Play(Animation::Dash);
+
+        if (c.Body().IsGrounded)
+        {
+            c.Animator().Play(Animation::Dash);
+
+        }
+        else
+        {
+            c.Animator().Play(Animation::WallJump);
+            c.Body().Velocity.y = c.Stats().JumpVelocity * 0.2;
+            c.Movement().AccelY = -c.Stats().Gravity * 0.5;
+        }
+
+
         c.StateMachine().RequestState(StateID::Dash, c);
         
         c.IsFacingRight() = c.Intent().MoveX > 0;
         c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;
-        c.Body().Velocity.x = 200 * c.Intent().MoveX;
+        c.Body().Velocity.x = 500 * c.Intent().MoveX;
         c.Movement().DeccelX = c.Stats().RunDeccel;
-        c.Movement().AccelY = 0;
+        
+
+        
     }
+
+    // Dash in air.
+    // Double jump always
+    // Cancel attack after timer
+    // Stop flying
+    // Twitter
 
     void Update(Character& c, float dt) override
     {
@@ -41,6 +62,12 @@ public:
         if (!c.StateMachine().CheckState(StateID::Dash))
         {
             m_isActive = false;
+            return;
+        }
+
+        if (c.Stats().CanJump && c.Intent().Jump.Pressed)
+        {
+            c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
 

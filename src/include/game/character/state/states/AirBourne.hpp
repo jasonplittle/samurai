@@ -17,6 +17,13 @@ protected:
             return true;
         }
 
+        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
+        {
+            c.Movement().DoubleJumpUsed = true; // Todo Why? - stuart, fuck you
+            c.StateMachine().RequestState(StateID::Jump, c);
+            return true;
+        }
+
         if (c.Stats().CanWallSlide && c.Body().Walled != 0)
         {
             c.Movement().DoubleJumpUsed = false;

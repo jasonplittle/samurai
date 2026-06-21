@@ -20,7 +20,7 @@ public:
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
 
-        constexpr float fastGrav = 3 * regGrav;
+        constexpr float fastGrav = 1.8 * regGrav;
 
         constexpr float idleSpeed = 5;
         constexpr float walkSpeed = 120;
@@ -42,8 +42,8 @@ public:
             .JumpVelocity = v0,
             .Gravity = regGrav,
             .FloatGravity = regGrav,
-            .FallGravity = regGrav * 3,
-            .FastFallGravity = regGrav * 6,
+            .FallGravity = regGrav * 1.8,
+            .FastFallGravity = regGrav * 4.5,
 
             .Width = 32,
             .Height = 32,

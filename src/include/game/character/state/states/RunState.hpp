@@ -12,9 +12,9 @@ public:
         std::cout << "Run state" << std::endl;
         c.Animator().Play(Animation::Run);
 
-        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-        c.Movement().AccelX = c.Stats().RunAccel;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
+        // c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        // c.Movement().AccelX = c.Stats().RunAccel;
+        // c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override

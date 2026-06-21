@@ -12,8 +12,8 @@ public:
         c.Animator().Play(Animation::WallJump);
 
         c.Body().Velocity.y = 0;
-        c.Body().Velocity.x = c.Stats().JumpVelocity * 0.75 * (c.IsFacingRight() ? 1 : -1);
-        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.4;
+        c.Body().Velocity.x = c.Stats().JumpVelocity * 0.5 * (c.IsFacingRight() ? 1 : -1);
+        c.Body().Velocity.y = c.Stats().JumpVelocity;
         c.Movement().AccelY = -c.Stats().Gravity;
         c.Movement().AccelX = c.Stats().RunAccel;
         c.Movement().DeccelX = c.Stats().RunDeccel;

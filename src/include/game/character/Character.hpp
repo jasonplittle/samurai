@@ -23,6 +23,7 @@ struct CharacterIntent
 
     InputButton Jump;
     InputButton Down;
+    InputButton Slow;
     InputButton Defend;
     InputButton Primary;
     InputButton Secondary;

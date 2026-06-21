@@ -43,6 +43,10 @@ ActionMap getKeyBinds()
         Action::Secondary,
         GLFW_KEY_F);
 
+    actionMap.Bind(
+        Action::Slow,
+        GLFW_KEY_LEFT_SHIFT);
+
     return actionMap;
 }
 
@@ -95,10 +99,10 @@ int main()
     if (glewInit() != GLEW_OK) return -1;
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    ImGui::CreateContext();
-    ImGui::StyleColorsDark();
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init();
+    // ImGui::CreateContext();
+    // ImGui::StyleColorsDark();
+    // ImGui_ImplGlfw_InitForOpenGL(window, true);
+    // ImGui_ImplOpenGL3_Init();
 
     int windowWidth, windowHeight;
 

@@ -68,6 +68,14 @@ void PlayerController::Update(float dt)
     };
     intent.Primary = primary;
 
+    InputButton slow = 
+    {
+        .Pressed = m_input.Pressed(Action::Slow),
+        .Released = m_input.Released(Action::Slow),
+        .Held = m_input.Held(Action::Slow),
+    };
+    intent.Slow = slow;
+
     InputButton secondary = 
     {
         .Pressed = m_input.Pressed(Action::Secondary),

@@ -14,7 +14,7 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
 
     m_stateMachine.RequestState(StateID::Idle, *this);
 }
-
+           
 void Character::Motor()
 {
     const float speedDif = (m_movementProfile.TargetSpeedX * ((m_currentIntent.MoveX > 0) - (m_currentIntent.MoveX < 0))) - m_body.Velocity.x;

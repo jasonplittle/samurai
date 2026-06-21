@@ -12,9 +12,13 @@ public:
         std::cout << "Walk state" << std::endl;
         c.Animator().Play(Animation::Walk);
 
-        c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
-        c.Movement().AccelX = c.Stats().WalkAccel;
-        c.Movement().DeccelX = c.Stats().WalkDeccel;
+        // c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        // c.Movement().AccelX = c.Stats().RunAccel;
+        // c.Movement().DeccelX = c.Stats().RunDeccel;
+
+        // c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
+        // c.Movement().AccelX = c.Stats().WalkAccel;
+        // c.Movement().DeccelX = c.Stats().WalkDeccel;
     }
 
     void Update(Character& c, float dt) override

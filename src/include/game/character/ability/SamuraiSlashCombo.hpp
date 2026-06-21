@@ -49,6 +49,12 @@ public:
     {
         m_timeInPhase += dt;
 
+        if (std::abs(c.Intent().MoveX) > 0)
+        {
+            c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
             m_isActive = false;
