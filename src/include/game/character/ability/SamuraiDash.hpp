@@ -47,13 +47,10 @@ public:
         
     }
 
-    // Dash in air. Seperate ability. Move backwards after left bug
-    // Double jump always. Done
-    // Cancel attack after timer
+    // Dash in air. Seperate ability.
     // Stop flying
     // Twitter
     // Ledges
-    // Dive landing hiccup. Becasue of defend
     // Wall jump vs disconnect then jump
     // Speed up animation.
     // Get frame count from animator. Better than timing for logic. 
@@ -76,6 +73,7 @@ public:
 
         if (c.Stats().CanJump && c.Intent().Jump.Pressed)
         {
+            m_isActive = false;
             c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }

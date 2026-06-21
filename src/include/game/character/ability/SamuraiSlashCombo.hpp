@@ -50,6 +50,12 @@ public:
         m_timer += dt;
         m_timeInPhase += dt;
 
+        if (!c.StateMachine().CheckState(StateID::Attacking))
+        {
+            m_isActive = false;
+            return;
+        }
+
         if (std::abs(c.Intent().MoveX) > 0 && m_timer > k_cancelTime)
         {
             m_isActive = false;
@@ -57,11 +63,14 @@ public:
             return;
         }
 
-        if (!c.StateMachine().CheckState(StateID::Attacking))
+        if (c.Stats().CanJump && c.Intent().Jump.Pressed && m_timer > k_cancelTime)
         {
             m_isActive = false;
+            c.StateMachine().RequestState(StateID::Jump, c);
             return;
         }
+
+        
 
         if (m_attackPhase == 1)
         {
