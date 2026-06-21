@@ -20,9 +20,7 @@ protected:
         if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
         {
             c.Movement().DoubleJumpUsed = true;
-            bool changed = c.StateMachine().RequestState(StateID::Jump, c);
-
-            std::cout << "Double jump " << changed << std::endl;
+            c.StateMachine().RequestState(StateID::Jump, c);
             return true;
         }
 

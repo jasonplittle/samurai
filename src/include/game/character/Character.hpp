@@ -42,6 +42,7 @@ struct MovementProfile
     float DeccelY;
 
     bool DoubleJumpUsed = true;
+    bool DashUsed = true;
 };
 
 

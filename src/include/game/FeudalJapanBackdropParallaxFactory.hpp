@@ -25,7 +25,7 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.3f,
+                .ParallaxFactor = 0.2f,
                 .Width = width,
                 .Height = height,
                 .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/3.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
@@ -36,7 +36,7 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.6f,
+                .ParallaxFactor = 0.4f,
                 .Width = width,
                 .Height = height,
                 .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/2.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
@@ -47,10 +47,10 @@ public:
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
-                .ParallaxFactor = 0.9f,
-                .Width = width,
+                .ParallaxFactor = 0.6f,
+                .Width = width * 2,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/1.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
+                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/1.png", glm::vec2(640, 180), glm::vec4(0, 0, 0, 0))
             }
         );
 

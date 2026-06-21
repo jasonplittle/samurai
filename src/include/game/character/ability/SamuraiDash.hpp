@@ -52,6 +52,8 @@ public:
     // Cancel attack after timer
     // Stop flying
     // Twitter
+    // Ledges
+    // Dive landing hiccup. Becasue of defend
 
     void Update(Character& c, float dt) override
     {
