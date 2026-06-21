@@ -4,10 +4,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
-
 #include "Renderer.hpp"
 #include "Input.hpp"
 #include "Game.hpp"
@@ -99,11 +95,6 @@ int main()
     if (glewInit() != GLEW_OK) return -1;
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    // ImGui::CreateContext();
-    // ImGui::StyleColorsDark();
-    // ImGui_ImplGlfw_InitForOpenGL(window, true);
-    // ImGui_ImplOpenGL3_Init();
-
     int windowWidth, windowHeight;
 
     Renderer renderer;
@@ -150,10 +141,6 @@ int main()
 
         glfwSwapBuffers(window);
     }
-
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
 
     glfwTerminate();
 
