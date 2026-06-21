@@ -27,11 +27,6 @@ public:
             return changed;
         }
 
-        if (m_current->GetID() == next)
-        {
-            return true;
-        }
-
         if (!m_current->CanTransitionTo(next, c))
         {
             return false;
@@ -55,7 +50,7 @@ private:
             m_current->Exit(c);
         }
 
-        m_current = m_stateFactory->Create(next); // Check if null ptr return false;
+        m_current = m_stateFactory->Create(next);
 
         if (!m_current) return false;
 

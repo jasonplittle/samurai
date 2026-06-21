@@ -12,20 +12,13 @@ public:
         std::cout << "Float state" << std::endl;
         c.Animator().Play(Animation::Float);
 
-        c.Movement().AccelY = -c.Stats().Gravity * 0.3;
+        c.Movement().AccelY = -c.Stats().Gravity * 0.6;
     }
 
     void Update(Character& c, float dt) override
     {
         bool exit = AirBourneUpdate(c, dt);
         if (exit) return;
-
-        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
-        {
-            c.Movement().DoubleJumpUsed = true;
-            c.StateMachine().RequestState(StateID::Jump, c);
-            return;
-        }
 
         if (c.Body().Velocity.y < 0 && c.Animator().IsFinished())
         {

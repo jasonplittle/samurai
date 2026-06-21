@@ -34,8 +34,6 @@ void PlayerController::Update(float dt)
         intent.Dash = true;
     }
 
-    
-
     InputButton jump = 
     {
         .Pressed = m_input.Pressed(Action::Jump),
@@ -43,6 +41,13 @@ void PlayerController::Update(float dt)
         .Held = m_input.Held(Action::Jump),
     };
     intent.Jump = jump;
+
+    if (m_input.Pressed(Action::Jump))
+    {
+        std::cout << "Jump pressed" << std::endl;
+    }
+
+    
 
     InputButton down = 
     {
