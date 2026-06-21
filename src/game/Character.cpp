@@ -51,11 +51,11 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
         if (m_currentIntent.Defend.Pressed)
             m_abilities.RequestAbility(*this, AbilitySlot::Defend);
 
-        if (m_currentIntent.Primary.Pressed && m_body.IsGrounded)
+        if (m_currentIntent.Primary.Pressed)
+        {
             m_abilities.RequestAbility(*this, AbilitySlot::Primary);
-
-        if (m_currentIntent.Primary.Pressed && !m_body.IsGrounded)
             m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
+        }
     }
 
     m_animator.Update(dt);

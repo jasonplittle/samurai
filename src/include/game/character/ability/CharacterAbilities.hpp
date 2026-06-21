@@ -1,6 +1,7 @@
 #pragma once
 
 #include <optional>
+#include <queue>
 
 #include "Character.hpp"
 #include "IAbilityFactory.hpp"
@@ -15,6 +16,35 @@ public:
 
     void Update(Character& c, float dt)
     {
+        if (!m_requests.empty())
+        {
+            for (auto& reqSlot : m_requests)
+            {
+                if (m_activeSlot.has_value() && reqSlot == m_activeSlot.value())
+                {
+                    m_current->Trigger(c);
+                    break;
+                }
+
+                std::unique_ptr<IAbility> nextAbility = m_abilityFactory->CreateAbility(reqSlot);
+
+                if (!nextAbility)
+                    continue;
+
+                if (!nextAbility->CanActivate(c))
+                    continue;
+
+                if (m_current)
+                    m_current->Cancel(c);
+
+                m_current = std::move(nextAbility);
+                m_current->Activate(c);
+                m_activeSlot.emplace(reqSlot);
+                break;
+            }
+            m_requests.clear();
+        }
+
         if (!m_current)
             return;
 
@@ -29,23 +59,8 @@ public:
 
     void RequestAbility(Character& c, AbilitySlot slot)
     {
-        if (m_activeSlot.has_value() && slot == m_activeSlot.value())
-        {
-            m_current->Trigger(c);
-            return;
-        }
-
-        m_next = m_abilityFactory->CreateAbility(slot);
-        if (!m_next || !m_next->CanActivate(c))
-            return;
-
-        if (m_current)
-            m_current->Cancel(c);
-
-        m_current = std::move(m_next);
-        m_next = nullptr;
-        m_current->Activate(c);
-        m_activeSlot.emplace(slot);
+        m_requests.push_back(slot);
+        return;
     }
 
     void CancelAbility(Character& c)
@@ -59,7 +74,7 @@ public:
 
 private:
     std::optional<AbilitySlot> m_activeSlot;
+    std::vector<AbilitySlot> m_requests;
     std::unique_ptr<IAbility> m_current;
-    std::unique_ptr<IAbility> m_next;
     std::unique_ptr<IAbilityFactory> m_abilityFactory;
 };

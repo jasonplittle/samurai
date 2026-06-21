@@ -23,10 +23,11 @@ public:
         c.Animator().Play(Animation::Fall);
         c.StateMachine().RequestState(StateID::Attacking, c);
         c.Movement().AccelY = -c.Stats().FastFallGravity;
-        if (c.Body().Velocity.y > 0)
-        {
-            c.Body().Velocity.y = 0;
-        }
+        c.Body().Velocity.y = 0;
+
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().AccelX = c.Stats().RunAccel;
+        c.Movement().DeccelX = c.Stats().RunDeccel;        
     }
 
     void Update(Character& c, float dt) override
