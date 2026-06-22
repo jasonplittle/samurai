@@ -57,13 +57,12 @@ private:
             .Damage = 3.f,
             .Knockback = 100.f,
             .Instigator = &c,
-            .UseRealTime = true,
-            .Lifetime = 0.1f,
         };
 
         m_hitbox = std::make_shared<Hitbox>(hitbox);
         c.GameplayContext().SpawnHitbox(m_hitbox);
     }
+
 
 private:
     std::shared_ptr<Hitbox> m_hitbox;

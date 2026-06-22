@@ -28,7 +28,7 @@ public:
 
     void Trigger(Character& c) override
     {
-        if (m_attackPhase == 1 && c.Animator().GetCurrentFrame() > 10)
+        if (m_attackPhase == 1 && c.Animator().IsAfterFrame(9))
         {
             m_attackPhase = 2;
             m_nextPhaseRequesed = true;
@@ -46,18 +46,12 @@ public:
 
         if (m_attackPhase == 1)
         {
-            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 7)
-            {
-                spawnHitbox(c);
-            }
+            manageHitbox(c, 8, 9);
         }
 
         if (m_attackPhase == 2)
         {
-            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 2)
-            {
-                spawnHitbox(c);
-            }
+            manageHitbox(c, 3, 5);
         }
 
         if (c.Animator().IsFinished())
@@ -88,8 +82,6 @@ private:
             .Damage = 30.f,
             .Knockback = 1000.f,
             .Instigator = &c,
-            .LifetimeFrames = 2,
-            .StartFrame = c.Animator().GetCurrentFrame()
         };
 
         m_hitbox = std::make_shared<Hitbox>(hitbox);
@@ -98,12 +90,23 @@ private:
         m_hitboxSpawned = true;
     }
 
+    void manageHitbox(Character& c, int spawnFrame, int despawnFrame)
+    {
+        if (!m_hitboxSpawned && c.Animator().IsAfterFrame(spawnFrame))
+        {
+            spawnHitbox(c);
+        }
+
+        if (m_hitboxSpawned && c.Animator().IsBeforeFrame(despawnFrame))
+        {
+            m_hitbox->KeepHitboxAlive();
+        }
+    }
+
 private:
     int m_attackPhase = 0;
     bool m_nextPhaseRequesed = false;
     bool m_hitboxSpawned = false;
 
     std::shared_ptr<Hitbox> m_hitbox;
-
-    // Move stats
 };

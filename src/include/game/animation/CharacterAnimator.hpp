@@ -68,6 +68,9 @@ public:
     int GetCurrentFrame() const { return m_currentFrame; }
     const Sprite& GetCurrentSprite() const { return *m_animationSet.Clips.at(m_currentAnimation).Sprite; }
 
+    bool IsBeforeFrame(int frameNumber) { return m_currentFrame + 1 < frameNumber; }
+    bool IsAfterFrame(int frameNumber) { return m_currentFrame + 1 >= frameNumber; } // Todo split frames. i.e compare to 1.5
+
     bool FlipX() const { return m_animationSet.Clips.at(m_currentAnimation).FlipX; }
 
     bool IsFinished() const { return m_isFinished; }

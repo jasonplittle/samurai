@@ -91,7 +91,7 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
     float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -2.f : 2.f;
     bool attack = false;
 
-    if (distance < 30.f)
+    if (distance < 10.f)
     {
         moveX = 0;
     }
@@ -106,7 +106,9 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
 
     if (!player.IsAlive())
     {
+        std::cout << "Player is dead" << std::endl;
         m_state = MobState::Patrol;
+        attack = false;
     }
 
     CharacterIntent intent

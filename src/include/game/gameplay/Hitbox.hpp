@@ -36,17 +36,14 @@ public:
 
     Character* Instigator;
 
-    int LifetimeFrames;
-    int StartFrame;
-    bool UseRealTime = false;
-    float Lifetime = 0.0f;
-    float TimeAlive = 0.0f;
-    
     bool Canceled = false;
+    bool KeepAlive = true;
 
     std::unordered_set<Character*> HitTargets;
 
     Rect Bounds() const;
     bool IsAlive() const;
     void Update(float dt);
+
+    void KeepHitboxAlive() { KeepAlive = true; }
 };

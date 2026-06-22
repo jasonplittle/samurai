@@ -126,7 +126,7 @@ private:
 
     IGameplayContext& m_gameplayContext;
 
-    bool m_isFacingRight;
+    bool m_isFacingRight = true;
     float m_health;
     float m_defence = 0.0;
     bool m_isAlive = true;

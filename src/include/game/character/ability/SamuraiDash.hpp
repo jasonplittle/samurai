@@ -62,6 +62,8 @@ public:
 
     // Change hitbox from shared_ptr to weak_ptr
 
+    // Seperate fx from dash. Spawn fx.
+
 
     void Update(Character& c, float dt) override
     {

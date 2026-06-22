@@ -40,10 +40,7 @@ public:
             return;
         }
 
-        if (!m_hitboxSpawned && m_timeInPhase > 0.2)
-        {
-            spawnHitbox(c);
-        }
+        manageHitbox(c, 3, 5);
 
         if (c.Animator().IsFinished())
         {
@@ -63,14 +60,25 @@ private:
             .Damage = 15.f,
             .Knockback = 250.f,
             .Instigator = &c,
-            .LifetimeFrames = 2,
-            .StartFrame = c.Animator().GetCurrentFrame()
         };
 
         m_hitbox = std::make_shared<Hitbox>(hitbox);
         c.GameplayContext().SpawnHitbox(m_hitbox);
 
         m_hitboxSpawned = true;
+    }
+
+    void manageHitbox(Character& c, int spawnFrame, int despawnFrame)
+    {
+        if (!m_hitboxSpawned && c.Animator().IsAfterFrame(spawnFrame))
+        {
+            spawnHitbox(c);
+        }
+
+        if (m_hitboxSpawned && c.Animator().IsBeforeFrame(despawnFrame))
+        {
+            m_hitbox->KeepHitboxAlive();
+        }
     }
 
 private:

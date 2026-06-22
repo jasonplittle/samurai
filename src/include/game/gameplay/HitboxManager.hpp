@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <iostream>
 
 #include "Hitbox.hpp"
 #include "SpriteRenderer.hpp"
@@ -16,6 +17,24 @@ public:
         m_hitboxes.push_back(hitbox);
     }
 
+    void Update(float dt)
+    {
+        std::cout << "Hit length: " << m_hitboxes.size() << std::endl;
+
+        for (auto it = m_hitboxes.begin(); it != m_hitboxes.end(); )
+        {
+            if (!(*it)->IsAlive())
+            {
+                it = m_hitboxes.erase(it);
+            }
+            else
+            {
+                (*it)->Update(dt);
+                ++it;
+            }
+        }
+    }
+
     void DrawHitboxes(SpriteRenderer& renderer, OrthographicCamera camera)
     {
         for (auto& hitbox : m_hitboxes)
@@ -29,23 +48,6 @@ public:
                 glm::vec2(hitbox->Bounds().Right - hitbox->Bounds().Left, hitbox->Bounds().Bottom - hitbox->Bounds().Top),
                 0.5
             );
-        }
-    }
-
-    void Update(float dt)
-    {
-        for (auto it = m_hitboxes.begin(); it != m_hitboxes.end(); )
-        {
-            (*it)->Update(dt);
-
-            if (!(*it)->IsAlive())
-            {
-                it = m_hitboxes.erase(it);
-            }
-            else
-            {
-                ++it;
-            }
         }
     }
 

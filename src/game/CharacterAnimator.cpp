@@ -27,6 +27,7 @@ void CharacterAnimator::Play(Animation animation)
     }
 
     m_currentAnimation = nextAnimation;
+    m_timeInCurrentFrame = 0.f;
 }
 
 void CharacterAnimator::Update(float dt)

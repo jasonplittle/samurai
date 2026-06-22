@@ -7,9 +7,11 @@ Rect Hitbox::Bounds() const
     glm::vec2 center = Instigator->Body().Position;
 
     if (Instigator->IsFacingRight())
-        center += PositionOffset;
+        center.x += PositionOffset.x;
     else
-        center -= PositionOffset;
+        center.x -= PositionOffset.x;
+
+    center.y += PositionOffset.y;
 
     return Rect
     {
@@ -23,25 +25,16 @@ Rect Hitbox::Bounds() const
 
 void Hitbox::Update(float dt)
 {
-    if (UseRealTime)
-    {
-        TimeAlive += dt;
-    }
+    KeepAlive = false;
 }
 
 bool Hitbox::IsAlive() const
 {
-    if (Canceled)
-        return false;
-
     if (!Instigator)
         return false;
 
     if (!Instigator->IsAlive())
         return false;
 
-    if (UseRealTime)
-        return TimeAlive < Lifetime;
-
-    return Instigator->Animator().GetCurrentFrame() < StartFrame + LifetimeFrames;
+    return KeepAlive;
 }
