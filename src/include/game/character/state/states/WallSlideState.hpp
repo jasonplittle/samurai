@@ -10,13 +10,13 @@ public:
     {
         std::cout << "Wall state" << std::endl;
 
-        if (c.Body().Walled == 1)
+        if (c.Body().Walled.IsRight())
         {
             c.Animator().Play(Animation::WallContactRight);
             c.IsFacingRight() = false;
             c.Movement().AccelX = 1;
         }
-        else if (c.Body().Walled == -1)
+        else if (c.Body().Walled.IsLeft())
         {
             c.Animator().Play(Animation::WallContactLeft);
             c.IsFacingRight() = true;
@@ -25,7 +25,7 @@ public:
 
         c.Body().Velocity.y = 0;
         c.Movement().AccelY = -c.Stats().WallSlideGravity;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
+        c.Movement().AccelY = 0;
 
         c.Movement().DoubleJumpUsed = false;
     }
@@ -47,7 +47,7 @@ public:
             return;
         }
 
-        if (c.Body().Walled == 1)
+        if (c.Body().Walled.IsRight())
         {
             if (c.Intent().MoveX > 0)
             {
@@ -71,7 +71,7 @@ public:
             }
         }
 
-        if (c.Body().Walled == -1)
+        if (c.Body().Walled.IsLeft())
         {
             if (c.Intent().MoveX < 0)
             {

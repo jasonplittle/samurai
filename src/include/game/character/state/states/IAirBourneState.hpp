@@ -43,7 +43,7 @@ protected:
             return true;
         }
 
-        if (c.Stats().CanWallSlide && std::abs(c.Body().Walled) > 1)
+        if (c.Stats().CanWallSlide && c.Body().Walled.IsFull())
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
             return true;

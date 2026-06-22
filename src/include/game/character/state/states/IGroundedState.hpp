@@ -59,7 +59,7 @@ protected:
             return true;
         }
 
-        if ((c.Body().Walled != 0 && std::abs(c.Intent().MoveX) > 0))
+        if ((!c.Body().Walled.IsFree() && std::abs(c.Intent().MoveX) > 0))
         {
             c.StateMachine().RequestState(StateID::Walk, c);
             return true;

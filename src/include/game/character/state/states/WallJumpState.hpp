@@ -49,7 +49,7 @@ public:
             return;
         }
 
-        if (c.Body().Walled != 0 && m_jumpTimer > k_wallReconnectTime)
+        if (c.Body().Walled.IsFull() && m_jumpTimer > k_wallReconnectTime)
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
             return;

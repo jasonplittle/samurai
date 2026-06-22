@@ -24,10 +24,9 @@ void CharacterAnimator::Play(Animation animation)
     {
         m_currentFrame = m_animationSet.Clips.at(nextAnimation).StartFrame;
         m_isFinished = false;
+        m_timeInCurrentFrame = 0.f;
+        m_currentAnimation = nextAnimation;
     }
-
-    m_currentAnimation = nextAnimation;
-    m_timeInCurrentFrame = 0.f;
 }
 
 void CharacterAnimator::Update(float dt)

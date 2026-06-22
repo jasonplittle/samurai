@@ -1,19 +1,6 @@
 #include "PlayerController.hpp"
 
 
-// player input
-// movement intentions
-// jump logic - coyote timer, jump before hitting the ground
-// dash logic
-// coyote time
-// jump buffering
-
-// Jump design
-    // coyote timer
-    // Jump buffering
-    // Press down to increase gravity
-    // Variable jump height
-
 void PlayerController::Update(float dt)
 {
     CharacterIntent intent = {};
@@ -40,14 +27,7 @@ void PlayerController::Update(float dt)
         .Released = m_input.Released(Action::Jump),
         .Held = m_input.Held(Action::Jump),
     };
-    intent.Jump = jump;
-
-    if (m_input.Pressed(Action::Jump))
-    {
-        std::cout << "Jump pressed" << std::endl;
-    }
-
-    
+    intent.Jump = jump;    
 
     InputButton down = 
     {

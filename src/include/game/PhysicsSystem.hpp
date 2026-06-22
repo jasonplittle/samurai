@@ -7,11 +7,32 @@
 #include <iostream>
 
 
+enum class WalledState
+{
+    Free,
+    PartialLeft,
+    FullLeft,
+    PartialRight,
+    FullRight,
+};
+
+struct Walled
+{
+    WalledState State = WalledState::Free;
+
+    bool IsFree() const { return State == WalledState::Free; }
+    bool IsPartial() const { return State == WalledState::PartialLeft || State == WalledState::PartialRight; }
+    bool IsFull() const { return State == WalledState::FullLeft || State == WalledState::FullRight; }
+
+    bool IsLeft() const { return State == WalledState::PartialLeft || State == WalledState::FullLeft; }
+    bool IsRight() const { return State == WalledState::PartialRight || State == WalledState::FullRight; }
+};
+
 
 struct KinematicBody
 {
     bool IsGrounded = false;
-    int Walled = 0;
+    Walled Walled = { .State = WalledState::Free };
     bool IsSolid = false;
 
     glm::vec2 Position = glm::vec2(0.f, 0.f);
@@ -28,7 +49,7 @@ public:
     void UpdateBody(KinematicBody& body, const World& world, float dt)
     {
         body.IsGrounded = false;
-        body.Walled = 0;
+        body.Walled.State = WalledState::Free;
         body.Velocity += body.Acceleration * dt;
 
         body.Position.y += body.Velocity.y * dt;
@@ -36,17 +57,17 @@ public:
 
         body.Position.x += body.Velocity.x * dt;
         DetectWalls(body, world);
-        CollideX(body, world);
-
-        
+        CollideX(body, world);        
     }
 
     void DetectWalls(KinematicBody& body, const World& world)
     {
-        int bodyTop    = body.Position.y + body.Radii.y;
+        int bodyTop    = body.Position.y + body.Radii.y + 8;
         int bodyBottom = body.Position.y - body.Radii.y;
         int bodyLeft   = body.Position.x - body.Radii.x;
         int bodyRight  = body.Position.x + body.Radii.x;
+
+        // std::cout << bodyTop << ", " << bodyBottom << std::endl;
 
         int sampleCount = 0;
 
@@ -64,16 +85,14 @@ public:
                 ++rightHits;
         }
 
-        body.Walled = 0;
-
         if (leftHits > 0)
         {
-            body.Walled = (leftHits == sampleCount) ? -2 : -1;
+            body.Walled.State = (leftHits == sampleCount) ? WalledState::FullLeft : WalledState::PartialLeft;
         }
 
         if (rightHits > 0)
         {
-            body.Walled = (rightHits == sampleCount) ? 2 : 1;
+            body.Walled.State = (rightHits == sampleCount) ? WalledState::FullRight : WalledState::PartialRight;
         }
     }
 
@@ -90,7 +109,6 @@ public:
             {
                 body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
                 body.Velocity.x = 0;
-                // body.Walled = -1;
                 return true;
             }
 
@@ -98,7 +116,6 @@ public:
             {
                 body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
                 body.Velocity.x = 0;
-                // body.Walled = 1;
                 return true;
             }
         }
