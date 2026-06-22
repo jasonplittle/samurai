@@ -91,6 +91,8 @@ bool Character::applyHitboxes(const HitboxManager& hitboxManager)
         // Damage
         bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
         m_health -= hitbox->Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
+
+        if (m_health <= 0.f) hit = true;
     }
 
     return hit;
