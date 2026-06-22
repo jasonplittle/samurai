@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CharacterState.hpp"
+#include "ICharacterState.hpp"
 
 
-class DeathState : public CharacterState
+class DeathState : public ICharacterState
 {
 public:
     void Enter(Character& c) override

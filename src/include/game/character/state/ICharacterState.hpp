@@ -26,10 +26,10 @@ enum class StateID
 };
 
 
-class CharacterState
+class ICharacterState
 {
 public:
-    virtual ~CharacterState() = default;
+    virtual ~ICharacterState() = default;
 
     virtual void Enter(Character& c) {}
     virtual void Exit(Character& c) {}

@@ -1,13 +1,12 @@
 #pragma once
 
-#include "CharacterState.hpp"
-#include "AirBourne.hpp"
+#include "IAirBourneState.hpp"
 
 
-class FloatState : public CharacterState, public AirBourne
+class FloatState : public IAirBourneState
 {
 public:
-    void Enter(Character& c) override
+    void OnEnter(Character& c) override
     {
         std::cout << "Float state" << std::endl;
         c.Animator().Play(Animation::Float);
@@ -15,11 +14,8 @@ public:
         c.Movement().AccelY = -c.Stats().FloatGravity;
     }
 
-    void Update(Character& c, float dt) override
+    void OnUpdate(Character& c, float dt) override
     {
-        bool exit = AirBourneUpdate(c, dt);
-        if (exit) return;
-
         if (c.Body().Velocity.y < 0 && c.Animator().IsFinished())
         {
             c.StateMachine().RequestState(StateID::Fall, c);

@@ -20,7 +20,7 @@
 class SamuraiStateFactory : public IStateFactory
 {
 public:
-    std::unique_ptr<CharacterState>
+    std::unique_ptr<ICharacterState>
     Create(StateID id) override
     {
         switch (id)

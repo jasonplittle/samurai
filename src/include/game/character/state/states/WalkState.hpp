@@ -1,32 +1,21 @@
 #pragma once
 
-#include "CharacterState.hpp"
-#include "Grounded.hpp"
+#include "IGroundedState.hpp"
 
 
-class WalkState : public CharacterState, public Grounded
+class WalkState : public IGroundedState
 {
 public:
-    void Enter(Character& c) override
+    void OnEnter(Character& c) override
     {
         std::cout << "Walk state" << std::endl;
         c.Animator().Play(Animation::Walk);
-
-        // c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-        // c.Movement().AccelX = c.Stats().RunAccel;
-        // c.Movement().DeccelX = c.Stats().RunDeccel;
-
-        // c.Movement().TargetSpeedX = c.Stats().WalkSpeed;
-        // c.Movement().AccelX = c.Stats().WalkAccel;
-        // c.Movement().DeccelX = c.Stats().WalkDeccel;
     }
 
-    void Update(Character& c, float dt) override
+    void OnUpdate(Character& c, float dt) override
     {
-        bool exit = GroundedUpdate(c, dt);
-        if (exit) return;
-
         float speed = std::abs(c.Body().Velocity.x);
+        
         if (speed < c.Stats().IdleSpeed)
         {
             c.StateMachine().RequestState(StateID::Idle, c);

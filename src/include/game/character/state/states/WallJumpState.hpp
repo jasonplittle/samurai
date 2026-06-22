@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CharacterState.hpp"
-#include "AirBourne.hpp"
+#include "ICharacterState.hpp"
 
-class WallJumpState : public CharacterState, public AirBourne
+
+class WallJumpState : public ICharacterState
 {
 public:
     void Enter(Character& c) override
@@ -27,8 +27,8 @@ public:
 
         if (m_jumpTimer > k_wallControlTime)
         {
-            bool exit = AirBourneUpdate(c, dt);
-            if (exit) return;
+            // bool exit = AirBourneUpdate(c, dt);
+            // if (exit) return;
         }
         else
         {

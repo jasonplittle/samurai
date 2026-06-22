@@ -1,30 +1,22 @@
 #pragma once
 
-#include "CharacterState.hpp"
-#include "AirBourne.hpp"
+#include "IAirBourneState.hpp"
 
 
-class JumpState : public CharacterState, public AirBourne
+class JumpState : public IAirBourneState
 {
 public:
-    void Enter(Character& c) override
+    void OnEnter(Character& c) override
     {
         std::cout << "Jump state" << std::endl;
         c.Animator().Play(Animation::Jump);
 
         c.Movement().AccelY = -c.Stats().Gravity;
         c.Body().Velocity.y = c.Stats().JumpVelocity;
-
-        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-        c.Movement().AccelX = c.Stats().RunAccel;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
-    void Update(Character& c, float dt) override
+    void OnUpdate(Character& c, float dt) override
     {
-        bool exit = AirBourneUpdate(c, dt);
-        if (exit) return;
-
         if (c.Body().Velocity.y < std::sqrt(0.15) * c.Stats().JumpVelocity)
         {
             c.StateMachine().RequestState(StateID::Float, c);

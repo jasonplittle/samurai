@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "CharacterState.hpp"
+#include "ICharacterState.hpp"
 
 
 class IStateFactory
 {
 public:
-    virtual std::unique_ptr<CharacterState> Create(StateID id) = 0;
+    virtual std::unique_ptr<ICharacterState> Create(StateID id) = 0;
 };

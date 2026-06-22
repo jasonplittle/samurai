@@ -1,25 +1,44 @@
 #pragma once
 
-#include "CharacterState.hpp"
+#include "ICharacterState.hpp"
 
 
-class AirBourne
+class IAirBourneState : public ICharacterState
 {
+public:
+    void Enter(Character& c) override final
+    {
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().AccelX = c.Stats().RunAccel;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
+
+        OnEnter(c);
+    }
+
+    void Update(Character& c, float dt) override final
+    {
+        bool exit = AirBourneUpdate(c, dt);
+        if (exit) return;
+
+        OnUpdate(c, dt);
+    }
+
 protected:
+    virtual void OnEnter(Character& c) {}
+    virtual void OnUpdate(Character& c, float dt) = 0;
+
     bool AirBourneUpdate(Character& c, float dt)
     {
         c.Motor();
 
         if (c.Body().IsGrounded)
         {
-            c.Movement().DoubleJumpUsed = false;
             c.StateMachine().RequestState(StateID::Idle, c);
             return true;
         }
 
         if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
         {
-            c.Movement().DoubleJumpUsed = true;
             c.StateMachine().RequestState(StateID::DoubleJump, c);
             return true;
         }

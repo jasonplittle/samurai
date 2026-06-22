@@ -68,6 +68,6 @@ private:
     }
 
 private:
-    std::unique_ptr<CharacterState> m_current;
+    std::unique_ptr<ICharacterState> m_current;
     std::unique_ptr<IStateFactory> m_stateFactory;
 };

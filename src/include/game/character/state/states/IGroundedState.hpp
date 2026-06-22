@@ -1,11 +1,35 @@
 #pragma once
 
-#include "CharacterState.hpp"
+#include "ICharacterState.hpp"
 
 
-class Grounded
+class IGroundedState : public ICharacterState
 {
+public:
+    void Enter(Character& c) override final
+    {
+        c.Movement().AccelY = -c.Stats().Gravity;
+        c.Movement().DoubleJumpUsed = false;
+
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().AccelX = c.Stats().RunAccel;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
+
+        OnEnter(c);
+    }
+
+    void Update(Character& c, float dt) override final
+    {
+        bool exit = GroundedUpdate(c, dt);
+        if (exit) return;
+
+        OnUpdate(c, dt);
+    }
+
 protected:
+    virtual void OnEnter(Character& c) {}
+    virtual void OnUpdate(Character& c, float dt) = 0;
+
     bool GroundedUpdate(Character& c, float dt)
     {
         if (c.Intent().Slow.Held)
