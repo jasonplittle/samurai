@@ -34,6 +34,8 @@ public:
 
     void DrawHitboxes(SpriteRenderer& renderer, OrthographicCamera camera)
     {
+        return;
+        
         for (auto& hitbox : m_hitboxes)
         {
             renderer.Render(

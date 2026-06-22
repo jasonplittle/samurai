@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "stb_image.h"
+
 #include "Renderer.hpp"
 #include "Input.hpp"
 #include "Game.hpp"
@@ -68,12 +70,30 @@ void KeyCallback(
     }
 }
 
+void setIcon(GLFWwindow* window, GLFWimage* icon)
+{
+    int width, height, channels;
+    unsigned char* pixels = stbi_load("resources/icon.png", &width, &height, &channels, 4);
+
+    if (pixels)
+    {
+        icon->width = width;
+        icon->height = height;
+        icon->pixels = pixels;
+
+        glfwSetWindowIcon(window, 1, icon);
+
+        stbi_image_free(pixels);
+    }
+}
+
 
 int main()
 {
     std::cout << "Starting Application..." << std::endl;
 
     GLFWwindow* window;
+    GLFWimage icon;
 
     if (!glfwInit()) return -1;
 
@@ -91,6 +111,8 @@ int main()
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    setIcon(window, &icon);
 
     if (glewInit() != GLEW_OK) return -1;
     std::cout << glGetString(GL_VERSION) << std::endl;
