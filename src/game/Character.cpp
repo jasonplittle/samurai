@@ -32,9 +32,9 @@ void Character::Motor()
 }
 
 
-void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
+void Character::Update(float dt, const HitboxManager& hitboxManager)
 {
-    bool hit = applyHitboxes(hitboxes);
+    bool hit = applyHitboxes(hitboxManager);
     
     if (hit)
     {
@@ -64,33 +64,33 @@ void Character::Update(float dt, std::vector<Hitbox>& hitboxes)
 }
 
 
-bool Character::applyHitboxes(std::vector<Hitbox>& hitboxes)
+bool Character::applyHitboxes(const HitboxManager& hitboxManager)
 {
     bool hit = false;
 
-    for (auto& hitbox : hitboxes)
+    for (const auto& hitbox : hitboxManager.GetHitboxes())
     {
-        if (this == hitbox.Instigator)
+        if (this == hitbox->Instigator)
             continue;
 
-        if (hitbox.HitTargets.find(this) != hitbox.HitTargets.end())
+        if (hitbox->HitTargets.find(this) != hitbox->HitTargets.end())
             continue;
 
-        if (!Intersects(hitbox.Bounds(), Hurtbox()))
+        if (!Intersects(hitbox->Bounds(), Hurtbox()))
             continue;
 
-        bool hitboxDefended = m_defence * 100.f >= hitbox.Damage;
+        bool hitboxDefended = m_defence * 100.f >= hitbox->Damage;
         if (!hit && !hitboxDefended) hit = true;
         
-        hitbox.HitTargets.insert(this);
+        hitbox->HitTargets.insert(this);
 
-        glm::vec2 direction = glm::normalize(m_body.Position - hitbox.Instigator->Body().Position);
+        glm::vec2 direction = glm::normalize(m_body.Position - hitbox->Instigator->Body().Position);
         direction.y *= 0.5;
-        m_body.Velocity = direction * (hitbox.Knockback / m_stats.Mass) * (hitboxDefended ? m_defence : 1.0f);
+        m_body.Velocity = direction * (hitbox->Knockback / m_stats.Mass) * (hitboxDefended ? m_defence : 1.0f);
 
         // Damage
         bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
-        m_health -= hitbox.Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
+        m_health -= hitbox->Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
     }
 
     return hit;

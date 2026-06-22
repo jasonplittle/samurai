@@ -8,6 +8,7 @@
 #include "CharacterAbilities.hpp"
 #include "IGameplayContext.hpp"
 #include "Hitbox.hpp"
+#include "HitboxManager.hpp"
 
 
 struct InputButton
@@ -88,7 +89,7 @@ class Character
 public:
     Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
 
-    void Update(float dt, std::vector<Hitbox>& hitboxes);
+    void Update(float dt, const HitboxManager& hitboxManager);
 
     void SetIntent(CharacterIntent intent) { m_currentIntent = intent; };
 
@@ -110,7 +111,7 @@ public:
     float& DeathDecay() { return m_deathDecay; }
 
 private:
-    bool applyHitboxes(std::vector<Hitbox>& hitboxes);
+    bool applyHitboxes(const HitboxManager& hitboxManager);
 
 private:
     KinematicBody m_body;

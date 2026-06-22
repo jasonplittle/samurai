@@ -3,9 +3,6 @@
 #include <glm/glm.hpp>
 #include <unordered_set>
 
-#include <iostream>
-
-
 class Character;
 
 
@@ -39,9 +36,17 @@ public:
 
     Character* Instigator;
 
-    float Lifetime;
+    int LifetimeFrames;
+    int StartFrame;
+    bool UseRealTime = false;
+    float Lifetime = 0.0f;
+    float TimeAlive = 0.0f;
+    
+    bool Canceled = false;
 
     std::unordered_set<Character*> HitTargets;
 
     Rect Bounds() const;
+    bool IsAlive() const;
+    void Update(float dt);
 };

@@ -15,13 +15,13 @@ void MobManager::AddMob(glm::vec2 position, IGameplayContext& context)
     }
 }
 
-void MobManager::Update(float dt, Character& player, const World& world, PhysicsSystem& physics, std::vector<Hitbox>& hitboxes)
+void MobManager::Update(float dt, Character& player, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager)
 {
     for (auto& mob : m_mobs)
     {
         mob.Controller->Update(dt, player, world);
         physics.UpdateBody(mob.Character->Body(), world, dt);
-        mob.Character->Update(dt, hitboxes);
+        mob.Character->Update(dt, hitboxManager);
     }
 
     m_spawnThrottleTimer += dt;

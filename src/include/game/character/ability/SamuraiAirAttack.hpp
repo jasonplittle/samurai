@@ -63,10 +63,12 @@ private:
             .Damage = 15.f,
             .Knockback = 250.f,
             .Instigator = &c,
-            .Lifetime = 0.2,
+            .LifetimeFrames = 2,
+            .StartFrame = c.Animator().GetCurrentFrame()
         };
 
-        c.GameplayContext().SpawnHitbox(hitbox);
+        m_hitbox = std::make_shared<Hitbox>(hitbox);
+        c.GameplayContext().SpawnHitbox(m_hitbox);
 
         m_hitboxSpawned = true;
     }
@@ -75,5 +77,6 @@ private:
     bool m_hitboxSpawned = false;
     float m_timeInPhase = 0.0f;
 
-    // Move stats
+    std::shared_ptr<Hitbox> m_hitbox;
+
 };

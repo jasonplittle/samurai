@@ -28,10 +28,9 @@ public:
 
     void Trigger(Character& c) override
     {
-        if (m_attackPhase == 1 && m_timeInPhase > 1.0)
+        if (m_attackPhase == 1 && c.Animator().GetCurrentFrame() > 10)
         {
             m_attackPhase = 2;
-            m_timeInPhase = 0.f;
             m_nextPhaseRequesed = true;
             m_hitboxSpawned = false;
         }
@@ -39,8 +38,6 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        m_timeInPhase += dt;
-
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
             m_isActive = false;
@@ -49,7 +46,7 @@ public:
 
         if (m_attackPhase == 1)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.7)
+            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 7)
             {
                 spawnHitbox(c);
             }
@@ -57,7 +54,7 @@ public:
 
         if (m_attackPhase == 2)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.2)
+            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 2)
             {
                 spawnHitbox(c);
             }
@@ -75,7 +72,6 @@ public:
             if (m_attackPhase == 2)
             {
                 c.Animator().Play(Animation::Attack2);
-                m_timeInPhase = 0.f;
                 m_nextPhaseRequesed = false;
             }
 
@@ -92,19 +88,22 @@ private:
             .Damage = 30.f,
             .Knockback = 1000.f,
             .Instigator = &c,
-            .Lifetime = 0.2,
+            .LifetimeFrames = 2,
+            .StartFrame = c.Animator().GetCurrentFrame()
         };
 
-        c.GameplayContext().SpawnHitbox(hitbox);
+        m_hitbox = std::make_shared<Hitbox>(hitbox);
+        c.GameplayContext().SpawnHitbox(m_hitbox);
 
         m_hitboxSpawned = true;
     }
 
 private:
     int m_attackPhase = 0;
-    float m_timeInPhase = 0.0f;
     bool m_nextPhaseRequesed = false;
     bool m_hitboxSpawned = false;
+
+    std::shared_ptr<Hitbox> m_hitbox;
 
     // Move stats
 };

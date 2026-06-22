@@ -67,11 +67,9 @@ void Game::Update(float dt)
 {
     m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
-    m_player->Update(dt, m_hitboxes);
-
-    m_mobManager.Update(dt, *m_player, m_world, m_physics, m_hitboxes);
-    
-    updateHitboxes(dt);
+    m_player->Update(dt, m_hitboxManager);
+    m_mobManager.Update(dt, *m_player, m_world, m_physics, m_hitboxManager);
+    m_hitboxManager.Update(dt);
 
     m_camera.Pos.x = std::max(m_player->Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
 }
@@ -82,6 +80,7 @@ void Game::Render()
     m_background.DrawLayers(m_renderer, m_camera);
     m_props.DrawProps(m_renderer, m_camera);
     m_world.DrawTiles(m_renderer, m_camera);
+    m_hitboxManager.DrawHitboxes(m_renderer, m_camera);
     m_mobManager.DrawMobs(m_renderer, m_camera);
 
     m_renderer.Render(
@@ -93,22 +92,4 @@ void Game::Render()
         m_player->Animator().GetFrameSize(),
         m_player->DeathDecay()
     );
-}
-
-
-void Game::updateHitboxes(float dt)
-{
-    for (auto it = m_hitboxes.begin(); it != m_hitboxes.end(); )
-    {
-        it->Lifetime -= dt;
-
-        if (it->Lifetime <= 0.0)
-        {
-            it = m_hitboxes.erase(it);
-        }
-        else
-        {
-            ++it;
-        }
-    }
 }

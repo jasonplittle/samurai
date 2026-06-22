@@ -3,7 +3,7 @@
 #include "Character.hpp"
 #include "MobController.hpp"
 #include "PhysicsSystem.hpp"
-#include "Hitbox.hpp"
+#include "HitboxManager.hpp"
 
 
 struct Mob
@@ -17,7 +17,7 @@ class MobManager
 {
 public:
     void AddMob(glm::vec2 position, IGameplayContext& context);
-    void Update(float dt, Character& player, const World& world, PhysicsSystem& physics, std::vector<Hitbox>& hitboxes);
+    void Update(float dt, Character& player, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager);
     void DrawMobs(SpriteRenderer& renderer, OrthographicCamera camera);
 
 private:

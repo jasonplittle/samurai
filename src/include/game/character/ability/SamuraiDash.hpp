@@ -52,11 +52,15 @@ public:
     // Twitter
     // Ledges
     // Wall jump vs disconnect then jump
+    
     // Speed up animation.
     // Get frame count from animator. Better than timing for logic. 
+
     // Ground dash. Cancel/enter sprint if pressing right.
     // Air acceleration
     // Stop multiple air attacks
+
+    // Change hitbox from shared_ptr to weak_ptr
 
 
     void Update(Character& c, float dt) override

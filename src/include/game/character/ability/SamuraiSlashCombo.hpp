@@ -27,19 +27,17 @@ public:
     {
         if (m_attackPhase == 1)
         {
-            if (m_timeInPhase > 0.5)
+            if (c.Animator().GetCurrentFrame() > 5)
             {
                 m_attackPhase = 2;
-                m_timeInPhase = 0.f;
                 m_nextPhaseRequesed = true;
                 m_hitboxSpawned = false;
             }
         }
 
-        if (m_attackPhase == 2 && m_timeInPhase > 0.5)
+        if (m_attackPhase == 2 && c.Animator().GetCurrentFrame() > 5)
         {
             m_attackPhase = 3;
-            m_timeInPhase = 0.f;
             m_nextPhaseRequesed = true;
             m_hitboxSpawned = false;
         }
@@ -48,7 +46,6 @@ public:
     void Update(Character& c, float dt) override
     {
         m_timer += dt;
-        m_timeInPhase += dt;
 
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
@@ -74,7 +71,7 @@ public:
 
         if (m_attackPhase == 1)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.4)
+            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 4)
             {
                 spawnHitbox(c);
             }
@@ -82,7 +79,7 @@ public:
 
         if (m_attackPhase == 2)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.3)
+            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 3)
             {
                 spawnHitbox(c);
             }
@@ -90,7 +87,7 @@ public:
 
         if (m_attackPhase == 3)
         {
-            if (!m_hitboxSpawned && m_timeInPhase > 0.2)
+            if (!m_hitboxSpawned && c.Animator().GetCurrentFrame() > 2)
             {
                 spawnHitbox(c);
             }
@@ -108,14 +105,12 @@ public:
             if (m_attackPhase == 2)
             {
                 c.Animator().Play(Animation::Attack2);
-                m_timeInPhase = 0.f;
                 m_nextPhaseRequesed = false;
             }
 
             if (m_attackPhase == 3)
             {
                 c.Animator().Play(Animation::Attack3);
-                m_timeInPhase = 0.f;
                 m_nextPhaseRequesed = false;
             }
         }        
@@ -131,10 +126,12 @@ private:
             .Damage = 15.f * m_attackPhase,
             .Knockback = 500.f,
             .Instigator = &c,
-            .Lifetime = 0.2,
+            .LifetimeFrames = 2,
+            .StartFrame = c.Animator().GetCurrentFrame()
         };
 
-        c.GameplayContext().SpawnHitbox(hitbox);
+        m_hitbox = std::make_shared<Hitbox>(hitbox);
+        c.GameplayContext().SpawnHitbox(m_hitbox);
 
         m_hitboxSpawned = true;
     }
@@ -143,9 +140,10 @@ private:
     float m_timer = 0.0;
     const float k_cancelTime = 0.1;
     int m_attackPhase = 0;
-    float m_timeInPhase = 0.0f;
     bool m_nextPhaseRequesed = false;
     bool m_hitboxSpawned = false;
+
+    std::shared_ptr<Hitbox> m_hitbox;
 
 
     // Move stats

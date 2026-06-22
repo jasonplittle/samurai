@@ -14,6 +14,8 @@
 #include "IGameplayContext.hpp"
 #include "GameInput.hpp"
 
+#include "HitboxManager.hpp"
+
 
 struct Inputs // For sandbox only
 {
@@ -36,13 +38,10 @@ public:
     void Update(float dt);
     void Render();
 
-    virtual void SpawnHitbox(const Hitbox& hitbox) override
+    virtual void SpawnHitbox(std::shared_ptr<Hitbox> hitbox) override
     {
-        m_hitboxes.push_back(hitbox);
+        m_hitboxManager.AddHitbox(hitbox);
     }
-
-private:
-    void updateHitboxes(float dt);
 
 private:
     std::shared_ptr<Character> m_player;
@@ -50,7 +49,7 @@ private:
 
     MobManager m_mobManager;
     
-    std::vector<Hitbox> m_hitboxes;
+    HitboxManager m_hitboxManager;
 
     PhysicsSystem m_physics;
 

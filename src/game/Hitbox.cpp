@@ -21,35 +21,27 @@ Rect Hitbox::Bounds() const
 }
 
 
+void Hitbox::Update(float dt)
+{
+    if (UseRealTime)
+    {
+        TimeAlive += dt;
+    }
+}
 
-// std::unique_ptr<Sprite> spr = std::make_unique<Sprite>("resources/world/Tileset.png", glm::vec2(32, 32));
+bool Hitbox::IsAlive() const
+{
+    if (Canceled)
+        return false;
 
-    // for (auto& hitbox : m_hitboxes)
-    // {
-    //     m_renderer.Render(
-    //         *spr,
-    //         glm::ivec2(1, 4), 
-    //         false,
-    //         m_camera,
-    //         glm::vec2((hitbox.Bounds().Left + hitbox.Bounds().Right) / 2, (hitbox.Bounds().Bottom + hitbox.Bounds().Top) / 2),
-    //         glm::vec2(hitbox.Bounds().Right - hitbox.Bounds().Left, hitbox.Bounds().Bottom - hitbox.Bounds().Top)
-    //     );
-    // }
+    if (!Instigator)
+        return false;
 
-    // m_renderer.Render(
-    //     *spr,
-    //     glm::ivec2(1, 4), 
-    //     false,
-    //     m_camera,
-    //     glm::vec2((m_player2->Hurtbox().Left + m_player2->Hurtbox().Right) / 2, (m_player2->Hurtbox().Bottom + m_player2->Hurtbox().Top) / 2),
-    //     glm::vec2(m_player2->Hurtbox().Right - m_player2->Hurtbox().Left, m_player2->Hurtbox().Bottom - m_player2->Hurtbox().Top)
-    // );
+    if (!Instigator->IsAlive())
+        return false;
 
-    // m_renderer.Render(
-    //     *spr,
-    //     glm::ivec2(1, 4), 
-    //     false,
-    //     m_camera,
-    //     glm::vec2((m_player1->Hurtbox().Left + m_player1->Hurtbox().Right) / 2, (m_player1->Hurtbox().Bottom + m_player1->Hurtbox().Top) / 2),
-    //     glm::vec2(m_player1->Hurtbox().Right - m_player1->Hurtbox().Left, m_player1->Hurtbox().Bottom - m_player1->Hurtbox().Top)
-    // );
+    if (UseRealTime)
+        return TimeAlive < Lifetime;
+
+    return Instigator->Animator().GetCurrentFrame() < StartFrame + LifetimeFrames;
+}
