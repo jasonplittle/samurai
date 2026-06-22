@@ -20,7 +20,6 @@ public:
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
         m_attackPhase = 1;
-        m_hitboxSpawned = false;
     }
 
     void Trigger(Character& c) override
@@ -29,7 +28,6 @@ public:
         {
             m_attackPhase = 2;
             m_nextPhaseRequesed = true;
-            m_hitboxSpawned = false;
             return;
         }
 
@@ -37,7 +35,6 @@ public:
         {
             m_attackPhase = 3;
             m_nextPhaseRequesed = true;
-            m_hitboxSpawned = false;
             return;
         }
     }
@@ -90,12 +87,14 @@ public:
             {
                 c.Animator().Play(Animation::Attack2);
                 m_nextPhaseRequesed = false;
+                m_hitboxSpawned = false;
             }
 
             if (m_attackPhase == 3)
             {
                 c.Animator().Play(Animation::Attack3);
                 m_nextPhaseRequesed = false;
+                m_hitboxSpawned = false;
             }
         }        
     }
@@ -103,19 +102,17 @@ public:
 private:
     void spawnHitbox(Character& c)
     {
-        Hitbox hitbox = 
-        {
+        std::shared_ptr<Hitbox> hitbox = std::make_shared<Hitbox>(
+        Hitbox {
             .PositionOffset = glm::vec2(24, 0),
             .Radii = glm::vec2(16, 16),
             .Damage = 15.f * m_attackPhase,
             .Knockback = 500.f,
             .Instigator = &c,
-        };
+        });
 
-        m_hitbox = std::make_shared<Hitbox>(hitbox);
-        c.GameplayContext().SpawnHitbox(m_hitbox);
-
-        m_hitboxSpawned = true;
+        m_hitboxes.push_back(hitbox);
+        c.GameplayContext().SpawnHitbox(hitbox);
     }
 
     void manageHitbox(Character& c, int spawnFrame, int despawnFrame)
@@ -123,11 +120,12 @@ private:
         if (!m_hitboxSpawned && c.Animator().IsAfterFrame(spawnFrame))
         {
             spawnHitbox(c);
+            m_hitboxSpawned = true;
         }
 
         if (m_hitboxSpawned && c.Animator().IsBeforeFrame(despawnFrame))
         {
-            m_hitbox->KeepHitboxAlive();
+            m_hitboxes.back()->KeepHitboxAlive();
         }
     }
 
@@ -136,5 +134,5 @@ private:
     bool m_nextPhaseRequesed = false;
     bool m_hitboxSpawned = false;
 
-    std::shared_ptr<Hitbox> m_hitbox;
+    std::vector<std::shared_ptr<Hitbox>> m_hitboxes;
 };

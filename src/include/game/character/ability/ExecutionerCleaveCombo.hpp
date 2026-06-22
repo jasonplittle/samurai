@@ -22,8 +22,7 @@ public:
         m_isActive = true;
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
-        m_attackPhase = 1;
-        m_hitboxSpawned = false;        
+        m_attackPhase = 1;   
     }
 
     void Trigger(Character& c) override
@@ -32,7 +31,6 @@ public:
         {
             m_attackPhase = 2;
             m_nextPhaseRequesed = true;
-            m_hitboxSpawned = false;
         }
     }
 
@@ -67,6 +65,7 @@ public:
             {
                 c.Animator().Play(Animation::Attack2);
                 m_nextPhaseRequesed = false;
+                m_hitboxSpawned = false;
             }
 
         }        

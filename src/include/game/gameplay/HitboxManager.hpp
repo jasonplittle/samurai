@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-#include <iostream>
 
 #include "Hitbox.hpp"
 #include "SpriteRenderer.hpp"
@@ -19,8 +18,6 @@ public:
 
     void Update(float dt)
     {
-        std::cout << "Hit length: " << m_hitboxes.size() << std::endl;
-
         for (auto it = m_hitboxes.begin(); it != m_hitboxes.end(); )
         {
             if (!(*it)->IsAlive())

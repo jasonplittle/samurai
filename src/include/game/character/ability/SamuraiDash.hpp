@@ -60,9 +60,11 @@ public:
     // Air acceleration
     // Stop multiple air attacks
 
-    // Change hitbox from shared_ptr to weak_ptr
+    // Multiple hitboxes per ability. Transfer hit-targets for combo logic
 
     // Seperate fx from dash. Spawn fx.
+
+
 
 
     void Update(Character& c, float dt) override
