@@ -11,12 +11,13 @@ public:
         AnimationSet set;
         set.FrameSize = glm::vec2(96, 96);
         glm::vec2 standardFrameCenterOffset = glm::vec2(0, -16);
+        float frameRate = 0.07f;
 
         set.Clips[Animation::Idle] =
         {
             .StartFrame = 0,
             .FrameCount = 10,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -26,7 +27,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 12,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -36,7 +37,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 16,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.05,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -46,7 +47,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 7,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -56,7 +57,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 7,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -66,7 +67,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 6,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -76,7 +77,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 5,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.1,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -86,7 +87,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 4,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -96,7 +97,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -106,7 +107,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.12,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -116,7 +117,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -126,7 +127,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.11f,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(10, -4),
@@ -136,7 +137,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.11f,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(-10, -4),
@@ -146,7 +147,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.09f,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(10, -4),
@@ -156,7 +157,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.09f,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(-10, -4),
@@ -166,7 +167,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 3,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -176,7 +177,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 6,
-            .FrameDuration = 0.1f,
+            .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -186,7 +187,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 9,
-            .FrameDuration = 0.2f,
+            .FrameDuration = 0.15f,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -196,7 +197,7 @@ public:
         {
             .StartFrame = 8,
             .FrameCount = 9,
-            .FrameDuration = 0.2f,
+            .FrameDuration = 0.15f,
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
@@ -206,7 +207,7 @@ public:
         {
             .StartFrame = 0,
             .FrameCount = 4,
-            .FrameDuration = 0.1f,
+            .FrameDuration = 0.05,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
