@@ -4,7 +4,7 @@
 
 #include "PhysicsSystem.hpp"
 #include "CharacterStateMachine.hpp"
-#include "CharacterAnimator.hpp"
+#include "Animator.hpp"
 #include "CharacterAbilities.hpp"
 #include "IGameplayContext.hpp"
 #include "Hitbox.hpp"
@@ -87,14 +87,14 @@ struct CharacterStats
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, CharacterAnimator animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
 
     void Update(float dt, const HitboxManager& hitboxManager);
 
     void SetIntent(CharacterIntent intent) { m_currentIntent = intent; };
 
     KinematicBody& Body() { return m_body; }
-    CharacterAnimator& Animator() { return m_animator; }
+    AnimationPlayer& Animator() { return m_animator; }
     CharacterStateMachine& StateMachine() { return m_stateMachine; }
     CharacterStats& Stats() { return m_stats; }
     MovementProfile& Movement() { return m_movementProfile; }
@@ -117,7 +117,7 @@ private:
     KinematicBody m_body;
     CharacterStats m_stats;
     CharacterStateMachine m_stateMachine;
-    CharacterAnimator m_animator;
+    AnimationPlayer m_animator;
 
     CharacterIntent m_currentIntent;
     MovementProfile m_movementProfile;

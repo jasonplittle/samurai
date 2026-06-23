@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CharacterAnimator.hpp"
+#include "Animator.hpp"
 
 
 class SamuraiAnimationFactory
 {
 public:
-    static AnimationSet CreateSamuraiAnimations()
+    static AnimationSet CreateAnimations()
     {
         AnimationSet set;
         set.FrameSize = glm::vec2(96, 96);

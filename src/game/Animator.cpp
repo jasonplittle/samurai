@@ -1,9 +1,9 @@
-#include "CharacterAnimator.hpp"
+#include "Animator.hpp"
 
 #include <iostream>
 
 
-CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
+AnimationPlayer::AnimationPlayer(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
     : m_currentAnimation(initAnimation), 
       m_animationSet(std::move(animationSet)),
       m_animationMap(animationMap)
@@ -11,7 +11,7 @@ CharacterAnimator::CharacterAnimator(Animation initAnimation, AnimationSet anima
     m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
 }
 
-void CharacterAnimator::Play(Animation animation)
+void AnimationPlayer::Play(Animation animation)
 {
     Animation nextAnimation = animation;
 
@@ -29,7 +29,7 @@ void CharacterAnimator::Play(Animation animation)
     }
 }
 
-void CharacterAnimator::Update(float dt)
+void AnimationPlayer::Update(float dt)
 {
     m_timeInCurrentFrame += dt;
 

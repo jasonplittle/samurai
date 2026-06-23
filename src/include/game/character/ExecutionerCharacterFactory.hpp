@@ -12,7 +12,7 @@
 class ExecutionerCharacterFactory
 {
 public:
-    static std::unique_ptr<Character> CreateExecutionerCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
+    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
     {
         constexpr float jumpPeakTs = 0.3;
         constexpr float jumpPeakHeight = 64;
@@ -62,7 +62,7 @@ public:
         
         CharacterAbilities abilities = CharacterAbilities(std::make_unique<ExecutionerAbilityFactory>());
 
-        CharacterAnimator animator = CharacterAnimator(Animation::Idle, ExecutionerAnimationFactory::CreateExecutionerAnimations(), animationMap);
+        AnimationPlayer animator = AnimationPlayer(Animation::Idle, ExecutionerAnimationFactory::CreateAnimations(), animationMap);
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ExecutionerStateFactory>());
 

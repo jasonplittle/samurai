@@ -1,12 +1,12 @@
 #pragma once
 
-#include "CharacterAnimator.hpp"
+#include "Animator.hpp"
 
 
 class ExecutionerAnimationFactory
 {
 public:
-    static AnimationSet CreateExecutionerAnimations()
+    static AnimationSet CreateAnimations()
     {
         AnimationSet set;
         set.FrameSize = glm::vec2(130, 92);

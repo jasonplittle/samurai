@@ -8,7 +8,7 @@ void MobManager::AddMob(glm::vec2 position, IGameplayContext& context)
     {
         m_spawnThrottleTimer = 0.0;
         
-        std::shared_ptr<Character> character = ExecutionerCharacterFactory::CreateExecutionerCharacter(position, context);
+        std::shared_ptr<Character> character = ExecutionerCharacterFactory::CreateCharacter(position, context);
         std::unique_ptr<MobController> controller = std::make_unique<MobController>(character);
 
         m_mobs.emplace_back(Mob {std::move(character), std::move(controller)});

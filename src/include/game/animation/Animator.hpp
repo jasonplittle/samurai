@@ -57,10 +57,10 @@ struct AnimationSet
 using AnimationMap = std::unordered_map<Animation, Animation>;
 
 
-class CharacterAnimator
+class AnimationPlayer
 {
 public:
-    CharacterAnimator(Animation initState, AnimationSet animationSet, AnimationMap animationMap);
+    AnimationPlayer(Animation initState, AnimationSet animationSet, AnimationMap animationMap);
 
     void Update(float dt);
     void Play(Animation animation);

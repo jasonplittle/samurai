@@ -12,7 +12,7 @@ add_subdirectory(thirdparty/stb_image)
 add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/Application.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Character.cpp
-    ${CMAKE_SOURCE_DIR}/src/game/CharacterAnimator.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/Animator.cpp
     ${CMAKE_SOURCE_DIR}/src/game/PlayerController.cpp
     ${CMAKE_SOURCE_DIR}/src/game/MobController.cpp
     ${CMAKE_SOURCE_DIR}/src/game/Sprite.cpp
