@@ -9,35 +9,40 @@ public:
     void Enter(Character& c) override
     {
         std::cout << "Wall jump state" << std::endl;
-        c.Animator().Play(Animation::WallJump);
 
-        c.Body().Velocity.x = c.Stats().JumpVelocity * 0.5 * (c.IsFacingRight() ? 1 : -1);
-        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.7;
+        float velx = c.Stats().JumpVelocity;
+        float vely = c.Stats().JumpVelocity;
+        bool intentionIntoWall = c.Body().Walled.IsRight() ? c.Intent().MoveX > 0 : c.Intent().MoveX < 0;
+
+        if (intentionIntoWall || c.Intent().MoveX == 0)
+        {
+            c.Animator().Play(Animation::Jump);
+            velx *= 0.5f * (c.Body().Walled.IsRight() ? -1 : 1);
+            vely *= 0.7f;
+        }
+        else
+        {
+            c.Animator().Play(Animation::WallJump);
+            velx *= 0.7f * (c.Body().Walled.IsRight() ? -1 : 1);
+            vely *= 0.5f;
+        }
+
+        c.Body().Velocity.x = velx;
+        c.Body().Velocity.y = vely;
+        
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
         c.Movement().AccelY = -c.Stats().Gravity;
         c.Movement().AccelX = c.Stats().RunAccel;
         c.Movement().DeccelX = c.Stats().RunDeccel;
-        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-        c.Movement().DoubleJumpUsed = false;
     }
 
     void Update(Character& c, float dt) override
     {
         m_jumpTimer += dt;
 
-        if (m_jumpTimer > k_wallControlTime)
+        if (m_jumpTimer >= k_wallControlTime)
         {
-        }
-        else
-        {
-            c.Body().Acceleration.x = c.Movement().AccelX;
-            c.Body().Acceleration.y = c.Movement().AccelY;
-        }
-
-        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
-        {
-            c.Movement().DoubleJumpUsed = true;
-            c.StateMachine().RequestState(StateID::Jump, c);
-            return;
+            c.Motor();
         }
 
         if (c.Body().IsGrounded)
@@ -46,7 +51,13 @@ public:
             return;
         }
 
-        if (c.Body().Walled.IsFull() && m_jumpTimer > k_wallReconnectTime)
+        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
+        {
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
+            return;
+        }
+
+        if (c.Stats().CanWallSlide && c.Body().Walled.IsFull())
         {
             c.StateMachine().RequestState(StateID::WallSlide, c);
             return;
@@ -67,7 +78,6 @@ public:
 
 private:
     float m_jumpTimer = 0.0f;
-    const float k_wallReconnectTime = 0.1f;
     const float k_wallControlTime = 0.1f;
 
 };

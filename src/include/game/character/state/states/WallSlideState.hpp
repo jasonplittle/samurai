@@ -10,21 +10,12 @@ public:
     {
         std::cout << "Wall state" << std::endl;
 
-        if (c.Body().Walled.IsRight())
-        {
-            c.Animator().Play(Animation::WallContactRight);
-            c.IsFacingRight() = false;
-            c.Movement().AccelX = 1;
-        }
-        else if (c.Body().Walled.IsLeft())
-        {
-            c.Animator().Play(Animation::WallContactLeft);
-            c.IsFacingRight() = true;
-            c.Movement().AccelX = -1;
-        }
-
+        Animation contactAnim = c.Body().Walled.IsRight() ? Animation::WallContactRight : Animation::WallContactLeft;
+        c.Animator().Play(contactAnim);
+        c.IsFacingRight() = !c.Body().Walled.IsRight();
         c.Body().Velocity.y = 0;
         c.Body().Velocity.x = 0;
+        c.Movement().AccelX = c.Body().Walled.IsRight() ? 1 : -1;
         c.Movement().AccelY = 0;
         c.Movement().DoubleJumpUsed = false;
     }
