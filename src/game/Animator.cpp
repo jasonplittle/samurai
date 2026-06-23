@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-AnimationPlayer::AnimationPlayer(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
+AnimationSetPlayer::AnimationSetPlayer(Animation initAnimation, AnimationSet animationSet, AnimationMap animationMap) 
     : m_currentAnimation(initAnimation), 
       m_animationSet(std::move(animationSet)),
       m_animationMap(animationMap)
@@ -11,7 +11,7 @@ AnimationPlayer::AnimationPlayer(Animation initAnimation, AnimationSet animation
     m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
 }
 
-void AnimationPlayer::Play(Animation animation)
+void AnimationSetPlayer::Play(Animation animation)
 {
     Animation nextAnimation = animation;
 
@@ -29,7 +29,7 @@ void AnimationPlayer::Play(Animation animation)
     }
 }
 
-void AnimationPlayer::Update(float dt)
+void AnimationSetPlayer::Update(float dt)
 {
     m_timeInCurrentFrame += dt;
 
@@ -46,6 +46,36 @@ void AnimationPlayer::Update(float dt)
         }
         
         m_isFinished = true;
+    }
+
+    m_timeInCurrentFrame = 0;
+}
+
+
+AnimationPlayer::AnimationPlayer(AnimationClip& animationClip) : m_animationClip(animationClip) 
+{
+    m_currentFrame = m_animationClip.StartFrame;
+}
+
+
+void AnimationPlayer::Update(float dt)
+{
+    if (m_animationClip.IsStill)
+        return;
+
+    m_timeInCurrentFrame += dt;
+
+    if (m_timeInCurrentFrame <= m_animationClip.FrameDuration)
+        return;
+
+    m_currentFrame++;
+
+    if (m_currentFrame >= m_animationClip.FrameCount - m_animationClip.StartFrame)
+    {
+        if (m_animationClip.Loop)
+        {
+            m_currentFrame = m_animationClip.StartFrame;
+        }
     }
 
     m_timeInCurrentFrame = 0;

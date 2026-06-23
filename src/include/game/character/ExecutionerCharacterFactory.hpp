@@ -62,7 +62,7 @@ public:
         
         CharacterAbilities abilities = CharacterAbilities(std::make_unique<ExecutionerAbilityFactory>());
 
-        AnimationPlayer animator = AnimationPlayer(Animation::Idle, ExecutionerAnimationFactory::CreateAnimations(), animationMap);
+        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, ExecutionerAnimationFactory::CreateAnimations(), animationMap);
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ExecutionerStateFactory>());
 

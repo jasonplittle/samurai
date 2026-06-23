@@ -1,7 +1,7 @@
 #include "Character.hpp"
 
 
-Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext)
+Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext)
     : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities)), m_gameplayContext(gameplayContext)
 {
     m_body.Position = initPosition;

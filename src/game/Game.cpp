@@ -16,7 +16,7 @@ Game::Game(GameInput& gameInput)
     :
     m_world(FeudalJapanTilesetFactory::CreateTileSet()), 
     m_background(FeudalJapanBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
-    m_props(ForestPropsetFactory::CreatePropset()),
+    m_props(std::move(ForestPropsetFactory::CreatePropset())),
     m_player(std::move(SamuraiCharacterFactory::CreateCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this))),
     m_playerController(m_player, gameInput)
 {
@@ -68,6 +68,7 @@ void Game::Update(float dt)
 {
     m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
+    m_props.Update(dt);
     m_player->Update(dt, m_hitboxManager);
     m_mobManager.Update(dt, *m_player, m_world, m_physics, m_hitboxManager);
     m_projectileManager.Update(dt, m_physics, m_world);

@@ -2,6 +2,7 @@
 
 #include "SpriteRenderer.hpp"
 #include "World.hpp"
+#include "Animator.hpp"
 
 
 enum class PropId
@@ -35,13 +36,14 @@ struct Prop
     glm::vec2 Position;
     PropId Id;
     PropType Type;
+    std::unique_ptr<AnimationPlayer> Animator;
 };
 
 
 struct PropInfo
 {
     glm::vec2 Size;
-    std::unique_ptr<Sprite> Sprite;
+    AnimationClip AnimationClip;
 };
 
 
@@ -54,12 +56,13 @@ struct PropSet
 class Props
 {
 public:
-    Props(PropSet propSet);
+    Props(std::unique_ptr<PropSet> propSet);
 
     void AddProp(int WorldX, const World& world);
+    void Update(float dt);
     void DrawProps(SpriteRenderer& renderer, OrthographicCamera camera);
 
 private:
     std::vector<Prop> m_props;
-    PropSet m_propSet;
+    std::unique_ptr<PropSet> m_propSet;
 };

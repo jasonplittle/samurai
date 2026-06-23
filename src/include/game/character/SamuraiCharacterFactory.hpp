@@ -69,7 +69,7 @@ public:
 
         CharacterAbilities abilities = CharacterAbilities(std::make_unique<SamuraiAbilityFactory>());
 
-        AnimationPlayer animator = AnimationPlayer(Animation::Idle, SamuraiAnimationFactory::CreateAnimations(), AnimationMap());
+        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, SamuraiAnimationFactory::CreateAnimations(), AnimationMap());
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
 

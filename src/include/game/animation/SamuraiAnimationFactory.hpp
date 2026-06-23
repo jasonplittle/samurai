@@ -9,9 +9,11 @@ public:
     static AnimationSet CreateAnimations()
     {
         AnimationSet set;
-        set.FrameSize = glm::vec2(96, 96);
+        
         glm::vec2 standardFrameCenterOffset = glm::vec2(0, -16);
+        glm::vec2 frameSize = glm::vec2(96, 96);
         float frameRate = 0.07f;
+
 
         set.Clips[Animation::Idle] =
         {
@@ -21,7 +23,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/IDLE.png", frameSize)
         };
         set.Clips[Animation::Walk] =
         {
@@ -31,7 +34,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALK.png", frameSize)
         };
         set.Clips[Animation::Run] =
         {
@@ -41,7 +45,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/RUN.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/RUN.png", frameSize)
         };
         set.Clips[Animation::Attack1] =
         {
@@ -51,7 +56,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 1.png", frameSize)
         };
         set.Clips[Animation::Attack2] =
         {
@@ -61,7 +67,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 2.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 2.png", frameSize)
         };
         set.Clips[Animation::Attack3] =
         {
@@ -71,7 +78,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 3.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 3.png", frameSize)
         };
         set.Clips[Animation::Defend] =
         {
@@ -81,7 +89,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEFEND.png", frameSize)
         };
         set.Clips[Animation::Hurt] =
         {
@@ -91,7 +100,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/HURT.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/HURT.png", frameSize)
         };
         set.Clips[Animation::Jump] =
         {
@@ -101,7 +111,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-START.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-START.png", frameSize)
         };
         set.Clips[Animation::Float] =
         {
@@ -111,7 +122,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-TRANSITION.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-TRANSITION.png", frameSize)
         };
         set.Clips[Animation::Fall] =
         {
@@ -121,7 +133,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/JUMP-FALL.png", frameSize)
         };
         set.Clips[Animation::WallContactLeft] =
         {
@@ -131,7 +144,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(10, -4),
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", frameSize)
         };
         set.Clips[Animation::WallContactRight] =
         {
@@ -141,7 +155,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(-10, -4),
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL CONTACT.png", frameSize)
         };
         set.Clips[Animation::WallSlideLeft] =
         {
@@ -151,7 +166,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(10, -4),
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", frameSize)
         };
         set.Clips[Animation::WallSlideRight] =
         {
@@ -161,7 +177,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = glm::vec2(-10, -4),
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL SLIDE.png", frameSize)
         };
         set.Clips[Animation::WallJump] =
         {
@@ -171,7 +188,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL JUMP.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/WALL JUMP.png", frameSize)
         };
         set.Clips[Animation::AirAttack] =
         {
@@ -181,7 +199,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/Air ATTACK.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/Air ATTACK.png", frameSize)
         };
         set.Clips[Animation::Death] =
         {
@@ -191,7 +210,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", frameSize)
         };
         set.Clips[Animation::Dead] =
         {
@@ -201,7 +221,8 @@ public:
             .Loop = true,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DEATH.png", frameSize)
         };
         set.Clips[Animation::Dash] =
         {
@@ -211,7 +232,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/DASH.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DASH.png", frameSize)
         };
         set.Clips[Animation::Throw] =
         {
@@ -221,7 +243,8 @@ public:
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/THROW.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/THROW.png", frameSize)
         };
 
         return set;

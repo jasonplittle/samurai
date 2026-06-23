@@ -9,7 +9,7 @@ public:
     static AnimationSet CreateAnimations()
     {
         AnimationSet set;
-        set.FrameSize = glm::vec2(130, 92);
+        glm::vec2 frameSize = glm::vec2(130, 92);
         glm::vec2 standardFrameCenterOffset = glm::vec2(0, -4);
 
         set.Clips[Animation::Idle] =
@@ -20,7 +20,8 @@ public:
             .Loop = true,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/IDLE.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/IDLE.png", frameSize)
         };
         set.Clips[Animation::Walk] =
         {
@@ -30,7 +31,8 @@ public:
             .Loop = true,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/WALK.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/WALK.png", frameSize)
         };
         set.Clips[Animation::Attack1] =
         {
@@ -40,7 +42,8 @@ public:
             .Loop = false,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 1.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 1.png", frameSize)
         };
         set.Clips[Animation::Attack2] =
         {
@@ -50,7 +53,8 @@ public:
             .Loop = false,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 2.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/ATTACK 2.png", frameSize)
         };
         set.Clips[Animation::Hurt] =
         {
@@ -60,7 +64,8 @@ public:
             .Loop = false,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/HURT.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/HURT.png", frameSize)
         };
         set.Clips[Animation::Death] =
         {
@@ -70,7 +75,8 @@ public:
             .Loop = false,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", frameSize)
         };
         set.Clips[Animation::Dead] =
         {
@@ -80,7 +86,8 @@ public:
             .Loop = true,
             .FlipX = true,
             .FrameCenterOffset = standardFrameCenterOffset,
-            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", set.FrameSize)
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/executioner/DEATH.png", frameSize)
         };
 
         return set;

@@ -37,12 +37,14 @@ enum class Animation
 
 struct AnimationClip
 {
-    int StartFrame;
-    int FrameCount;
-    float FrameDuration;
-    bool Loop;
-    bool FlipX;
-    glm::vec2 FrameCenterOffset;
+    int StartFrame = 0;
+    int FrameCount = 0;
+    float FrameDuration = 0.f;
+    bool Loop = false;
+    bool IsStill = false;
+    bool FlipX = false;
+    glm::vec2 FrameCenterOffset = glm::vec2(0, 0);
+    glm::vec2 FrameSize;
     std::unique_ptr<Sprite> Sprite;
 };
 
@@ -50,17 +52,16 @@ struct AnimationClip
 struct AnimationSet
 {
     std::unordered_map<Animation, AnimationClip> Clips;
-    glm::vec2 FrameSize;
 };
 
 
 using AnimationMap = std::unordered_map<Animation, Animation>;
 
 
-class AnimationPlayer
+class AnimationSetPlayer
 {
 public:
-    AnimationPlayer(Animation initState, AnimationSet animationSet, AnimationMap animationMap);
+    AnimationSetPlayer(Animation initState, AnimationSet animationSet, AnimationMap animationMap);
 
     void Update(float dt);
     void Play(Animation animation);
@@ -75,7 +76,7 @@ public:
 
     bool IsFinished() const { return m_isFinished; }
 
-    glm::vec2 GetFrameSize() const { return m_animationSet.FrameSize; }
+    glm::vec2 GetFrameSize() const { return m_animationSet.Clips.at(m_currentAnimation).FrameSize; }
     glm::vec2 GetFrameCenterOffset() const { return m_animationSet.Clips.at(m_currentAnimation).FrameCenterOffset; }
 
 private:
@@ -87,4 +88,25 @@ private:
     float m_timeInCurrentFrame;
 
     bool m_isFinished;
+};
+
+
+class AnimationPlayer
+{
+public:
+    AnimationPlayer();
+    AnimationPlayer(AnimationClip& animationClip);
+    void Update(float dt);
+
+    const Sprite& GetCurrentSprite() const { return *m_animationClip.Sprite; }
+    int GetCurrentFrame() const { return m_currentFrame; }
+
+    glm::vec2 GetFrameSize() const { return m_animationClip.FrameSize; }
+    glm::vec2 GetFrameCenterOffset() const { return m_animationClip.FrameCenterOffset; }
+
+private:
+    AnimationClip& m_animationClip;
+    int m_currentFrame;
+    float m_timeInCurrentFrame;
+
 };

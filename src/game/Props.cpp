@@ -4,14 +4,14 @@
 #include <iostream>
 
 
-Props::Props(PropSet propSet) : m_propSet(std::move(propSet)) {}
+Props::Props(std::unique_ptr<PropSet> propSet) : m_propSet(std::move(propSet)) {}
 
 
 void Props::AddProp(int worldX, const World& world)
 {
     Prop newProp;
 
-    switch (worldX % 24)
+    switch (worldX % 18)
     {
         case 0:
         case 1:
@@ -38,61 +38,66 @@ void Props::AddProp(int worldX, const World& world)
             newProp.Type = PropType::Tree;
             break;
 
-        case 13:
-            newProp.Id = PropId::Bush1;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 13:
+        //     newProp.Id = PropId::Bush1;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 14:
-            newProp.Id = PropId::Bush2;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 14:
+        //     newProp.Id = PropId::Bush2;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 15:
-            newProp.Id = PropId::Bush3;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 15:
+        //     newProp.Id = PropId::Bush3;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 16:
-            newProp.Id = PropId::Bush4;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 16:
+        //     newProp.Id = PropId::Bush4;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 17:
-            newProp.Id = PropId::Bush5;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 17:
+        //     newProp.Id = PropId::Bush5;
+        //     newProp.Type = PropType::Bush;
+        //     break;
         
-        case 18:
-            newProp.Id = PropId::Bush6;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 18:
+        //     newProp.Id = PropId::Bush6;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 19:
-            newProp.Id = PropId::Bush7;
-            newProp.Type = PropType::Bush;
-            break;
+        // case 19:
+        //     newProp.Id = PropId::Bush7;
+        //     newProp.Type = PropType::Bush;
+        //     break;
 
-        case 20:
-            newProp.Id = PropId::Lamp;
-            newProp.Type = PropType::Object;
-            break;
+        // case 20:
+        //     newProp.Id = PropId::Lamp;
+        //     newProp.Type = PropType::Object;
+        //     break;
 
-        case 21:
-            newProp.Id = PropId::Torii;
-            newProp.Type = PropType::Object;
-            break;
+        // case 21:
+        //     newProp.Id = PropId::Torii;
+        //     newProp.Type = PropType::Object;
+        //     break;
 
-        case 22:
-            newProp.Id = PropId::Well;
-            newProp.Type = PropType::Object;
-            break;
-
-        case 23:
+        // case 22:
+        //     newProp.Id = PropId::Well;
+        //     newProp.Type = PropType::Object;
+        //     break;
+        case 13:
+        case 14:
+        case 15:
+        case 16:
+        case 17:
             newProp.Id = PropId::Flag;
             newProp.Type = PropType::Object;
             break;
-    }   
+    }
+    
+    newProp.Animator = std::make_unique<AnimationPlayer>(m_propSet->Set[newProp.Id].AnimationClip);
 
     int worldY = world.WorldXToGroundY(worldX);
 
@@ -102,25 +107,32 @@ void Props::AddProp(int worldX, const World& world)
     {
         Rect rec1 =
         {
-            .Left = prop.Position.x - (m_propSet.Set[prop.Id].Size.x / 2),
+            .Left = prop.Position.x - (m_propSet->Set[prop.Id].Size.x / 2),
             .Top = prop.Position.y,
-            .Right = prop.Position.x + (m_propSet.Set[prop.Id].Size.x / 2),
-            .Bottom = prop.Position.y + (m_propSet.Set[prop.Id].Size.y)
+            .Right = prop.Position.x + (m_propSet->Set[prop.Id].Size.x / 2),
+            .Bottom = prop.Position.y + (m_propSet->Set[prop.Id].Size.y)
         };
 
         Rect rec2 =
         {
-            .Left = newProp.Position.x - (m_propSet.Set[newProp.Id].Size.x / 2),
+            .Left = newProp.Position.x - (m_propSet->Set[newProp.Id].Size.x / 2),
             .Top = newProp.Position.y,
-            .Right = newProp.Position.x + (m_propSet.Set[newProp.Id].Size.x / 2),
-            .Bottom = newProp.Position.y + (m_propSet.Set[newProp.Id].Size.y),
+            .Right = newProp.Position.x + (m_propSet->Set[newProp.Id].Size.x / 2),
+            .Bottom = newProp.Position.y + (m_propSet->Set[newProp.Id].Size.y),
         };
 
         if (Intersects(rec1, rec2) && (prop.Type == newProp.Type || (prop.Type != PropType::Bush && newProp.Type != PropType::Bush)))
             return;
     }
 
-    m_props.push_back(newProp);
+    m_props.push_back(std::move(newProp));
+}
+
+
+void Props::Update(float dt)
+{
+    for (auto& prop : m_props)
+        prop.Animator->Update(dt);
 }
 
 
@@ -129,12 +141,12 @@ void Props::DrawProps(SpriteRenderer& renderer, OrthographicCamera camera)
     for (auto& prop : m_props)
     {
         renderer.Render(
-            *m_propSet.Set[prop.Id].Sprite,
-            glm::ivec2(0, 0),
+            prop.Animator->GetCurrentSprite(),
+            glm::ivec2(prop.Animator->GetCurrentFrame(), 0),
             false,
             camera,
-            prop.Position + glm::vec2(0, (m_propSet.Set[prop.Id].Size.y / 2) - 2),
-            m_propSet.Set[prop.Id].Size
+            prop.Position + glm::vec2(0, (prop.Animator->GetFrameSize().y / 2) - 2),
+            prop.Animator->GetFrameSize()
         );
     }
 }

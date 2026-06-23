@@ -87,14 +87,14 @@ struct CharacterStats
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
 
     void Update(float dt, const HitboxManager& hitboxManager);
 
     void SetIntent(CharacterIntent intent) { m_currentIntent = intent; };
 
     KinematicBody& Body() { return m_body; }
-    AnimationPlayer& Animator() { return m_animator; }
+    AnimationSetPlayer& Animator() { return m_animator; }
     CharacterStateMachine& StateMachine() { return m_stateMachine; }
     CharacterStats& Stats() { return m_stats; }
     MovementProfile& Movement() { return m_movementProfile; }
@@ -117,7 +117,7 @@ private:
     KinematicBody m_body;
     CharacterStats m_stats;
     CharacterStateMachine m_stateMachine;
-    AnimationPlayer m_animator;
+    AnimationSetPlayer m_animator;
 
     CharacterIntent m_currentIntent;
     MovementProfile m_movementProfile;
