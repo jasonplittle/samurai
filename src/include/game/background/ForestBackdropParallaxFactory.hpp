@@ -9,8 +9,9 @@ public:
     static ParallaxLayers CreateBackdrop(float width, float height)
     {
         ParallaxLayers parallaxLayers;
+        parallaxLayers.GlobalParalaxScale = 0.6f;
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
@@ -21,7 +22,7 @@ public:
             }
         );
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
@@ -32,7 +33,7 @@ public:
             }
         );
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},

@@ -11,9 +11,9 @@ BackgroundParallax::BackgroundParallax(ParallaxLayers parallaxLayers)
 
 void BackgroundParallax::DrawLayers(const SpriteRenderer& spriteRenderer, OrthographicCamera camera)
 {
-    for (auto& layer : m_parallaxLayers.set)
+    for (auto& layer : m_parallaxLayers.Set)
     {
-        float parallaxX = -camera.Pos.x + (camera.Pos.x * layer.ParallaxFactor * k_parallaxGlobalScale);
+        float parallaxX = -camera.Pos.x + (camera.Pos.x * layer.ParallaxFactor * m_parallaxLayers.GlobalParalaxScale);
         float offset = fmod(-parallaxX, layer.Width);
 
         float baseX = offset + (std::floor((camera.Pos.x - offset) / layer.Width) * layer.Width);

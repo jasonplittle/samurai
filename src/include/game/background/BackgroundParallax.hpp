@@ -19,7 +19,8 @@ struct BackgroundLayer
 
 struct ParallaxLayers
 {
-    std::vector<BackgroundLayer> set;
+    std::vector<BackgroundLayer> Set;
+    float GlobalParalaxScale;
 };
 
 
@@ -31,7 +32,4 @@ public:
 
 private:
     ParallaxLayers m_parallaxLayers;
-
-    const float k_parallaxGlobalScale = 0.6f;
-
 };

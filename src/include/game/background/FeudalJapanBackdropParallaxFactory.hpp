@@ -9,48 +9,49 @@ public:
     static ParallaxLayers CreateBackdrop(float width, float height)
     {
         ParallaxLayers parallaxLayers;
+        parallaxLayers.GlobalParalaxScale = 0.4f;
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
                 .ParallaxFactor = 0.1f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/4.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
+                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/4.png", glm::vec2(320, 180))
             }
         );
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
                 .ParallaxFactor = 0.2f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/3.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
+                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/3.png", glm::vec2(320, 180))
             }
         );
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
                 .ParallaxFactor = 0.4f,
                 .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/2.png", glm::vec2(320, 180), glm::vec4(0, 0, 0, 0))
+                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/2.png", glm::vec2(320, 180))
             }
         );
 
-        parallaxLayers.set.push_back(
+        parallaxLayers.Set.push_back(
             BackgroundLayer
             {
                 .Position = {0.0f, 0.0f},
                 .ParallaxFactor = 0.6f,
-                .Width = width * 2,
+                .Width = width,
                 .Height = height,
-                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/1.png", glm::vec2(640, 180), glm::vec4(0, 0, 0, 0))
+                .Sprite = std::make_unique<Sprite>("resources/background/feudalJapan/1.png", glm::vec2(320, 180))
             }
         );
 
