@@ -24,9 +24,8 @@ public:
         }
 
         c.Body().Velocity.y = 0;
-        c.Movement().AccelY = -c.Stats().WallSlideGravity;
+        c.Body().Velocity.x = 0;
         c.Movement().AccelY = 0;
-
         c.Movement().DoubleJumpUsed = false;
     }
 

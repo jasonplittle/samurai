@@ -11,9 +11,8 @@ public:
         std::cout << "Wall jump state" << std::endl;
         c.Animator().Play(Animation::WallJump);
 
-        c.Body().Velocity.y = 0;
         c.Body().Velocity.x = c.Stats().JumpVelocity * 0.5 * (c.IsFacingRight() ? 1 : -1);
-        c.Body().Velocity.y = c.Stats().JumpVelocity;
+        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.7;
         c.Movement().AccelY = -c.Stats().Gravity;
         c.Movement().AccelX = c.Stats().RunAccel;
         c.Movement().DeccelX = c.Stats().RunDeccel;
@@ -27,8 +26,6 @@ public:
 
         if (m_jumpTimer > k_wallControlTime)
         {
-            // bool exit = AirBourneUpdate(c, dt);
-            // if (exit) return;
         }
         else
         {
@@ -57,8 +54,6 @@ public:
 
         if (c.Animator().IsFinished())
         {
-            c.Movement().AccelX = c.Stats().RunAccel;
-            c.Movement().DeccelX = c.Stats().RunDeccel;
             c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
