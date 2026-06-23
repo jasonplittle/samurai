@@ -81,6 +81,7 @@ void Game::Render()
 {
     m_background.DrawLayers(m_renderer, m_camera);
     m_props.DrawProps(m_renderer, m_camera);
+    m_projectileManager.DrawProjectiles(m_renderer, m_camera);
     m_world.DrawTiles(m_renderer, m_camera);
     m_hitboxManager.DrawHitboxes(m_renderer, m_camera);
     m_mobManager.DrawMobs(m_renderer, m_camera);
@@ -94,6 +95,4 @@ void Game::Render()
         m_player->Animator().GetFrameSize(),
         m_player->DeathDecay()
     );
-
-    m_projectileManager.DrawProjectiles(m_renderer, m_camera);
 }

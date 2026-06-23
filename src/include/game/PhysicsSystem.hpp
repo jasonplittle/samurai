@@ -52,12 +52,12 @@ public:
         body.Walled.State = WalledState::Free;
         body.Velocity += body.Acceleration * dt;
 
-        body.Position.y += body.Velocity.y * dt;
-        CollideY(body, world);
-
         body.Position.x += body.Velocity.x * dt;
         DetectWalls(body, world);
-        CollideX(body, world);        
+        CollideX(body, world);  
+
+        body.Position.y += body.Velocity.y * dt;
+        CollideY(body, world);
     }
 
     void DetectWalls(KinematicBody& body, const World& world)
@@ -103,16 +103,20 @@ public:
 
         for (int y = bodyBottom; y < bodyTop; y++)
         {
-            if (world.IsSolid(bodyLeft, y))
-            {
-                body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
-                body.Velocity.x = 0;
-                return true;
-            }
+            bool isLeftSolid = world.IsSolid(bodyLeft, y);
+            bool isRightSolid = world.IsSolid(bodyRight, y);
 
-            if (world.IsSolid(bodyRight, y))
+            if (isLeftSolid || isRightSolid)
             {
-                body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
+                if (isRightSolid && body.Velocity.x >= 0)
+                {
+                    body.Position.x = world.WorldXToTileLeftX(bodyRight) - body.Radii.x;
+                }
+                if (isLeftSolid && body.Velocity.x < 0)
+                {
+                    body.Position.x = world.WorldXToTileRightX(bodyLeft) + body.Radii.x;
+                }
+
                 body.Velocity.x = 0;
                 return true;
             }
@@ -129,17 +133,21 @@ public:
 
         for (int x = bodyLeft; x < bodyRight; x++)
         {
-            if (world.IsSolid(x, bodyBottom))
-            {
-                body.Position.y = world.WorldYToTileTopY(bodyBottom) + body.Radii.y;
-                body.Velocity.y = 0;
-                body.IsGrounded = true;
-                return true;
-            }
+            bool isBottomSolid = world.IsSolid(x, bodyBottom);
+            bool isTopSolid = world.IsSolid(x, bodyTop);
 
-            if (world.IsSolid(x, bodyTop))
+            if (isBottomSolid || isTopSolid)
             {
-                body.Position.y = world.WorldYToTileBottomY(bodyTop) - body.Radii.y;
+                if (isBottomSolid && body.Velocity.y <= 0)
+                {
+                    body.Position.y = world.WorldYToTileTopY(bodyBottom) + body.Radii.y;
+                    body.IsGrounded = true;
+                }
+                if (isTopSolid && body.Velocity.y > 0)
+                {
+                    body.Position.y = world.WorldYToTileBottomY(bodyTop) - body.Radii.y;
+                }
+
                 body.Velocity.y = 0;
                 return true;
             }

@@ -43,8 +43,8 @@ public:
                 .Body = KinematicBody {
                     .Position = c.Body().Position + glm::vec2(32 * (c.IsFacingRight() ? 1 : -1), 0),
                     .Velocity = glm::vec2(300 * (c.IsFacingRight() ? 1 : -1), 0),
-                    .Acceleration = glm::vec2(5 * (c.IsFacingRight() ? -1 : 1), -5),
-                    .Radii = glm::vec2(2, 2),
+                    .Acceleration = glm::vec2(40 * (c.IsFacingRight() ? -1 : 1), -10),
+                    .Radii = glm::vec2(1, 1),
                 },
                 .Hitbox = std::make_shared<Hitbox>(Hitbox
                 {

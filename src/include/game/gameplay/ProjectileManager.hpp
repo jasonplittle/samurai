@@ -17,11 +17,10 @@ public:
     {
         for (auto& projectile : m_projectiles)
         {
-            physics.UpdateBody(projectile->Body, world, dt);
-
-            if (!projectile->Body.IsGrounded || projectile->Body.Walled.IsFree())
+            if (!projectile->Body.IsGrounded && projectile->Body.Walled.IsFree())
             {
                 projectile->Hitbox->KeepHitboxAlive();
+                physics.UpdateBody(projectile->Body, world, dt);
             }
             else
             {
