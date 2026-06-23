@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <unordered_set>
+#include "PhysicsSystem.hpp"
+
 
 class Character;
 
@@ -35,6 +37,8 @@ public:
     float Knockback;
 
     Character* Instigator;
+
+    KinematicBody* Origin = nullptr;
 
     bool Canceled = false;
     bool KeepAlive = true;

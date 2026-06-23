@@ -67,8 +67,6 @@ public:
         int bodyLeft   = body.Position.x - body.Radii.x;
         int bodyRight  = body.Position.x + body.Radii.x;
 
-        // std::cout << bodyTop << ", " << bodyBottom << std::endl;
-
         int sampleCount = 0;
 
         int leftHits = 0;

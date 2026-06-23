@@ -2,10 +2,7 @@
     // Dash in air. Seperate ability.
     // Stop flying
     // Twitter
-    // Ledges
-    
-    // Speed up animation.
-    // Get frame count from animator. Better than timing for logic. 
+    // Ledge
 
     // Ground dash. Cancel/enter sprint if pressing right.
     // Air acceleration
@@ -18,3 +15,8 @@
     // Tidy up stats
 
     // Fix run to walk phasing
+
+
+    // Add cooldown to ability slots
+
+    // Prop and projectile animation

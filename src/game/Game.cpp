@@ -70,6 +70,7 @@ void Game::Update(float dt)
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
     m_player->Update(dt, m_hitboxManager);
     m_mobManager.Update(dt, *m_player, m_world, m_physics, m_hitboxManager);
+    m_projectileManager.Update(dt, m_physics, m_world);
     m_hitboxManager.Update(dt);
 
     m_camera.Pos.x = std::max(m_player->Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
@@ -93,4 +94,6 @@ void Game::Render()
         m_player->Animator().GetFrameSize(),
         m_player->DeathDecay()
     );
+
+    m_projectileManager.DrawProjectiles(m_renderer, m_camera);
 }

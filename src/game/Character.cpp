@@ -56,6 +56,10 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
             m_abilities.RequestAbility(*this, AbilitySlot::Primary);
             m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
         }
+        if (m_currentIntent.Secondary.Pressed)
+        {
+            m_abilities.RequestAbility(*this, AbilitySlot::Secondary);
+        }
     }
 
     m_animator.Update(dt);

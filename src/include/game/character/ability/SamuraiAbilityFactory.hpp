@@ -7,6 +7,7 @@
 #include "SamuraiDive.hpp"
 #include "SamuraiDash.hpp"
 #include "SamuraiDefend.hpp"
+#include "SamuraiShurikenAbility.hpp"
 
 
 
@@ -31,6 +32,9 @@ public:
 
             case AbilitySlot::Defend:
                 return std::make_unique<SamuraiDefend>();
+
+            case AbilitySlot::Secondary:
+                return std::make_unique<SamuraiShuriken>();
 
             default:
                 return nullptr;

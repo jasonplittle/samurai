@@ -15,6 +15,7 @@
 #include "GameInput.hpp"
 
 #include "HitboxManager.hpp"
+#include "ProjectileManager.hpp"
 
 
 struct Inputs // For sandbox only
@@ -38,9 +39,15 @@ public:
     void Update(float dt);
     void Render();
 
-    virtual void SpawnHitbox(std::shared_ptr<Hitbox> hitbox) override
+    void SpawnHitbox(std::shared_ptr<Hitbox> hitbox) override
     {
         m_hitboxManager.AddHitbox(hitbox);
+    }
+
+    void SpawnProjectile(std::unique_ptr<Projectile>& projectile) override
+    {
+        m_hitboxManager.AddHitbox(projectile->Hitbox);
+        m_projectileManager.AddProjectile(projectile);
     }
 
 private:
@@ -50,6 +57,7 @@ private:
     MobManager m_mobManager;
     
     HitboxManager m_hitboxManager;
+    ProjectileManager m_projectileManager;
 
     PhysicsSystem m_physics;
 

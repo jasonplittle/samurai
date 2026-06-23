@@ -213,6 +213,16 @@ public:
             .FrameCenterOffset = standardFrameCenterOffset,
             .Sprite = std::make_unique<Sprite>("resources/samurai/DASH.png", set.FrameSize)
         };
+        set.Clips[Animation::Throw] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 7,
+            .FrameDuration = 0.08,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/THROW.png", set.FrameSize)
+        };
 
         return set;
     }

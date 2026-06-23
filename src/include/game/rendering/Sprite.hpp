@@ -14,6 +14,7 @@ public:
 
     const Texture& GetTexture() const { return *m_texture; }
     glm::vec4 GetUV(glm::vec2 cellCoords, bool flipX) const;
+    glm::vec2 GetSize() { return m_cellSize; }
     
 private:
     std::unique_ptr<Texture> m_texture;

@@ -4,7 +4,16 @@
 
 Rect Hitbox::Bounds() const
 {
-    glm::vec2 center = Instigator->Body().Position;
+    glm::vec2 center;
+
+    if (Origin)
+    {
+        center = Origin->Position;
+    }
+    else
+    {
+        center = Instigator->Body().Position;
+    }
 
     if (Instigator->IsFacingRight())
         center.x += PositionOffset.x;
