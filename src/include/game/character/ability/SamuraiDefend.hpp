@@ -19,10 +19,16 @@ public:
 
     void Activate(Character& c) override
     {
+        std::cout << "Defend ability" << std::endl;
+
         m_isActive = true;
         c.Animator().Play(Animation::Defend);
         c.StateMachine().RequestState(StateID::Attacking, c);
         c.Defence() = 0.7;
+
+        c.Movement().TargetSpeedX = 0;
+        c.Movement().AccelX = c.Stats().RunAccel;
+        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
