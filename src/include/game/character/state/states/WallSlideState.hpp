@@ -45,53 +45,28 @@ public:
             c.StateMachine().RequestState(StateID::WallJump, c);
             return;
         }
+        
+        bool intentionIntoWall = c.Body().Walled.IsRight() ? c.Intent().MoveX > 0 : c.Intent().MoveX < 0;
 
-        if (c.Body().Walled.IsRight())
+        if ((intentionIntoWall && c.Intent().Down.Held) || (c.Intent().MoveX == 0 && !c.Intent().Down.Held))
         {
-            if (c.Intent().MoveX > 0)
-            {
-                c.Animator().Play(Animation::WallContactRight);
-                c.Movement().AccelY = 0;
-                c.Body().Velocity.y = 0;
-            }
-            else if (c.Intent().MoveX == 0)
-            {
-                c.Animator().Play(Animation::WallSlideRight);
-                c.Movement().AccelY = -c.Stats().WallSlideGravity;
-            }
-            else if (c.Intent().MoveX < 0)
-            {
-                c.Movement().AccelX = c.Stats().RunAccel;
-                
-                c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-                c.Body().Velocity.x = -50;
-                c.StateMachine().RequestState(StateID::Float, c);
-                return;
-            }
+            Animation slideAnim = c.Body().Walled.IsRight() ? Animation::WallSlideRight : Animation::WallSlideLeft;
+            c.Animator().Play(slideAnim);
+            c.Movement().AccelY = -c.Stats().WallSlideGravity;
         }
-
-        if (c.Body().Walled.IsLeft())
+        else if (intentionIntoWall)
         {
-            if (c.Intent().MoveX < 0)
-            {
-                c.Animator().Play(Animation::WallContactLeft);
-                c.Movement().AccelY = 0;
-                c.Body().Velocity.y = 0;
-            }
-            else if (c.Intent().MoveX == 0)
-            {
-                c.Animator().Play(Animation::WallSlideLeft);
-                c.Movement().AccelY = -c.Stats().WallSlideGravity;
-            }
-            else if (c.Intent().MoveX > 0)
-            {
-                c.Movement().AccelX = c.Stats().RunAccel;
-                c.Movement().TargetSpeedX = c.Stats().RunSpeed;
-                c.Body().Velocity.x = 50;
-                c.StateMachine().RequestState(StateID::Float, c);
-                return;
-            }
-        }        
+            Animation contactAnim = c.Body().Walled.IsRight() ? Animation::WallContactRight : Animation::WallContactLeft;
+            c.Animator().Play(contactAnim);
+            c.Movement().AccelY = 0;
+            c.Body().Velocity.y = 0;
+        }
+        else if (c.Intent().Down.Held)
+        {
+            c.Body().Velocity.x = 50 * c.Body().Walled.IsRight() ? -1 : 1;
+            c.StateMachine().RequestState(StateID::Float, c);
+            return;
+        }
     }
 
     StateID GetID() const override

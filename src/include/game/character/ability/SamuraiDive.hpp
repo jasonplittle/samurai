@@ -14,6 +14,9 @@ public:
         if (c.Body().IsGrounded)
             return false;
 
+        if (c.StateMachine().CheckState(StateID::WallSlide))
+            return false;
+
         return true;
     }
 
