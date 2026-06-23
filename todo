@@ -3,7 +3,6 @@
     // Stop flying
     // Twitter
     // Ledges
-    // Wall jump vs disconnect then jump
     
     // Speed up animation.
     // Get frame count from animator. Better than timing for logic. 

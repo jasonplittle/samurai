@@ -24,16 +24,16 @@ public:
         m_isActive = true;
         c.Animator().Play(Animation::AirAttack);
         c.StateMachine().RequestState(StateID::Attacking, c);
-        c.Body().Velocity.y = 0;
-        c.Movement().AccelY = 0;
-        c.Movement().TargetSpeedX = 0;
+
+        c.Movement().AccelY = -c.Stats().Gravity;
+
+        c.Movement().TargetSpeedX = c.Stats().RunSpeed;
+        c.Movement().AccelX = c.Stats().RunAccel;
         c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
     {
-        m_timeInPhase += dt;
-
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
             m_isActive = false;
@@ -42,10 +42,17 @@ public:
 
         manageHitbox(c, 3, 5);
 
+        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
+            return;
+        }
+
         if (c.Animator().IsFinished())
         {
             m_isActive = false;
-            c.StateMachine().RequestState(StateID::Float, c);
+            c.StateMachine().RequestState(StateID::Fall, c);
             return;
         }
     }
@@ -82,9 +89,6 @@ private:
     }
 
 private:
-    bool m_hitboxSpawned = false;
-    float m_timeInPhase = 0.0f;
-
     std::shared_ptr<Hitbox> m_hitbox;
-
+    bool m_hitboxSpawned = false;
 };

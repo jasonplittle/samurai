@@ -22,15 +22,18 @@ public:
 
     void Activate(Character& c) override
     {
+        std::cout << "Dive ability" << std::endl;
+
         m_isActive = true;
         c.Animator().Play(Animation::Fall);
         c.StateMachine().RequestState(StateID::Attacking, c);
-        c.Movement().AccelY = -c.Stats().FastFallGravity;
+
         c.Body().Velocity.y = 0;
+        c.Movement().AccelY = -c.Stats().FastFallGravity;
 
         c.Movement().TargetSpeedX = c.Stats().RunSpeed;
         c.Movement().AccelX = c.Stats().RunAccel;
-        c.Movement().DeccelX = c.Stats().RunDeccel;        
+        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
@@ -69,5 +72,4 @@ private:
 
 private:
     std::shared_ptr<Hitbox> m_hitbox;
-
 };

@@ -9,9 +9,6 @@ public:
     void Enter(Character& c) override
     {
         std::cout << "Attack state" << std::endl;
-
-        c.Movement().TargetSpeedX = 0;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
     }
 
     void Update(Character& c, float dt) override
