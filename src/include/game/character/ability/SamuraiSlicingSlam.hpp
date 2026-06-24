@@ -44,6 +44,7 @@ public:
         };
 
         c.Movement().TargetSpeedX = 40;
+        c.Movement().AccelY = -c.Stats().Gravity;
     }
 
     void Update(Character& c, float dt) override
@@ -58,6 +59,14 @@ public:
         {
             c.Movement().TargetSpeedX = c.Stats().RunSpeed;
             c.Movement().AccelX = c.Stats().RunAccel;
+        }
+
+        if (c.Animator().IsAfterFrame(10))
+        {
+            if (!c.Body().IsGrounded)
+            {
+                c.StateMachine().RequestState(StateID::Fall, c);
+            }
         }
 
         manageHitbox1(c, 6, 8);
