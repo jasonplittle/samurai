@@ -38,7 +38,7 @@ public:
 
     virtual bool CanTransitionTo(StateID next, Character& c)
     {
-        return true;
+        return next != GetID();
     }
 
     virtual StateID GetID() const = 0;

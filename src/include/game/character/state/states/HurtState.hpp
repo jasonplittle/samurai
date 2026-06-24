@@ -9,6 +9,7 @@ public:
     void Enter(Character& c) override
     {
         std::cout << "Hurt state" << std::endl;
+        c.Animator().Play(Animation::Idle);
         c.Animator().Play(Animation::Hurt);
 
         c.Movement().AccelY = -c.Stats().FallGravity;
@@ -29,6 +30,11 @@ public:
                 c.StateMachine().RequestState(StateID::Idle, c);
             }
         }
+    }
+
+    bool CanTransitionTo(StateID next, Character& c)
+    {
+        return true;
     }
 
     StateID GetID() const override

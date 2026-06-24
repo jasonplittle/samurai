@@ -27,11 +27,6 @@ public:
             return changed;
         }
 
-        if (m_current->GetID() == next)
-        {
-            return true;
-        }
-
         if (!m_current->CanTransitionTo(next, c))
         {
             return false;
