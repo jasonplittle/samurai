@@ -28,6 +28,7 @@ struct CharacterIntent
     InputButton Defend;
     InputButton Primary;
     InputButton Secondary;
+    InputButton Ultimate;
     bool Dash = false;
 };
 

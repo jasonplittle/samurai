@@ -23,8 +23,7 @@ public:
         c.Animator().Play(Animation::Throw);
         c.StateMachine().RequestState(StateID::Attacking, c);
 
-        c.Body().Velocity.y = 0;
-        c.Movement().AccelY = -c.Stats().FloatGravity;
+        c.Movement().AccelY = -c.Stats().FallGravity;
     }
 
     void Update(Character& c, float dt) override

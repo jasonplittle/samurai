@@ -42,6 +42,10 @@ ActionMap getKeyBinds()
         GLFW_KEY_F);
 
     actionMap.Bind(
+        Action::Ultimate,
+        GLFW_KEY_R);
+
+    actionMap.Bind(
         Action::Slow,
         GLFW_KEY_LEFT_SHIFT);
 

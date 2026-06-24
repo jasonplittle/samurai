@@ -13,6 +13,7 @@ enum class Action
 
     Primary,
     Secondary,
+    Ultimate,
 
     Slow
 };

@@ -69,6 +69,14 @@ void PlayerController::Update(float dt)
     };    
     intent.Secondary = secondary;
 
+    InputButton ultimate = 
+    {
+        .Pressed = m_input.Pressed(Action::Ultimate),
+        .Released = m_input.Released(Action::Ultimate),
+        .Held = m_input.Held(Action::Ultimate),
+    };    
+    intent.Ultimate = ultimate;
+
     m_player->SetIntent(intent);
 }
 

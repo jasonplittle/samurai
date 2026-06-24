@@ -36,7 +36,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(120, 160);
+        frameSize = glm::vec2(130, 160);
         propSet->Set[PropId::Tree3] = 
         {
             .Size = frameSize,
