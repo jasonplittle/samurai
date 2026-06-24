@@ -42,6 +42,7 @@ struct AnimationClip
     float FrameDuration = 0.f;
     bool Loop = false;
     bool IsStill = false;
+    bool LeaveOnLastFrame = false;
     bool FlipX = false;
     glm::vec2 FrameCenterOffset = glm::vec2(0, 0);
     glm::vec2 FrameSize;

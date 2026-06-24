@@ -40,12 +40,17 @@ void AnimationSetPlayer::Update(float dt)
 
     if (m_currentFrame >= m_animationSet.Clips.at(m_currentAnimation).FrameCount - m_animationSet.Clips.at(m_currentAnimation).StartFrame)
     {
+        m_isFinished = true;
+
         if (m_animationSet.Clips.at(m_currentAnimation).Loop)
         {
             m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).StartFrame;
         }
-        
-        m_isFinished = true;
+
+        if (m_animationSet.Clips.at(m_currentAnimation).LeaveOnLastFrame && m_isFinished)
+        {
+            m_currentFrame = m_animationSet.Clips.at(m_currentAnimation).FrameCount - 1;
+        }
     }
 
     m_timeInCurrentFrame = 0;

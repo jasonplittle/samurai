@@ -4,18 +4,18 @@
 #include <memory>
 
 #include "Character.hpp"
-#include "SamuraiAnimationFactory.hpp"
-#include "SamuraiStateFactory.hpp"
-#include "SamuraiAbilityFactory.hpp"
+#include "ArcherAnimationFactory.hpp"
+#include "ArcherStateFactory.hpp"
+#include "ArcherAbilityFactory.hpp"
 
 
-class SamuraiCharacterFactory
+class ArcherCharacterFactory
 {
 public:
     static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
     {
-        constexpr float jumpPeakTs = 0.4;
-        constexpr float jumpPeakHeight = 96;
+        constexpr float jumpPeakTs = 0.2;
+        constexpr float jumpPeakHeight = 48;
 
         constexpr float regGrav = (2 * jumpPeakHeight) / (jumpPeakTs * jumpPeakTs);
         constexpr float v0 = (2 * jumpPeakHeight) / jumpPeakTs;
@@ -38,7 +38,7 @@ public:
             .Mass = 2,
             
             .CanJump = true,
-            .CanDoubleJump = true,
+            .CanDoubleJump = false,
             .JumpVelocity = v0,
             .Gravity = regGrav,
             .FloatGravity = regGrav * 0.65,
@@ -60,22 +60,26 @@ public:
             .RunAccel = 13,
             .RunDeccel = 8,
 
-            .CanWallSlide = true,
+            .CanWallSlide = false,
             .WallSlideGravity = regGrav / 6.f,
 
             .MaxHeals = 3,
 
-            .CanRun = true,
+            .CanRun = false,
         };
 
+        AnimationMap animationMap;
+        animationMap[Animation::Fall] = Animation::Jump;
+        animationMap[Animation::Float] = Animation::Jump;
+        animationMap[Animation::Run] = Animation::Walk;
 
-        CharacterAbilities abilities = CharacterAbilities(std::make_unique<SamuraiAbilityFactory>());
+        CharacterAbilities abilities = CharacterAbilities(std::make_unique<ArcherAbilityFactory>());
 
-        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, SamuraiAnimationFactory::CreateAnimations(), AnimationMap());
+        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, ArcherAnimationFactory::CreateAnimations(ArcherColor::Green), animationMap);
 
-        CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
+        CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ArcherStateFactory>());
 
-        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), gameplayContext);
-        return samurai;
+        std::unique_ptr<Character> archer = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), gameplayContext);
+        return archer;
     }
 };
