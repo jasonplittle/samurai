@@ -11,7 +11,8 @@ enum class AbilitySlot
     Secondary,
     Dash,
     Down,
-    Defend
+    Defend,
+    Ultimate,
 };
 
 

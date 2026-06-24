@@ -27,3 +27,7 @@
 
     // Player manager (good for multipler too, and add player (from network))
     // Another color samurai
+
+    // Spinning shuriken
+
+    // Make hitbox size and shape based on definable function. Optional

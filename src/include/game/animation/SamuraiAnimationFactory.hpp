@@ -246,6 +246,17 @@ public:
             .FrameSize = frameSize,
             .Sprite = std::make_unique<Sprite>("resources/samurai/THROW.png", frameSize)
         };
+        set.Clips[Animation::SpecialAttack] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 14,
+            .FrameDuration = 0.09,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/SPECIAL ATTACK.png", frameSize)
+        };
 
         return set;
     }

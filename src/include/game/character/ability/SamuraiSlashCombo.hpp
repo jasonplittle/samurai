@@ -47,12 +47,12 @@ public:
             return;
         }
 
-        if (std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(2))
+        if (std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(3))
         {
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
             return;
-        }
+        }     
 
         if (c.Stats().CanJump && c.Intent().Jump.Pressed && c.Animator().IsAfterFrame(2))
         {
