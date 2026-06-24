@@ -19,7 +19,7 @@ public:
 
     void Activate(Character& c) override
     {
-        std::cout << "Air attack ability" << std::endl;
+        std::cout << "Slicing slam ability" << std::endl;
 
         m_isActive = true;
         c.Animator().Play(Animation::SpecialAttack);

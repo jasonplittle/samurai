@@ -57,7 +57,8 @@ CharacterIntent MobController::updateIdle(float dt)
         .Down = InputButton{false, false, false},
         .Primary = InputButton{false, false, false},
         .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false}
+        .Ultimate = InputButton{false, false, false},
+        .Heal = InputButton{false, false, false}
     };
 
     return intent;
@@ -82,7 +83,8 @@ CharacterIntent MobController::updatePatrol(float dt)
         .Down = InputButton{false, false, false},
         .Primary = InputButton{false, false, false},
         .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false}
+        .Ultimate = InputButton{false, false, false},
+        .Heal = InputButton{false, false, false}
     };
 
     return intent;
@@ -120,7 +122,8 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
         .Down = InputButton{false, false, false},
         .Primary = InputButton{attack, false, false},
         .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false}
+        .Ultimate = InputButton{false, false, false},
+        .Heal = InputButton{false, false, false}
     };
 
     return intent;

@@ -29,6 +29,7 @@ struct CharacterIntent
     InputButton Primary;
     InputButton Secondary;
     InputButton Ultimate;
+    InputButton Heal;
     bool Dash = false;
 };
 
@@ -50,7 +51,7 @@ struct MovementProfile
 
 struct CharacterStats
 {
-    int MaxHealth;
+    float MaxHealth;
     int Mass;
 
     bool CanJump;
@@ -81,6 +82,8 @@ struct CharacterStats
 
     float PrimaryAttackRange;
 
+    int MaxHeals = 0;
+
     bool CanRun = false;
 };
 
@@ -106,7 +109,8 @@ public:
     bool& IsFacingRight() { return m_isFacingRight; }
     void Motor();
 
-    float Health() { return m_health; }
+    float& Health() { return m_health; }
+    int& Heals() { return m_heals; }
     float& Defence() { return m_defence; }
     bool IsAlive() { return m_health >= 0.0; }
     float& DeathDecay() { return m_deathDecay; }
@@ -132,4 +136,5 @@ private:
     float m_defence = 0.0;
     bool m_isAlive = true;
     float m_deathDecay = 1.0;
+    int m_heals = 0;
 };

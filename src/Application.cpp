@@ -46,6 +46,10 @@ ActionMap getKeyBinds()
         GLFW_KEY_R);
 
     actionMap.Bind(
+        Action::Heal,
+        GLFW_KEY_H);
+
+    actionMap.Bind(
         Action::Slow,
         GLFW_KEY_LEFT_SHIFT);
 

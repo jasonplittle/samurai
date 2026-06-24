@@ -9,6 +9,7 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     m_body.Radii.y = m_stats.RadiusY;
 
     m_health = m_stats.MaxHealth;
+    m_heals = m_stats.MaxHeals;
 
     m_movementProfile.AccelY = -m_stats.Gravity;
 
@@ -57,13 +58,13 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
             m_abilities.RequestAbility(*this, AbilitySlot::AirPrimary);
         }
         if (m_currentIntent.Secondary.Pressed)
-        {
             m_abilities.RequestAbility(*this, AbilitySlot::Secondary);
-        }
+
         if (m_currentIntent.Ultimate.Pressed)
-        {
             m_abilities.RequestAbility(*this, AbilitySlot::Ultimate);
-        }
+
+        if (m_currentIntent.Heal.Pressed)
+            m_abilities.RequestAbility(*this, AbilitySlot::Heal);
     }
 
     m_animator.Update(dt);

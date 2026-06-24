@@ -9,6 +9,7 @@
 #include "SamuraiDefend.hpp"
 #include "SamuraiShurikenAbility.hpp"
 #include "SamuraiSlicingSlam.hpp"
+#include "SamuraiHeal.hpp"
 
 
 class SamuraiAbilityFactory : public IAbilityFactory
@@ -38,6 +39,9 @@ public:
 
             case AbilitySlot::Ultimate:
                 return std::make_unique<SamuraiSlicingSlam>();
+
+            case AbilitySlot::Heal:
+                return std::make_unique<SamuraiHeal>();
 
             default:
                 return nullptr;

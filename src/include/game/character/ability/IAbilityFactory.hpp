@@ -4,6 +4,7 @@
 
 #include "IAbility.hpp"
 
+
 enum class AbilitySlot
 {
     Primary,
@@ -13,6 +14,7 @@ enum class AbilitySlot
     Down,
     Defend,
     Ultimate,
+    Heal,
 };
 
 

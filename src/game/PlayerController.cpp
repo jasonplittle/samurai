@@ -77,6 +77,14 @@ void PlayerController::Update(float dt)
     };    
     intent.Ultimate = ultimate;
 
+    InputButton heal = 
+    {
+        .Pressed = m_input.Pressed(Action::Heal),
+        .Released = m_input.Released(Action::Heal),
+        .Held = m_input.Held(Action::Heal),
+    };
+    intent.Heal = heal;
+
     m_player->SetIntent(intent);
 }
 

@@ -15,6 +15,8 @@ enum class Action
     Secondary,
     Ultimate,
 
+    Heal,
+
     Slow
 };
 

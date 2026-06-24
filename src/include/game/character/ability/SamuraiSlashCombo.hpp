@@ -54,7 +54,7 @@ public:
             return;
         }     
 
-        if (c.Stats().CanJump && c.Intent().Jump.Pressed && c.Animator().IsAfterFrame(2))
+        if (c.Intent().Jump.Pressed && c.Animator().IsAfterFrame(2))
         {
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Jump, c);

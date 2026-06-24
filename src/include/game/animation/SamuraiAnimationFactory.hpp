@@ -257,6 +257,29 @@ public:
             .FrameSize = frameSize,
             .Sprite = std::make_unique<Sprite>("resources/samurai/SPECIAL ATTACK.png", frameSize)
         };
+        set.Clips[Animation::Healing] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 15,
+            .FrameDuration = 0.08,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/HEALING.png", frameSize)
+        };
+
+        set.Clips[Animation::HealingNoEffect] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 15,
+            .FrameDuration = 0.12,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/HEALING NO EFFECT.png", frameSize)
+        };
 
         return set;
     }
