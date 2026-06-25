@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IAbilityFactory.hpp"
-
+#include "ArcherBowShot.hpp"
 
 
 
@@ -12,8 +12,8 @@ public:
     {
         switch (slot)
         {
-            // case AbilitySlot::Primary:
-            //     return std::make_unique<SamuraiSlashCombo>();
+            case AbilitySlot::Primary:
+                return std::make_unique<ArcherBowShot>();
 
             // case AbilitySlot::AirPrimary:
             //     return std::make_unique<SamuraiAirAttack>();

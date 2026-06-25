@@ -23,13 +23,11 @@ public:
         constexpr float fastGrav = 1.8 * regGrav;
 
         constexpr float idleSpeed = 5;
-        constexpr float walkSpeed = 120;
-        constexpr float runSpeed = 200;
+        constexpr float walkSpeed = 100;
+        constexpr float runSpeed = 140;
 
         constexpr float groundedAccel = 8;
         constexpr float groundedDeccel = 13;
-        constexpr float defendDeccel = 20;
-        constexpr float defendAccel = 0.8;
 
 
         CharacterStats stats
@@ -54,11 +52,11 @@ public:
             .WalkSpeed = walkSpeed,
             .RunSpeed = runSpeed,
 
-            .WalkAccel = 6,
+            .WalkAccel = 4,
             .WalkDeccel = 8,
 
-            .RunAccel = 13,
-            .RunDeccel = 8,
+            .RunAccel = 8,
+            .RunDeccel = 6,
 
             .CanWallSlide = false,
             .WallSlideGravity = regGrav / 6.f,

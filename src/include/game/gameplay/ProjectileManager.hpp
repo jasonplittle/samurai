@@ -39,6 +39,9 @@ public:
             if (projectile->Type == ProjectileType::Shuriken)
                 sprite = &*m_shurikenSprite;
 
+            if (projectile->Type == ProjectileType::Arrow)
+                sprite = &*m_arrowSprite;
+
             renderer.Render(
                 *sprite,
                 glm::ivec2(0, 0),
@@ -54,4 +57,5 @@ public:
 private:
     std::vector<std::unique_ptr<Projectile>> m_projectiles;
     std::unique_ptr<Sprite> m_shurikenSprite = std::make_unique<Sprite>("resources/samurai/shuriken.png", glm::vec2(8, 8));
+    std::unique_ptr<Sprite> m_arrowSprite = std::make_unique<Sprite>("resources/archer/ARROW.png", glm::vec2(48, 16));
 };

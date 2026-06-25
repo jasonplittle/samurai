@@ -7,7 +7,7 @@
 #include "SamuraiDive.hpp"
 #include "SamuraiDash.hpp"
 #include "SamuraiDefend.hpp"
-#include "SamuraiShurikenAbility.hpp"
+#include "SamuraiShuriken.hpp"
 #include "SamuraiSlicingSlam.hpp"
 #include "SamuraiHeal.hpp"
 

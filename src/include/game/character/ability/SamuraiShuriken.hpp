@@ -34,6 +34,34 @@ public:
             return;
         }
 
+        if (std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(3))
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+
+        if (c.Body().IsGrounded && c.Intent().Jump.Pressed && c.Animator().IsAfterFrame(2))
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::Jump, c);
+            return;
+        }
+
+        if (!c.Body().IsGrounded && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed && c.Animator().IsAfterFrame(2))
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
+            return;
+        }
+
+        if (c.Animator().IsFinished())
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::Idle, c);
+            return;
+        }
+
         if (!m_shurikenSpawned && c.Animator().IsAfterFrame(4))
         {
             std::unique_ptr<Projectile> shuriken = std::make_unique<Projectile>(Projectile
@@ -61,20 +89,6 @@ public:
             c.GameplayContext().SpawnProjectile(shuriken);
 
             m_shurikenSpawned = true;
-        }
-
-        if (c.Stats().CanDoubleJump && c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
-        {
-            m_isActive = false;
-            c.StateMachine().RequestState(StateID::DoubleJump, c);
-            return;
-        }
-
-        if (c.Animator().IsFinished())
-        {
-            m_isActive = false;
-            c.StateMachine().RequestState(StateID::Idle, c);
-            return;
         }
     }
 

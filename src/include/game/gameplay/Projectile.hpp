@@ -8,6 +8,7 @@
 enum class ProjectileType
 {
     Shuriken,
+    Arrow,
 };
 
 struct Projectile

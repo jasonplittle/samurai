@@ -8,6 +8,9 @@ class SamuraiSlashCombo : public IAbility
 public:
     bool CanActivate(Character& c) const override
     {
+        if (c.StateMachine().CheckState(StateID::Death))
+            return false;
+
         if (!c.Body().IsGrounded)
             return false;
 
@@ -16,6 +19,8 @@ public:
 
     void Activate(Character& c) override
     {
+        std::cout << "Samurai slash ability" << std::endl;
+
         m_isActive = true;
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
