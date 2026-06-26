@@ -32,13 +32,13 @@ protected:
 
     bool GroundedUpdate(Character& c, float dt)
     {
-        if (c.Intent().Slow.Held)
+        if (std::abs(c.Intent().MoveX) < 2.f)
         {
             c.Movement().TargetSpeedX = c.Stats().WalkSpeed * 0.7;
             c.Movement().AccelX = c.Stats().WalkAccel;
             c.Movement().DeccelX = c.Stats().WalkDeccel;
         }
-        if (c.Intent().Slow.Released)
+        if (std::abs(c.Intent().MoveX) > 1.f)
         {
             c.Movement().TargetSpeedX = c.Stats().RunSpeed;
             c.Movement().AccelX = c.Stats().RunAccel;

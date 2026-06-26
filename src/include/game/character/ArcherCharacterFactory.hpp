@@ -12,7 +12,7 @@
 class ArcherCharacterFactory
 {
 public:
-    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
+    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext, ArcherColor color)
     {
         constexpr float jumpPeakTs = 0.2;
         constexpr float jumpPeakHeight = 48;
@@ -61,6 +61,9 @@ public:
             .CanWallSlide = false,
             .WallSlideGravity = regGrav / 6.f,
 
+            .PrimaryAttackRange = 200.f, 
+            .StationaryAttackRange = 150.f,
+
             .MaxHeals = 3,
 
             .CanRun = false,
@@ -73,7 +76,7 @@ public:
 
         CharacterAbilities abilities = CharacterAbilities(std::make_unique<ArcherAbilityFactory>());
 
-        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, ArcherAnimationFactory::CreateAnimations(ArcherColor::Green), animationMap);
+        AnimationSetPlayer animator = AnimationSetPlayer(Animation::Idle, ArcherAnimationFactory::CreateAnimations(color), animationMap);
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ArcherStateFactory>());
 

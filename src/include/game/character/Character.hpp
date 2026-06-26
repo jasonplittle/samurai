@@ -24,7 +24,6 @@ struct CharacterIntent
 
     InputButton Jump;
     InputButton Down;
-    InputButton Slow;
     InputButton Defend;
     InputButton Primary;
     InputButton Secondary;
@@ -81,6 +80,7 @@ struct CharacterStats
     float WallSlideGravity;
 
     float PrimaryAttackRange;
+    float StationaryAttackRange;
 
     int MaxHeals = 0;
 

@@ -36,7 +36,7 @@ public:
             return;
         }
 
-        if (m_attackPhase == 2 && c.Animator().IsAfterFrame(4))
+        if (m_attackPhase == 2 && c.Animator().IsAfterFrame(3))
         {
             m_attackPhase = 3;
             m_nextPhaseRequesed = true;

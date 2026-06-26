@@ -5,15 +5,16 @@ void PlayerController::Update(float dt)
 {
     CharacterIntent intent = {};
 
+    float speed = m_input.Held(Action::Slow) ? 1.0f : 2.0f;
     
     if (m_input.Held(Action::MoveLeft))
     {
-        intent.MoveX -= 1.0f;
+        intent.MoveX -= speed;
     }
 
     if (m_input.Held(Action::MoveRight))
     {
-        intent.MoveX += 1.0f;
+        intent.MoveX += speed;
     }
 
     if (m_input.DoublePressed(Action::MoveLeft) || m_input.DoublePressed(Action::MoveRight))
@@ -52,14 +53,6 @@ void PlayerController::Update(float dt)
         .Held = m_input.Held(Action::Primary),
     };
     intent.Primary = primary;
-
-    InputButton slow = 
-    {
-        .Pressed = m_input.Pressed(Action::Slow),
-        .Released = m_input.Released(Action::Slow),
-        .Held = m_input.Held(Action::Slow),
-    };
-    intent.Slow = slow;
 
     InputButton secondary = 
     {

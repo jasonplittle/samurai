@@ -51,7 +51,9 @@ public:
             .CanWallSlide = false,
             .WallSlideGravity = 0,
 
-            .PrimaryAttackRange = 60.f
+            .PrimaryAttackRange = 60.f,
+            .StationaryAttackRange = 15.f,
+
         };
 
         AnimationMap animationMap;

@@ -95,9 +95,10 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
     float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -2.f : 2.f;
     bool attack = false;
 
-    if (distance < 10.f)
+    if (distance < m_mob->Stats().StationaryAttackRange && player.Body().Position.x > m_mob->Body().Position.x == m_mob->IsFacingRight())
     {
         moveX = 0;
+        attack = true;
     }
     else if (distance < m_mob->Stats().PrimaryAttackRange)
     {
