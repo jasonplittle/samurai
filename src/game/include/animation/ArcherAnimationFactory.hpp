@@ -86,7 +86,7 @@ public:
         set.Clips[Animation::Hurt] =
         {
             .StartFrame = 0,
-            .FrameCount = 7,
+            .FrameCount = 4,
             .FrameDuration = frameRate,
             .Loop = false,
             .FlipX = false,
@@ -119,7 +119,7 @@ public:
         };
         set.Clips[Animation::Death] =
         {
-            .StartFrame = 0,
+            .StartFrame = 5,
             .FrameCount = 11,
             .FrameDuration = 0.15f,
             .Loop = false,
