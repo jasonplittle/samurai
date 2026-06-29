@@ -6,20 +6,21 @@
 #include "ForestTilesetFactory.hpp"
 #include "ForestBackdropParallaxFactory.hpp"
 #include "ForestPropsetFactory.hpp"
-
 #include "FeudalJapanBackdropParallaxFactory.hpp"
 #include "FeudalJapanTilesetFactory.hpp"
 
 
 constexpr glm::ivec2 VIRTUAL_SCEEEN = { 640, 360 };
 
+
 Game::Game(GameInput& gameInput)
     :
-    m_world(FeudalJapanTilesetFactory::CreateTileSet()), 
-    m_background(FeudalJapanBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
+    m_world(ForestTilesetFactory::CreateTileSet()), 
+    m_background(ForestBackdropParallaxFactory::CreateBackdrop(VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y)),
     m_props(std::move(ForestPropsetFactory::CreatePropset())),
     m_player(std::move(SamuraiCharacterFactory::CreateCharacter(glm::vec2(VIRTUAL_SCEEEN.x * 0.5, VIRTUAL_SCEEEN.y), *this))),
-    m_playerController(m_player, gameInput)
+    m_playerController(m_player, gameInput),
+    m_gameInput(gameInput)
 {
     m_camera =
     {
@@ -36,39 +37,9 @@ void Game::Init()
 }
 
 
-// void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
-// {
-//     glm::vec2 mouseWorldPos = 
-//     {
-//         (inputs.mousePos.x / (windowSize.x / VIRTUAL_SCEEEN.x)) - (m_camera.Size.x * 0.5) + m_camera.Pos.x, 
-//         (((windowSize.y - inputs.mousePos.y) / (windowSize.y / VIRTUAL_SCEEEN.y)) - (m_camera.Size.y * 0.5) + m_camera.Pos.y) 
-//     };
-
-//     if (inputs.t)
-//     {
-//         m_props.AddProp(mouseWorldPos.x, m_world);
-//     }
-
-//     if (inputs.m)
-//     {
-//         m_mobManager.AddMob(mouseWorldPos, *this);
-//     }
-
-//     if (inputs.lMouse)
-//     {
-//         m_world.ShowTile(true, mouseWorldPos.x, mouseWorldPos.y);
-//     }
-//     if (inputs.rMouse)
-//     {
-//         m_world.ShowTile(false, mouseWorldPos.x, mouseWorldPos.y);
-//     }
-// }
-
-
 void Game::Update(float dt, int windowWidth, int windowHeight)
 {
-    // world editor update
-
+    m_worldEditior.Update(windowWidth, windowHeight, VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y, m_camera, m_gameInput, m_props, m_world, m_mobManager, *this);
     m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
     m_props.Update(dt);

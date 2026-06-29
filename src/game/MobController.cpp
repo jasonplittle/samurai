@@ -46,7 +46,7 @@ CharacterIntent MobController::updateIdle(float dt)
     if (m_idleTimer > 2.0f)
     {
         m_state = MobState::Patrol;
-        moveX = m_mob->IsFacingRight() ? -1.f : 1.f;
+        moveX = m_mob->IsFacingRight() ? -0.5f : 0.5f;
         m_idleTimer = 0;
     }
 
@@ -68,7 +68,7 @@ CharacterIntent MobController::updatePatrol(float dt)
 {
     m_patrolTimer += dt;
 
-    float moveX = m_mob->IsFacingRight() ? 1.f : -1.f;
+    float moveX = m_mob->IsFacingRight() ? 0.6f : -0.6f;
 
     if (m_patrolTimer > 5.0f)
     {
@@ -92,7 +92,7 @@ CharacterIntent MobController::updatePatrol(float dt)
 
 CharacterIntent MobController::updateAttack(float dt, Character& player, float distance)
 {
-    float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -2.f : 2.f;
+    float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -1.f : 1.f;
     bool attack = false;
 
     if (distance < m_mob->Stats().StationaryAttackRange && player.Body().Position.x > m_mob->Body().Position.x == m_mob->IsFacingRight())

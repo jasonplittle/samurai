@@ -30,7 +30,9 @@ enum class Action
     Dash,
 
     PlaceTile,
-    RemoveTile
+    RemoveTile,
+    PlaceMob,
+    PlaceProp,
 };
 
 
@@ -174,6 +176,16 @@ public:
         }
 
         return 0.0f;
+    }
+
+    double GetCursorX() const
+    {
+        return m_input.GetCursorX();
+    }
+
+    double GetCursorY() const
+    {
+        return m_input.GetCursorY();
     }
 
 private:

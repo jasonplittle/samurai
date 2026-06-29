@@ -2,18 +2,14 @@
 
 #include "Character.hpp"
 #include "PlayerController.hpp"
-
 #include "MobManager.hpp"
-
 #include "World.hpp"
 #include "BackgroundParallax.hpp"
 #include "Props.hpp"
-
+#include "WorldEditor.hpp"
 #include "SpriteRenderer.hpp"
-
 #include "IGameplayContext.hpp"
 #include "GameInput.hpp"
-
 #include "HitboxManager.hpp"
 #include "ProjectileManager.hpp"
 
@@ -42,6 +38,9 @@ private:
     std::shared_ptr<Character> m_player;
     PlayerController m_playerController;
 
+    GameInput& m_gameInput;
+
+    WorldEditor m_worldEditior;
     MobManager m_mobManager;
     
     HitboxManager m_hitboxManager;
