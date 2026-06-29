@@ -68,6 +68,9 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
         if (m_currentIntent.Secondary.Pressed)
             m_abilities.RequestAbility(*this, AbilitySlot::Secondary);
 
+        if (m_currentIntent.Throw.Pressed)
+            m_abilities.RequestAbility(*this, AbilitySlot::Throw);
+
         if (m_currentIntent.Ultimate.Pressed)
             m_abilities.RequestAbility(*this, AbilitySlot::Ultimate);
 

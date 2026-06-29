@@ -35,7 +35,10 @@ ActionMap getKeyBinds()
     actionMap.Bind(Action::Primary, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER });
 
     actionMap.Bind(Action::Secondary, { InputType::KeyboardKey, GLFW_KEY_F });
-    actionMap.Bind(Action::Secondary, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_Y });
+    actionMap.Bind(Action::Secondary, { InputType::GamepadAxis, GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER });
+
+    actionMap.Bind(Action::Throw, { InputType::KeyboardKey, GLFW_KEY_E });
+    actionMap.Bind(Action::Throw, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_Y });
 
     actionMap.Bind(Action::Ultimate, { InputType::KeyboardKey, GLFW_KEY_R });
     actionMap.Bind(Action::Ultimate, { InputType::GamepadAxis, GLFW_GAMEPAD_AXIS_LEFT_TRIGGER });

@@ -10,6 +10,7 @@ enum class AbilitySlot
     Primary,
     AirPrimary,
     Secondary,
+    Throw,
     Dash,
     AirDash,
     Down,

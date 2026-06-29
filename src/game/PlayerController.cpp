@@ -71,6 +71,14 @@ void PlayerController::Update(float dt)
     };    
     intent.Secondary = secondary;
 
+    InputButton throwItem = 
+    {
+        .Pressed = m_input.Pressed(Action::Throw),
+        .Released = m_input.Released(Action::Throw),
+        .Held = m_input.Held(Action::Throw),
+    };    
+    intent.Throw = throwItem;
+
     InputButton ultimate = 
     {
         .Pressed = m_input.Pressed(Action::Ultimate),

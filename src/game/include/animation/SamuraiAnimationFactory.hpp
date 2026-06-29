@@ -81,6 +81,28 @@ public:
             .FrameSize = frameSize,
             .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 3.png", frameSize)
         };
+        set.Clips[Animation::HeavyAttack1] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 7,
+            .FrameDuration = 0.11,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 2.png", frameSize)
+        };
+        set.Clips[Animation::HeavyAttack2] =
+        {
+            .StartFrame = 0,
+            .FrameCount = 6,
+            .FrameDuration = 0.11,
+            .Loop = false,
+            .FlipX = false,
+            .FrameCenterOffset = standardFrameCenterOffset,
+            .FrameSize = frameSize,
+            .Sprite = std::make_unique<Sprite>("resources/samurai/ATTACK 3.png", frameSize)
+        };
         set.Clips[Animation::Defend] =
         {
             .StartFrame = 0,

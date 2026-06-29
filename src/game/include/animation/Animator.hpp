@@ -31,7 +31,9 @@ enum class Animation
     WallContactRight,
     WallJump,
     WallSlideLeft,
-    WallSlideRight
+    WallSlideRight,
+    HeavyAttack1,
+    HeavyAttack2,
 };
 
 

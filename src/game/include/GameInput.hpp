@@ -22,6 +22,7 @@ enum class Action
 
     Primary,
     Secondary,
+    Throw,
     Ultimate,
 
     Heal,

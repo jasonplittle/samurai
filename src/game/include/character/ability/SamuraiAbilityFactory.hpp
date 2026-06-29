@@ -9,6 +9,7 @@
 #include "SamuraiGroundDash.hpp"
 #include "SamuraiDefend.hpp"
 #include "SamuraiShuriken.hpp"
+#include "SamuraiHeavyCombo.hpp"
 #include "SamuraiSlicingSlam.hpp"
 #include "SamuraiHeal.hpp"
 
@@ -39,6 +40,9 @@ public:
                 return std::make_unique<SamuraiDefend>();
 
             case AbilitySlot::Secondary:
+                return std::make_unique<SamuraiHeavyCombo>();
+
+            case AbilitySlot::Throw:
                 return std::make_unique<SamuraiShuriken>();
 
             case AbilitySlot::Ultimate:

@@ -18,17 +18,19 @@ struct InputButton
     bool Held = false;
 };
 
+
 struct CharacterIntent
 {
     float MoveX = 0.f;
 
-    InputButton Jump;
-    InputButton Down;
-    InputButton Defend;
-    InputButton Primary;
-    InputButton Secondary;
-    InputButton Ultimate;
-    InputButton Heal;
+    InputButton Jump = { false, false, false };
+    InputButton Down = { false, false, false };
+    InputButton Defend = { false, false, false };
+    InputButton Primary = { false, false, false };
+    InputButton Secondary = { false, false, false };
+    InputButton Throw = { false, false, false };
+    InputButton Ultimate = { false, false, false };
+    InputButton Heal = { false, false, false };
     bool Dash = false;
 };
 
