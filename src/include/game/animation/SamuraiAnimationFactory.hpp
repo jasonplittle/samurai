@@ -227,13 +227,13 @@ public:
         set.Clips[Animation::Dash] =
         {
             .StartFrame = 0,
-            .FrameCount = 4,
+            .FrameCount = 8,
             .FrameDuration = 0.05,
             .Loop = false,
             .FlipX = false,
             .FrameCenterOffset = standardFrameCenterOffset,
             .FrameSize = frameSize,
-            .Sprite = std::make_unique<Sprite>("resources/samurai/DASH.png", frameSize)
+            .Sprite = std::make_unique<Sprite>("resources/samurai/DASH NO EFFECT.png", frameSize)
         };
         set.Clips[Animation::Throw] =
         {

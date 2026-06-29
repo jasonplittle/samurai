@@ -5,7 +5,8 @@
 #include "SamuraiSlashCombo.hpp"
 #include "SamuraiAirAttack.hpp"
 #include "SamuraiDive.hpp"
-#include "SamuraiDash.hpp"
+#include "SamuraiAirDash.hpp"
+#include "SamuraiGroundDash.hpp"
 #include "SamuraiDefend.hpp"
 #include "SamuraiShuriken.hpp"
 #include "SamuraiSlicingSlam.hpp"
@@ -29,7 +30,10 @@ public:
                 return std::make_unique<SamuraiDive>();
 
             case AbilitySlot::Dash:
-                return std::make_unique<SamuraiDash>();
+                return std::make_unique<SamuraiGroundDash>();
+
+            case AbilitySlot::AirDash:
+                return std::make_unique<SamuraiAirDash>();
 
             case AbilitySlot::Defend:
                 return std::make_unique<SamuraiDefend>();

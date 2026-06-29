@@ -11,6 +11,7 @@ enum class AbilitySlot
     AirPrimary,
     Secondary,
     Dash,
+    AirDash,
     Down,
     Defend,
     Ultimate,

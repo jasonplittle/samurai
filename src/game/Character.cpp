@@ -44,7 +44,10 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
     else
     {
         if (m_currentIntent.Dash)
+        {
             m_abilities.RequestAbility(*this, AbilitySlot::Dash);
+            m_abilities.RequestAbility(*this, AbilitySlot::AirDash);
+        }
 
         if (m_currentIntent.Down.Pressed)
             m_abilities.RequestAbility(*this, AbilitySlot::Down);
@@ -75,6 +78,9 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
 
 bool Character::applyHitboxes(const HitboxManager& hitboxManager)
 {
+    if (m_isInvincable)
+        return false;
+
     bool hit = false;
 
     for (const auto& hitbox : hitboxManager.GetHitboxes())

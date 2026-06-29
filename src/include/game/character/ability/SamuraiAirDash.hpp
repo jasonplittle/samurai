@@ -3,7 +3,7 @@
 #include "IAbility.hpp"
 
 
-class SamuraiDash : public IAbility
+class SamuraiAirDash : public IAbility
 {
 public:
     bool CanActivate(Character& c) const override
@@ -11,8 +11,8 @@ public:
         if (c.StateMachine().CheckState(StateID::Death))
             return false;
 
-        // if (!c.Body().IsGrounded)
-        //     return false;
+        if (c.Body().IsGrounded)
+            return false;
 
         return true;
     }
@@ -22,6 +22,8 @@ public:
         std::cout << "Dash ability" << std::endl;
 
         m_isActive = true;
+
+        c.StateMachine().RequestState(StateID::Dash, c);
 
         if (c.Body().IsGrounded)
         {
@@ -36,7 +38,7 @@ public:
         }
 
 
-        c.StateMachine().RequestState(StateID::Dash, c);
+        
         
         c.IsFacingRight() = c.Intent().MoveX > 0;
         c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;

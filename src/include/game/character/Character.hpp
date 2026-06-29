@@ -115,6 +115,8 @@ public:
     bool IsAlive() { return m_health >= 0.0; }
     float& DeathDecay() { return m_deathDecay; }
 
+    void SetInvincibility(bool invincibility ) { m_isInvincable = invincibility; }
+
 private:
     bool applyHitboxes(const HitboxManager& hitboxManager);
 
@@ -137,4 +139,5 @@ private:
     bool m_isAlive = true;
     float m_deathDecay = 1.0;
     int m_heals = 0;
+    bool m_isInvincable = false;
 };

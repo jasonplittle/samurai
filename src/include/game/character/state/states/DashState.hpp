@@ -13,13 +13,7 @@ public:
 
     void Update(Character& c, float dt) override
     {
-        if (c.Stats().CanJump && c.Intent().Jump.Held && c.Body().IsGrounded)
-        {
-            c.StateMachine().RequestState(StateID::Jump, c);
-            c.Movement().TargetSpeedX = c.Body().Velocity.x;
-            return;
-        }
-    }
+}
 
     StateID GetID() const override
     {
