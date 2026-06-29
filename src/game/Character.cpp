@@ -36,8 +36,13 @@ void Character::Motor()
 void Character::Update(float dt, const HitboxManager& hitboxManager)
 {
     bool hit = applyHitboxes(hitboxManager);
-    
-    if (hit)
+
+    if (!IsAlive() && !(m_stateMachine.CheckState(StateID::Hurt) || m_stateMachine.CheckState(StateID::Death)))
+    {
+        std::cout << "Player is dead already" << std::endl;
+        m_stateMachine.RequestState(StateID::Death, *this);
+    }
+    else if (hit)
     {
         m_stateMachine.RequestState(StateID::Hurt, *this);
     }
