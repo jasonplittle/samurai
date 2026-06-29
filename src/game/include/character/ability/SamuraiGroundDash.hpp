@@ -26,7 +26,7 @@ public:
         c.StateMachine().RequestState(StateID::Dash, c);
         c.Animator().Play(Animation::Dash);
 
-        c.Body().Velocity.x = 200 * (c.IsFacingRight() ? 1 : -1);
+        c.Body().Velocity.x = 225 * (c.IsFacingRight() ? 1 : -1);
         c.Body().Acceleration.x = 0;
         c.Body().Acceleration.y = -c.Stats().FloatGravity;
 
@@ -80,6 +80,7 @@ public:
         if (c.Animator().IsFinished())
         {
             m_isActive = false;
+            c.Body().Velocity.x = 0;
             c.StateMachine().RequestState(StateID::Idle, c);
             return;
         }

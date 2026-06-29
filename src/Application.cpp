@@ -146,7 +146,10 @@ void setIcon(GLFWwindow* window, GLFWimage* icon)
     unsigned char* pixels = stbi_load("resources/icon.png", &width, &height, &channels, 4);
 
     if (!pixels)
+    {
+        std::cout << "Failed to load icon image" << std::endl;
         return;
+    }
     
     icon->width = width;
     icon->height = height;
@@ -196,8 +199,6 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    setIcon(window, &icon);
-
     if (glewInit() != GLEW_OK)
     {
         std::cout << "Failed to init glew" << std::endl;
@@ -211,6 +212,8 @@ int main()
     glfwSetWindowUserPointer(window, &input);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetMouseButtonCallback(window, mouseButtonCallback);
+
+    setIcon(window, &icon);
     
     renderer.EnableBlending();
 
