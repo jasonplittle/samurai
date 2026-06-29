@@ -19,59 +19,52 @@ public:
 
     void Activate(Character& c) override
     {
-        std::cout << "Dash ability" << std::endl;
+        std::cout << "Air dash ability" << std::endl;
 
         m_isActive = true;
 
         c.StateMachine().RequestState(StateID::Dash, c);
+        c.Animator().Play(Animation::Dash);
 
-        if (c.Body().IsGrounded)
-        {
-            c.Animator().Play(Animation::Dash);
-
-        }
-        else
-        {
-            c.Animator().Play(Animation::WallJump);
-            c.Body().Velocity.y = c.Stats().JumpVelocity * 0.2;
-            c.Movement().AccelY = -c.Stats().Gravity * 0.5;
-        }
-
-
-        
-        
         c.IsFacingRight() = c.Intent().MoveX > 0;
-        c.Movement().TargetSpeedX = c.Stats().RunSpeed * c.Intent().MoveX;
-        c.Body().Velocity.x = 500 * c.Intent().MoveX;
-        c.Movement().DeccelX = c.Stats().RunDeccel;
-        
+        c.Body().Velocity.x = 225 * c.Intent().MoveX;
+        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.2f;
+        c.Body().Acceleration.x = 0;
+        c.Body().Acceleration.y = -c.Stats().FloatGravity;
 
-        
+        c.SetInvincibility(true);
     }
 
     void Update(Character& c, float dt) override
     {
-        const float speedDif = c.Movement().TargetSpeedX - c.Body().Velocity.x;
-        c.Body().Acceleration.x = speedDif * c.Movement().DeccelX;
-        c.Body().Acceleration.y = c.Movement().AccelY;
-
         if (!c.StateMachine().CheckState(StateID::Dash))
         {
             m_isActive = false;
+            c.SetInvincibility(false);
             return;
         }
 
-        if (c.Stats().CanJump && c.Intent().Jump.Pressed)
+        if (c.Body().IsGrounded)
         {
             m_isActive = false;
-            c.StateMachine().RequestState(StateID::Jump, c);
-            return;
-        }
-
-        if(c.Animator().IsFinished())
-        {
-            m_isActive = false;
+            c.SetInvincibility(false);
             c.StateMachine().RequestState(StateID::Run, c);
+            return;
+        }
+
+        if (c.Intent().Jump.Pressed && !c.Movement().DoubleJumpUsed)
+        {
+            m_isActive = false;
+            c.SetInvincibility(false);
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
+            return;
+        }
+
+        if (c.Animator().IsAfterFrame(5))
+        {
+            m_isActive = false;
+            c.SetInvincibility(false);
+            c.StateMachine().RequestState(StateID::Float, c);
             return;
         }
     }

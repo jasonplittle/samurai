@@ -19,7 +19,7 @@ public:
 
     void Activate(Character& c) override
     {
-        std::cout << "Dash ability" << std::endl;
+        std::cout << "Ground dash ability" << std::endl;
 
         m_isActive = true;
 
@@ -43,11 +43,19 @@ public:
             return;
         }
 
-        if (c.Stats().CanJump && c.Intent().Jump.Pressed)
+        if (c.Intent().Jump.Pressed && c.Body().IsGrounded)
         {
             m_isActive = false;
             c.SetInvincibility(false);
             c.StateMachine().RequestState(StateID::Jump, c);
+            return;
+        }
+
+        if (c.Intent().Jump.Pressed && !c.Body().IsGrounded && !c.Movement().DoubleJumpUsed)
+        {
+            m_isActive = false;
+            c.SetInvincibility(false);
+            c.StateMachine().RequestState(StateID::DoubleJump, c);
             return;
         }
 
