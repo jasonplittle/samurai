@@ -26,7 +26,7 @@ public:
         c.StateMachine().RequestState(StateID::Dash, c);
         c.Animator().Play(Animation::Dash);
 
-        c.Body().Velocity.x = 225 * (c.IsFacingRight() ? 1 : -1);
+        c.Body().Velocity.x = 250 * (c.IsFacingRight() ? 1 : -1);
         c.Body().Acceleration.x = 0;
         c.Body().Acceleration.y = -c.Stats().FloatGravity;
 
@@ -58,6 +58,7 @@ public:
             return;
         }
 
+
         if (c.Animator().IsAfterFrame(5))
         {
             c.SetInvincibility(false);
@@ -75,6 +76,15 @@ public:
                 c.StateMachine().RequestState(StateID::Run, c);
                 return;
             }
+
+        }
+        else if (c.Animator().IsAfterFrame(3))
+        {
+            c.Body().Velocity.x = 150 * (c.IsFacingRight() ? 1 : -1);
+        }
+        else if (c.Animator().IsAfterFrame(1))
+        {
+            c.Body().Velocity.x = 425 * (c.IsFacingRight() ? 1 : -1);
         }
 
         if (c.Animator().IsFinished())

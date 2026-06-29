@@ -25,12 +25,16 @@ public:
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
         m_attackPhase = 1;
+
+        m_minMoveVal = std::abs(c.Intent().MoveX);
+        c.Movement().TargetSpeedX = 20;
     }
 
     void Trigger(Character& c) override
     {
         if (m_attackPhase == 1 && c.Animator().IsAfterFrame(4))
         {
+            c.Movement().TargetSpeedX = 5;
             m_attackPhase = 2;
             m_nextPhaseRequesed = true;
             return;
@@ -52,7 +56,12 @@ public:
             return;
         }
 
-        if (std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(3))
+        if (std::abs(c.Intent().MoveX) < m_minMoveVal)
+        {
+            m_minMoveVal = std::abs(c.Intent().MoveX);
+        }
+
+        if (std::abs(c.Intent().MoveX) > m_minMoveVal + 0.2f)
         {
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
@@ -140,4 +149,6 @@ private:
     bool m_hitboxSpawned = false;
 
     std::vector<std::shared_ptr<Hitbox>> m_hitboxes;
+
+    float m_minMoveVal;
 };

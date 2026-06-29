@@ -27,7 +27,7 @@ public:
         c.Animator().Play(Animation::Dash);
 
         c.Body().Velocity.x = 200 * (c.IsFacingRight() ? 1 : -1);
-        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.2f;
+        c.Body().Velocity.y = c.Stats().JumpVelocity * 0.3f;
         c.Body().Acceleration.x = 0;
         c.Body().Acceleration.y = -c.Stats().FloatGravity;
 
@@ -65,6 +65,10 @@ public:
             c.SetInvincibility(false);
             c.StateMachine().RequestState(StateID::Float, c);
             return;
+        }
+        else if (c.Animator().IsAfterFrame(1))
+        {
+            c.Body().Velocity.x = 350 * (c.IsFacingRight() ? 1 : -1);
         }
     }
 

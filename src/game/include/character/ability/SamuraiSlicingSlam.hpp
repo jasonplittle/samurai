@@ -63,6 +63,7 @@ public:
 
         if (c.Animator().IsAfterFrame(10))
         {
+            c.Movement().TargetSpeedX = 40;
             if (!c.Body().IsGrounded)
             {
                 c.StateMachine().RequestState(StateID::Fall, c);

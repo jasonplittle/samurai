@@ -23,7 +23,11 @@ public:
         c.Animator().Play(Animation::Throw);
         c.StateMachine().RequestState(StateID::Attacking, c);
 
-        c.Movement().AccelY = -c.Stats().FallGravity;
+        c.Movement().AccelY = -c.Stats().FloatGravity;
+        c.Body().Velocity.y *= 0.5;
+
+        m_minMoveVal = std::abs(c.Intent().MoveX);
+        c.Movement().TargetSpeedX = 20;
     }
 
     void Update(Character& c, float dt) override
@@ -34,12 +38,17 @@ public:
             return;
         }
 
-        if (std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(3))
+        if (std::abs(c.Intent().MoveX) < m_minMoveVal)
+        {
+            m_minMoveVal = std::abs(c.Intent().MoveX);
+        }
+
+        if (std::abs(c.Intent().MoveX) > m_minMoveVal + 0.2f)
         {
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
             return;
-        }
+        }    
 
         if (c.Body().IsGrounded && c.Intent().Jump.Pressed && c.Animator().IsAfterFrame(2))
         {
@@ -89,9 +98,13 @@ public:
             c.GameplayContext().SpawnProjectile(shuriken);
 
             m_shurikenSpawned = true;
+
+            c.Movement().AccelY = -c.Stats().FallGravity;
         }
     }
 
 private:
     bool m_shurikenSpawned = false;
+
+    float m_minMoveVal;
 };

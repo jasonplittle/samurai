@@ -1,19 +1,9 @@
 // Ability cooldown/condition/state
+  
 
-
-
-// Attack cancels move, and vice-versa
-
-
-
-    
-
-
-    // Stop flying
     // Ledge
 
     // Air acceleration
-    // Stop multiple air attacks
 
     // Multiple hitboxes per ability. Transfer hit-targets for combo logic
 
