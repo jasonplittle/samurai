@@ -7,57 +7,53 @@
 #include "stb_image.h"
 
 #include "Renderer.hpp"
-#include "Input.hpp"
-#include "Game.hpp"
 
 #include "GameInput.hpp"
+#include "Game.hpp"
 
 
 ActionMap getKeyBinds()
 {
     ActionMap actionMap;
 
-    actionMap.Bind(
-        Action::MoveLeft,
-        GLFW_KEY_A);
+    actionMap.Bind(Action::MoveX, { InputType::GamepadAxis, GLFW_GAMEPAD_AXIS_LEFT_X });
 
-    actionMap.Bind(
-        Action::MoveRight,
-        GLFW_KEY_D);
+    actionMap.Bind(Action::MoveLeft, { InputType::KeyboardKey, GLFW_KEY_A });
+    actionMap.Bind(Action::MoveLeft, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_DPAD_LEFT });
 
-    actionMap.Bind(
-        Action::Jump,
-        GLFW_KEY_W);
+    actionMap.Bind(Action::MoveRight, { InputType::KeyboardKey, GLFW_KEY_D });
+    actionMap.Bind(Action::MoveRight, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_DPAD_RIGHT });
 
-    actionMap.Bind(
-        Action::Down,
-        GLFW_KEY_S);
+    actionMap.Bind(Action::Jump, { InputType::KeyboardKey, GLFW_KEY_W });
+    actionMap.Bind(Action::Jump, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_A });
 
-    actionMap.Bind(
-        Action::Primary,
-        GLFW_KEY_SPACE);
+    actionMap.Bind(Action::Down, { InputType::KeyboardKey, GLFW_KEY_S });
+    actionMap.Bind(Action::Down, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_DPAD_DOWN });
+    actionMap.Bind(Action::Down, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_LEFT_BUMPER });
 
-    actionMap.Bind(
-        Action::Secondary,
-        GLFW_KEY_F);
+    actionMap.Bind(Action::Primary, { InputType::KeyboardKey, GLFW_KEY_SPACE });
+    actionMap.Bind(Action::Primary, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER });
 
-    actionMap.Bind(
-        Action::Ultimate,
-        GLFW_KEY_R);
+    actionMap.Bind(Action::Secondary, { InputType::KeyboardKey, GLFW_KEY_F });
+    actionMap.Bind(Action::Secondary, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_Y });
 
-    actionMap.Bind(
-        Action::Heal,
-        GLFW_KEY_H);
+    actionMap.Bind(Action::Ultimate, { InputType::KeyboardKey, GLFW_KEY_R });
+    actionMap.Bind(Action::Ultimate, { InputType::GamepadAxis, GLFW_GAMEPAD_AXIS_LEFT_TRIGGER });
 
-    actionMap.Bind(
-        Action::Slow,
-        GLFW_KEY_LEFT_SHIFT);
+    actionMap.Bind(Action::Heal, { InputType::KeyboardKey, GLFW_KEY_H });
+    actionMap.Bind(Action::Heal, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_X });
+
+    actionMap.Bind(Action::Slow, { InputType::KeyboardKey, GLFW_KEY_LEFT_SHIFT });
+    actionMap.Bind(Action::Dash, { InputType::GamepadButton, GLFW_GAMEPAD_BUTTON_B });
+
+    actionMap.Bind(Action::PlaceTile, { InputType::MouseButton, GLFW_MOUSE_BUTTON_LEFT });
+    actionMap.Bind(Action::RemoveTile, { InputType::MouseButton, GLFW_MOUSE_BUTTON_RIGHT });
 
     return actionMap;
 }
 
 
-void KeyCallback(
+void keyCallback(
     GLFWwindow* window,
     int key,
     int scancode,
@@ -70,29 +66,95 @@ void KeyCallback(
 
     if (action == GLFW_PRESS)
     {
-        input->OnKeyPressed(key);
+        input->OnKeyPressed(key + KEYBOARD_OFFSET);
     }
     else if (action == GLFW_RELEASE)
     {
-        input->OnKeyReleased(key);
+        input->OnKeyReleased(key + KEYBOARD_OFFSET);
     }
 }
+
+
+void mouseButtonCallback(GLFWwindow* window,
+                         int button,
+                         int action,
+                         int mods)
+{
+    InputSystem* input = static_cast<InputSystem*>(glfwGetWindowUserPointer(window));
+
+    if (action == GLFW_PRESS)
+    {
+        input->OnKeyPressed(button + MOUSE_OFFSET);
+    }
+    else if (action == GLFW_RELEASE)
+    {
+        input->OnKeyReleased(button + MOUSE_OFFSET);
+    }
+}
+
+
+void readCursor(GLFWwindow* window, InputSystem* input)
+{
+    double x, y;
+    glfwGetCursorPos(window, &x, &y);
+
+    input->SetCursor(x, y);
+}
+
+
+void readGamepad(GLFWgamepadstate* pad, InputSystem* input)
+{
+    if (!glfwGetGamepadState(GLFW_JOYSTICK_1, pad))
+        return;
+    
+    for (int i = 0; i <= GLFW_GAMEPAD_BUTTON_LAST; ++i)
+    {
+        if (pad->buttons[i] == GLFW_PRESS)
+        {
+            input->OnKeyPressed(i + GAMEPAD_OFFSET);
+        }
+        else if (pad->buttons[i] == GLFW_RELEASE)
+        {
+            input->OnKeyReleased(i + GAMEPAD_OFFSET);
+        }
+    }
+
+    for (int i = 0; i <= GLFW_GAMEPAD_AXIS_LAST; ++i)
+    {
+        float val = pad->axes[i];
+
+        if (i == GLFW_GAMEPAD_AXIS_LEFT_TRIGGER || i == GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER)
+        {
+            val = (val + 1.0f) * 0.5f;
+            if (val < 0.05f) 
+                val = 0.0f;
+        }
+        else
+        {
+            if (std::abs(val) < 0.15f)
+                val = 0.0f;
+        }
+
+        input->UpdateAxis(i + GAMEPAD_AXIS_OFFSET, val);
+    }
+}
+
 
 void setIcon(GLFWwindow* window, GLFWimage* icon)
 {
     int width, height, channels;
     unsigned char* pixels = stbi_load("resources/icon.png", &width, &height, &channels, 4);
 
-    if (pixels)
-    {
-        icon->width = width;
-        icon->height = height;
-        icon->pixels = pixels;
+    if (!pixels)
+        return;
+    
+    icon->width = width;
+    icon->height = height;
+    icon->pixels = pixels;
 
-        glfwSetWindowIcon(window, 1, icon);
+    glfwSetWindowIcon(window, 1, icon);
 
-        stbi_image_free(pixels);
-    }
+    stbi_image_free(pixels);
 }
 
 
@@ -102,8 +164,21 @@ int main()
 
     GLFWwindow* window;
     GLFWimage icon;
+    GLFWgamepadstate pad;
+    Renderer renderer;
+    int windowWidth, windowHeight;
+    float lastTime;
+    float currentTime;
+    float dt;
+    InputSystem input;
+    GameInput gameInput(input, getKeyBinds());
 
-    if (!glfwInit()) return -1;
+
+    if (!glfwInit())
+    {
+        std::cout << "Failed to init glfw" << std::endl;
+        return -1;
+    }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -113,6 +188,7 @@ int main()
 
     if (!window)
     {
+        std::cout << "Failed to create glfw window" << std::endl;
         glfwTerminate();
         return -1;
     }
@@ -122,28 +198,27 @@ int main()
 
     setIcon(window, &icon);
 
-    if (glewInit() != GLEW_OK) return -1;
+    if (glewInit() != GLEW_OK)
+    {
+        std::cout << "Failed to init glew" << std::endl;
+        return -1;
+    }
+    
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    int windowWidth, windowHeight;
+    std::cout << "Gamepad name: " << glfwGetGamepadName(GLFW_JOYSTICK_1) << std::endl;
 
-    Renderer renderer;
+    glfwSetWindowUserPointer(window, &input);
+    glfwSetKeyCallback(window, keyCallback);
+    glfwSetMouseButtonCallback(window, mouseButtonCallback);
+    
     renderer.EnableBlending();
 
-    float lastTime = glfwGetTime();
-    float currentTime;
-    float dt;
-
-    Inputs inputs;
-
-    InputSystem input;
-    glfwSetWindowUserPointer(window, &input);
-    glfwSetKeyCallback(window, KeyCallback);
-
-    GameInput gameInput(input, getKeyBinds());
 
     Game game(gameInput);
     game.Init();
+    lastTime = glfwGetTime();
+    
     
     while (!glfwWindowShouldClose(window))
     {
@@ -159,14 +234,10 @@ int main()
         
         glfwPollEvents();
 
-        inputs.t = Input::Instance().IsKeyPressed(window, GLFW_KEY_T);
-        inputs.m = Input::Instance().IsKeyPressed(window, GLFW_KEY_M);
-        inputs.lMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_LEFT);
-        inputs.rMouse = Input::Instance().IsMousePressed(window, GLFW_MOUSE_BUTTON_RIGHT);
-        inputs.mousePos = Input::Instance().GetCursorPos(window);
+        readGamepad(&pad, &input);
+        readCursor(window, &input);
         
-        game.ReadInput(glm::vec2(windowWidth, windowHeight), inputs);
-        game.Update(dt);
+        game.Update(dt, windowWidth, windowHeight);
         game.Render();
 
         glfwSwapBuffers(window);

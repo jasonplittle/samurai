@@ -26,8 +26,7 @@ public:
         c.StateMachine().RequestState(StateID::Dash, c);
         c.Animator().Play(Animation::Dash);
 
-        c.IsFacingRight() = c.Intent().MoveX > 0;
-        c.Body().Velocity.x = 225 * c.Intent().MoveX;
+        c.Body().Velocity.x = 200 * (c.IsFacingRight() ? 1 : -1);
         c.Body().Velocity.y = c.Stats().JumpVelocity * 0.2f;
         c.Body().Acceleration.x = 0;
         c.Body().Acceleration.y = -c.Stats().FloatGravity;

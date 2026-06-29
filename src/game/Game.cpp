@@ -36,37 +36,39 @@ void Game::Init()
 }
 
 
-void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
+// void Game::ReadInput(glm::ivec2 windowSize, Inputs inputs)
+// {
+//     glm::vec2 mouseWorldPos = 
+//     {
+//         (inputs.mousePos.x / (windowSize.x / VIRTUAL_SCEEEN.x)) - (m_camera.Size.x * 0.5) + m_camera.Pos.x, 
+//         (((windowSize.y - inputs.mousePos.y) / (windowSize.y / VIRTUAL_SCEEEN.y)) - (m_camera.Size.y * 0.5) + m_camera.Pos.y) 
+//     };
+
+//     if (inputs.t)
+//     {
+//         m_props.AddProp(mouseWorldPos.x, m_world);
+//     }
+
+//     if (inputs.m)
+//     {
+//         m_mobManager.AddMob(mouseWorldPos, *this);
+//     }
+
+//     if (inputs.lMouse)
+//     {
+//         m_world.ShowTile(true, mouseWorldPos.x, mouseWorldPos.y);
+//     }
+//     if (inputs.rMouse)
+//     {
+//         m_world.ShowTile(false, mouseWorldPos.x, mouseWorldPos.y);
+//     }
+// }
+
+
+void Game::Update(float dt, int windowWidth, int windowHeight)
 {
-    glm::vec2 mouseWorldPos = 
-    {
-        (inputs.mousePos.x / (windowSize.x / VIRTUAL_SCEEEN.x)) - (m_camera.Size.x * 0.5) + m_camera.Pos.x, 
-        (((windowSize.y - inputs.mousePos.y) / (windowSize.y / VIRTUAL_SCEEEN.y)) - (m_camera.Size.y * 0.5) + m_camera.Pos.y) 
-    };
+    // world editor update
 
-    if (inputs.t)
-    {
-        m_props.AddProp(mouseWorldPos.x, m_world);
-    }
-
-    if (inputs.m)
-    {
-        m_mobManager.AddMob(mouseWorldPos, *this);
-    }
-
-    if (inputs.lMouse)
-    {
-        m_world.ShowTile(true, mouseWorldPos.x, mouseWorldPos.y);
-    }
-    if (inputs.rMouse)
-    {
-        m_world.ShowTile(false, mouseWorldPos.x, mouseWorldPos.y);
-    }
-}
-
-
-void Game::Update(float dt)
-{
     m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
     m_props.Update(dt);

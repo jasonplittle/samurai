@@ -26,9 +26,6 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/MobManager.cpp
     ${CMAKE_SOURCE_DIR}/src/game/GameInput.cpp
 
-
-    ${CMAKE_SOURCE_DIR}/src/platform/Input.cpp
-
     ${CMAKE_SOURCE_DIR}/src/renderer/Renderer.cpp 
     ${CMAKE_SOURCE_DIR}/src/renderer/IndexBuffer.cpp 
     ${CMAKE_SOURCE_DIR}/src/renderer/VertexBuffer.cpp 
@@ -61,8 +58,8 @@ target_include_directories("${CMAKE_PROJECT_NAME}"
         ${CMAKE_SOURCE_DIR}/src/include/game/rendering
         ${CMAKE_SOURCE_DIR}/src/include/game/world
 
-        ${CMAKE_SOURCE_DIR}/src/include/platform
         ${CMAKE_SOURCE_DIR}/src/renderer/include
+
         ${CMAKE_SOURCE_DIR}/thirdparty/glfw-3.4/include 
         ${CMAKE_SOURCE_DIR}/thirdparty/glew-2.1.0/include
         ${CMAKE_SOURCE_DIR}/thirdparty/stb_image

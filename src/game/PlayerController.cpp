@@ -1,23 +1,32 @@
 #include "PlayerController.hpp"
 
+#include <algorithm>
+
 
 void PlayerController::Update(float dt)
 {
     CharacterIntent intent = {};
 
-    float speed = m_input.Held(Action::Slow) ? 1.0f : 2.0f;
+    intent.MoveX = m_input.Axis(Action::MoveX);
     
     if (m_input.Held(Action::MoveLeft))
     {
-        intent.MoveX -= speed;
+        intent.MoveX -= 1.f;
     }
 
     if (m_input.Held(Action::MoveRight))
     {
-        intent.MoveX += speed;
+        intent.MoveX += 1.f;
     }
 
-    if (m_input.DoublePressed(Action::MoveLeft) || m_input.DoublePressed(Action::MoveRight))
+    if (m_input.Held(Action::Slow))
+    {
+        intent.MoveX *= 0.5f;
+    }
+
+    intent.MoveX = std::clamp(intent.MoveX, -1.0f, 1.0f);
+
+    if (m_input.DoublePressed(Action::MoveLeft) || m_input.DoublePressed(Action::MoveRight) || m_input.Pressed(Action::Dash))
     {
         intent.Dash = true;
     }

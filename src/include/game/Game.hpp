@@ -18,25 +18,13 @@
 #include "ProjectileManager.hpp"
 
 
-struct Inputs // For sandbox only
-{
-    bool t;
-    bool m;
-
-    bool lMouse;
-    bool rMouse;
-    glm::vec2 mousePos;
-};
-
-
 class Game : public IGameplayContext
 {
 public:
     Game(GameInput& gameInput);
 
     void Init();
-    void ReadInput(glm::ivec2 windowSize, Inputs inputs);
-    void Update(float dt);
+    void Update(float dt, int windowWidth, int windowHeight);
     void Render();
 
     void SpawnHitbox(std::shared_ptr<Hitbox> hitbox) override

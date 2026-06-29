@@ -23,7 +23,7 @@ public:
         constexpr float fastGrav = 1.8 * regGrav;
 
         constexpr float idleSpeed = 5;
-        constexpr float walkSpeed = 120;
+        constexpr float walkSpeed = 140;
         constexpr float runSpeed = 200;
 
         constexpr float groundedAccel = 8;

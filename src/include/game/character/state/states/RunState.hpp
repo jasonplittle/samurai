@@ -16,7 +16,7 @@ public:
     {
         float speed = std::abs(c.Body().Velocity.x);
 
-        if (speed <= c.Stats().WalkSpeed)
+        if (speed <= c.Stats().WalkSpeed * 0.85f)
         {
             c.StateMachine().RequestState(StateID::Walk, c);
             return;
