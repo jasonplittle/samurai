@@ -64,6 +64,7 @@ public:
             .WallSlideGravity = regGrav / 6.f,
 
             .MaxHeals = 3,
+            .MaxThrowables = 5,
 
             .CanRun = true,
         };

@@ -10,11 +10,15 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
 
     m_health = m_stats.MaxHealth;
     m_heals = m_stats.MaxHeals;
+    m_throwables = m_stats.MaxThrowables;
+    m_stamina = m_stats.MaxStamina;
+    m_mana = m_stats.MaxMana;
 
     m_movementProfile.AccelY = -m_stats.Gravity;
 
     m_stateMachine.RequestState(StateID::Idle, *this);
 }
+
 
 void Character::Motor()
 {
@@ -26,7 +30,7 @@ void Character::Motor()
     {
         m_isFacingRight = true;
     }
-    if (m_currentIntent.MoveX < 0)
+    else if (m_currentIntent.MoveX < 0)
     {
         m_isFacingRight = false;
     }
@@ -118,6 +122,7 @@ bool Character::applyHitboxes(const HitboxManager& hitboxManager)
 
     return hit;
 }
+
 
 Rect Character::Hurtbox() const
 {

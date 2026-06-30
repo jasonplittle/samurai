@@ -12,6 +12,12 @@ public:
         if (c.StateMachine().CheckState(StateID::Death))
             return false;
 
+        if (c.Throwables() <= 0)
+            return false;
+
+        if (c.Stamina() < 20)
+            return false;
+
         return true;
     }
 
@@ -28,6 +34,8 @@ public:
 
         m_minMoveVal = std::abs(c.Intent().MoveX);
         c.Movement().TargetSpeedX = 20;
+
+        c.Stamina() -= 20;
     }
 
     void Update(Character& c, float dt) override

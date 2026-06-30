@@ -34,6 +34,13 @@ protected:
     {
         c.Motor();
 
+        c.Stamina() += 2.f * dt;
+
+        if (c.Stamina() > c.Stats().MaxStamina)
+        {
+            c.Stamina() = c.Stats().MaxStamina;
+        }
+
         if (!c.Body().IsGrounded)
         {
             c.StateMachine().RequestState(StateID::Float, c);

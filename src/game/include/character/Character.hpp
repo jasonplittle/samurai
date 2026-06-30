@@ -53,6 +53,8 @@ struct MovementProfile
 struct CharacterStats
 {
     float MaxHealth;
+    float MaxStamina = 100.f;
+    float MaxMana = 100.f;
     int Mass;
 
     bool CanJump;
@@ -85,6 +87,7 @@ struct CharacterStats
     float StationaryAttackRange;
 
     int MaxHeals = 0;
+    int MaxThrowables = 0;
 
     bool CanRun = false;
 };
@@ -112,10 +115,16 @@ public:
     void Motor();
 
     float& Health() { return m_health; }
+    float& Stamina() { return m_stamina; }
+    float& Mana() { return m_mana; }
     int& Heals() { return m_heals; }
+    int& Throwables() { return m_throwables; }
     float& Defence() { return m_defence; }
     bool IsAlive() { return m_health >= 0.0; }
     float& DeathDecay() { return m_deathDecay; }
+
+
+    bool CanDoubleJump() { return true; }
 
     void SetInvincibility(bool invincibility ) { m_isInvincable = invincibility; }
 
@@ -137,9 +146,12 @@ private:
 
     bool m_isFacingRight = true;
     float m_health;
+    float m_stamina;
+    float m_mana;
     float m_defence = 0.0;
     bool m_isAlive = true;
     float m_deathDecay = 1.0;
     int m_heals = 0;
+    int m_throwables = 0;
     bool m_isInvincable = false;
 };
