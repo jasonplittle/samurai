@@ -22,6 +22,9 @@ public:
         m_isActive = true;
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
+
+        c.Movement().TargetSpeedX = 20;
+        m_minMoveVal = std::abs(c.Intent().MoveX);
     }
 
     void Update(Character& c, float dt) override
@@ -32,7 +35,12 @@ public:
             return;
         }
 
-        if (c.Body().IsGrounded && std::abs(c.Intent().MoveX) > 0 && c.Animator().IsAfterFrame(3))
+        if (std::abs(c.Intent().MoveX) < m_minMoveVal)
+        {
+            m_minMoveVal = std::abs(c.Intent().MoveX);
+        }
+
+        if (std::abs(c.Intent().MoveX) > m_minMoveVal + 0.2f)
         {
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
@@ -85,4 +93,6 @@ public:
 
 private:
     bool m_arrowSpawned = false;
+
+    float m_minMoveVal;
 };

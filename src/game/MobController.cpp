@@ -1,5 +1,6 @@
 #include "MobController.hpp"
 
+#include <random>
 
 
 void MobController::Update(float dt, Character& player, const World& world)
@@ -50,16 +51,8 @@ CharacterIntent MobController::updateIdle(float dt)
         m_idleTimer = 0;
     }
 
-    CharacterIntent intent
-    {
-        .MoveX = moveX,
-        .Jump = InputButton{false, false, false},
-        .Down = InputButton{false, false, false},
-        .Primary = InputButton{false, false, false},
-        .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false},
-        .Heal = InputButton{false, false, false}
-    };
+    CharacterIntent intent;
+    intent.MoveX = moveX;
 
     return intent;
 }
@@ -76,16 +69,8 @@ CharacterIntent MobController::updatePatrol(float dt)
         m_patrolTimer = 0;
     }
 
-    CharacterIntent intent
-    {
-        .MoveX = moveX,
-        .Jump = InputButton{false, false, false},
-        .Down = InputButton{false, false, false},
-        .Primary = InputButton{false, false, false},
-        .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false},
-        .Heal = InputButton{false, false, false}
-    };
+    CharacterIntent intent;
+    intent.MoveX = moveX;
 
     return intent;
 }
@@ -94,15 +79,25 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
 {
     float moveX = player.Body().Position.x < m_mob->Body().Position.x ? -1.f : 1.f;
     bool attack = false;
+    int rand = 0;
+
+    static std::mt19937 rng(std::random_device{}());
+    
 
     if (distance < m_mob->Stats().StationaryAttackRange && player.Body().Position.x > m_mob->Body().Position.x == m_mob->IsFacingRight())
     {
         moveX = 0;
         attack = true;
+
+        std::uniform_int_distribution<int> dist(0, 100);
+        rand = dist(rng);
     }
     else if (distance < m_mob->Stats().PrimaryAttackRange)
     {
         attack = true;
+
+        std::uniform_int_distribution<int> dist(0, 100);
+        rand = dist(rng);
     }
     else if (distance > 200.f)
     {
@@ -116,16 +111,20 @@ CharacterIntent MobController::updateAttack(float dt, Character& player, float d
         attack = false;
     }
 
-    CharacterIntent intent
+    CharacterIntent intent;
+    intent.MoveX = moveX;
+
+    if (m_mob->StateMachine().CheckState(StateID::Attacking))
+        return intent;
+
+    if (rand > 90)
     {
-        .MoveX = moveX,
-        .Jump = InputButton{false, false, false},
-        .Down = InputButton{false, false, false},
-        .Primary = InputButton{attack, false, false},
-        .Secondary = InputButton{false, false, false},
-        .Ultimate = InputButton{false, false, false},
-        .Heal = InputButton{false, false, false}
-    };
+        intent.Ultimate.Pressed = attack;
+    }
+    else
+    {
+        intent.Primary.Pressed = attack;
+    }
 
     return intent;
 }

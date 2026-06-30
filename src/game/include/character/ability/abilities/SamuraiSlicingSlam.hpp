@@ -17,6 +17,8 @@ public:
         return true;
     }
 
+    virtual bool CanBeOverriden(Character& c) const override { return false; }
+
     void Activate(Character& c) override
     {
         std::cout << "Slicing slam ability" << std::endl;
@@ -24,6 +26,8 @@ public:
         m_isActive = true;
         c.Animator().Play(Animation::SpecialAttack);
         c.StateMachine().RequestState(StateID::Attacking, c);
+
+        c.SetInvincibility(true);
 
         m_hitbox1 =
         {
@@ -51,6 +55,7 @@ public:
     {
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
+            c.SetInvincibility(false);
             m_isActive = false;
             return;
         }
@@ -66,7 +71,10 @@ public:
             c.Movement().TargetSpeedX = 40;
             if (!c.Body().IsGrounded)
             {
+                c.SetInvincibility(false);
+                m_isActive = false;
                 c.StateMachine().RequestState(StateID::Fall, c);
+                return;
             }
         }
 
@@ -75,6 +83,7 @@ public:
 
         if (c.Animator().IsFinished())
         {
+            c.SetInvincibility(false);
             m_isActive = false;
             c.StateMachine().RequestState(StateID::Idle, c);
             return;

@@ -19,10 +19,15 @@ public:
 
     void Activate(Character& c) override
     {
+        std::cout << "Executioner cleave ability" << std::endl;
+
         m_isActive = true;
         c.Animator().Play(Animation::Attack1);
         c.StateMachine().RequestState(StateID::Attacking, c);
         m_attackPhase = 1;   
+
+        c.Movement().TargetSpeedX = 5;
+        m_minMoveVal = std::abs(c.Intent().MoveX);
     }
 
     void Trigger(Character& c) override
@@ -39,6 +44,18 @@ public:
         if (!c.StateMachine().CheckState(StateID::Attacking))
         {
             m_isActive = false;
+            return;
+        }
+
+        if (std::abs(c.Intent().MoveX) < m_minMoveVal)
+        {
+            m_minMoveVal = std::abs(c.Intent().MoveX);
+        }
+
+        if (std::abs(c.Intent().MoveX) > m_minMoveVal + 0.2f)
+        {
+            m_isActive = false;
+            c.StateMachine().RequestState(StateID::Idle, c);
             return;
         }
 
@@ -108,4 +125,6 @@ private:
     bool m_hitboxSpawned = false;
 
     std::shared_ptr<Hitbox> m_hitbox;
+
+    float m_minMoveVal;
 };

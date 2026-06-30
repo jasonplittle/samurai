@@ -36,7 +36,7 @@ public:
         glm::vec2 modelSize
     ) const
     {
-        Render(sprite, spriteCellCoords, flipX, camera, modelPos, modelSize, 1.0f);
+        Render(sprite, spriteCellCoords, flipX, camera, modelPos, modelSize, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
     }
 
     void Render(
@@ -47,6 +47,19 @@ public:
         glm::vec2 modelPos, 
         glm::vec2 modelSize,
         float opacity
+    ) const
+    {
+        Render(sprite, spriteCellCoords, flipX, camera, modelPos, modelSize, glm::vec4(1.0f, 1.0f, 1.0f, opacity));
+    }
+
+    void Render(
+        const Sprite& sprite, 
+        glm::vec2 spriteCellCoords, 
+        bool flipX,
+        OrthographicCamera camera,
+        glm::vec2 modelPos, 
+        glm::vec2 modelSize,
+        glm::vec4 color
     ) const;
 
 private:

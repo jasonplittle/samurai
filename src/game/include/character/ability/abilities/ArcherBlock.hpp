@@ -3,7 +3,7 @@
 #include "IAbility.hpp"
 
 
-class SamuraiDefend : public IAbility
+class ArcherBlock : public IAbility
 {
 public:
     bool CanActivate(Character& c) const override
@@ -19,12 +19,12 @@ public:
 
     void Activate(Character& c) override
     {
-        std::cout << "Samurai defend ability" << std::endl;
+        std::cout << "Archer block ability" << std::endl;
 
         m_isActive = true;
         c.Animator().Play(Animation::Defend);
         c.StateMachine().RequestState(StateID::Attacking, c);
-        c.Defence() = 0.7;
+        c.Defence() = 0.5;
 
         c.Movement().TargetSpeedX = 0;
         c.Movement().AccelX = c.Stats().RunAccel;

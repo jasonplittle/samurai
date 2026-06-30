@@ -2,7 +2,8 @@
 
 #include "IAbilityFactory.hpp"
 #include "ArcherBowShot.hpp"
-
+#include "ArcherBlock.hpp"
+#include "ArcherTripleShot.hpp"
 
 
 class ArcherAbilityFactory : public IAbilityFactory
@@ -15,26 +16,14 @@ public:
             case AbilitySlot::Primary:
                 return std::make_unique<ArcherBowShot>();
 
-            // case AbilitySlot::AirPrimary:
-            //     return std::make_unique<SamuraiAirAttack>();
+            case AbilitySlot::Defend:
+                return std::make_unique<ArcherBlock>();
 
-            // case AbilitySlot::Down:
-            //     return std::make_unique<SamuraiDive>();
+            case AbilitySlot::Secondary:
+                return std::make_unique<ArcherBowShot>();
 
-            // case AbilitySlot::Dash:
-            //     return std::make_unique<SamuraiDash>();
-
-            // case AbilitySlot::Defend:
-            //     return std::make_unique<SamuraiDefend>();
-
-            // case AbilitySlot::Secondary:
-            //     return std::make_unique<SamuraiShuriken>();
-
-            // case AbilitySlot::Ultimate:
-            //     return std::make_unique<SamuraiSlicingSlam>();
-
-            // case AbilitySlot::Heal:
-            //     return std::make_unique<SamuraiHeal>();
+            case AbilitySlot::Ultimate:
+                return std::make_unique<ArcherTripleShot>();
 
             default:
                 return nullptr;

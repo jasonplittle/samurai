@@ -18,12 +18,11 @@ public:
 
     virtual void Update(Character& c, float dt) {}
 
+    virtual bool CanBeOverriden(Character& c) const  { return true; }
+
     virtual void Cancel(Character& c) { m_isActive = false; }
 
-    virtual bool IsFinished() const
-    {
-        return !m_isActive;
-    }
+    virtual bool IsFinished() const { return !m_isActive; }
 
 protected:
     bool m_isActive = true;

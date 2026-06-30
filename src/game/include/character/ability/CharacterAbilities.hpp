@@ -26,6 +26,9 @@ public:
                     break;
                 }
 
+                if (m_activeSlot.has_value() && !m_current->CanBeOverriden(c))
+                    continue;
+
                 std::unique_ptr<IAbility> nextAbility = m_abilityFactory->CreateAbility(reqSlot);
 
                 if (!nextAbility)

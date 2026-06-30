@@ -15,6 +15,12 @@ public:
             case AbilitySlot::Primary:
                 return std::make_unique<ExecutionerCleaveCombo>();
 
+            case AbilitySlot::Secondary:
+                return std::make_unique<ExecutionerCleaveCombo>();
+
+            case AbilitySlot::Ultimate:
+                return std::make_unique<ExecutionerCleaveCombo>();
+
             default:
                 return nullptr;
         }
