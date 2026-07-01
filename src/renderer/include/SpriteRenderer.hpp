@@ -12,14 +12,7 @@
 #include "Texture.hpp"
 
 #include "Sprite.hpp"
-
-
-struct OrthographicCamera
-{
-    glm::vec2 Pos;
-    glm::vec2 Size;
-    int Zoom;
-};
+#include "Camera.hpp"
 
 
 class SpriteRenderer

@@ -70,4 +70,10 @@ void Game::Render()
         m_player->Animator().GetFrameSize(),
         m_player->DeathDecay()
     );
+
+    glm::vec2 barSize = glm::vec2(200, 15);
+    glm::vec2 healthSize = glm::vec2(150, 15);
+    // m_quadRenderer.Render(m_camera, glm::vec2(m_camera.Pos.x - (VIRTUAL_SCEEEN.x) * 0.5, m_camera.Pos.y + (VIRTUAL_SCEEEN.y * 0.5)), glm::vec2(100, 20), glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
+    m_quadRenderer.Render(m_camera, m_camera.Pos + glm::vec2(-VIRTUAL_SCEEEN.x * 0.5 + 5, VIRTUAL_SCEEEN.y * 0.5 - barSize.y - 5), barSize, glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
+    m_quadRenderer.Render(m_camera, m_camera.Pos + glm::vec2(-VIRTUAL_SCEEEN.x * 0.5 + 5, VIRTUAL_SCEEEN.y * 0.5 - barSize.y - 5), healthSize, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
 }

@@ -1,6 +1,5 @@
 #include "SpriteRenderer.hpp"
 
-#include <iostream>
 
 SpriteRenderer::SpriteRenderer()
 {

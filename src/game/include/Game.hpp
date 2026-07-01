@@ -8,6 +8,7 @@
 #include "Props.hpp"
 #include "WorldEditor.hpp"
 #include "SpriteRenderer.hpp"
+#include "QuadRenderer.hpp"
 #include "IGameplayContext.hpp"
 #include "GameInput.hpp"
 #include "HitboxManager.hpp"
@@ -54,4 +55,5 @@ private:
 
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;
+    QuadRenderer m_quadRenderer;
 };

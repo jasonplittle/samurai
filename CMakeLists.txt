@@ -15,8 +15,6 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/Animator.cpp
     ${CMAKE_SOURCE_DIR}/src/game/PlayerController.cpp
     ${CMAKE_SOURCE_DIR}/src/game/MobController.cpp
-    ${CMAKE_SOURCE_DIR}/src/game/Sprite.cpp
-    ${CMAKE_SOURCE_DIR}/src/game/SpriteRenderer.cpp
     ${CMAKE_SOURCE_DIR}/src/game/BackgroundParallax.cpp
     ${CMAKE_SOURCE_DIR}/src/game/World.cpp
     ${CMAKE_SOURCE_DIR}/src/game/TileMap.cpp
@@ -34,6 +32,9 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/renderer/ErrorUtils.cpp
     ${CMAKE_SOURCE_DIR}/src/renderer/Shader.cpp
     ${CMAKE_SOURCE_DIR}/src/renderer/Texture.cpp
+    ${CMAKE_SOURCE_DIR}/src/renderer/Sprite.cpp
+    ${CMAKE_SOURCE_DIR}/src/renderer/SpriteRenderer.cpp
+    ${CMAKE_SOURCE_DIR}/src/renderer/QuadRenderer.cpp
 )
 
 target_link_libraries("${CMAKE_PROJECT_NAME}"
