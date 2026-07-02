@@ -34,6 +34,8 @@ public:
         c.Body().Acceleration.x = 0;
         c.Body().Acceleration.y = -c.Stats().FloatGravity;
 
+        c.Movement().DashUsed = true;
+
         c.SetInvincibility(true);
     }
 

@@ -73,7 +73,8 @@ public:
                     .Knockback = 250.f,
                     .Instigator = &c,
                 }),
-                .Size = glm::vec2(4, 4)
+                .Size = glm::vec2(4, 4),
+                .IsFacingRight = c.IsFacingRight()
             });
 
             arrow->Hitbox->Origin = &arrow->Body;
@@ -104,7 +105,8 @@ public:
                     .Knockback = 250.f,
                     .Instigator = &c,
                 }),
-                .Size = glm::vec2(4, 4)
+                .Size = glm::vec2(4, 4),
+                .IsFacingRight = c.IsFacingRight()
             });
 
             arrow->Hitbox->Origin = &arrow->Body;
@@ -133,7 +135,8 @@ public:
                     .Knockback = 250.f,
                     .Instigator = &c,
                 }),
-                .Size = glm::vec2(4, 4)
+                .Size = glm::vec2(4, 4),
+                .IsFacingRight = c.IsFacingRight()
             });
 
             arrow->Hitbox->Origin = &arrow->Body;

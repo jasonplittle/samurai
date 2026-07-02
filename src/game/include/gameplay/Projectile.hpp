@@ -17,4 +17,5 @@ struct Projectile
     KinematicBody Body;
     std::shared_ptr<Hitbox> Hitbox;
     glm::vec2 Size;
+    bool IsFacingRight;
 };

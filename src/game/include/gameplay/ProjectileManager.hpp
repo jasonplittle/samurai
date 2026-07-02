@@ -45,7 +45,7 @@ public:
             renderer.Render(
                 *sprite,
                 glm::ivec2(0, 0),
-                false,
+                !projectile->IsFacingRight,
                 camera,
                 projectile->Body.Position,
                 sprite->GetSize(),
