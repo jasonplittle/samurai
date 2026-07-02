@@ -13,11 +13,14 @@ public:
         Animation contactAnim = c.Body().Walled.IsRight() ? Animation::WallContactRight : Animation::WallContactLeft;
         c.Animator().Play(contactAnim);
         c.IsFacingRight() = !c.Body().Walled.IsRight();
+        
         c.Body().Velocity.y = 0;
         c.Body().Velocity.x = 0;
         c.Movement().AccelX = c.Body().Walled.IsRight() ? 1 : -1;
         c.Movement().AccelY = 0;
+
         c.Movement().DoubleJumpUsed = false;
+        c.Movement().DashUsed = false;
     }
 
     void Update(Character& c, float dt) override

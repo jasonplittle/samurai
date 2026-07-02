@@ -10,6 +10,7 @@ public:
     {
         c.Movement().AccelY = -c.Stats().Gravity;
         c.Movement().DoubleJumpUsed = false;
+        c.Movement().DashUsed = false;
 
         c.Movement().TargetSpeedX = c.Stats().RunSpeed;
         c.Movement().AccelX = c.Stats().RunAccel;

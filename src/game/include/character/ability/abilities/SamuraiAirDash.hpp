@@ -11,6 +11,9 @@ public:
         if (c.StateMachine().CheckState(StateID::Death))
             return false;
 
+        if (c.Movement().DashUsed)
+            return false;
+
         if (c.Body().IsGrounded)
             return false;
 
