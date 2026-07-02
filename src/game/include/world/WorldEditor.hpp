@@ -13,8 +13,6 @@ class WorldEditor
 public:
     void Update(int windowWidth, 
                 int windowHeight, 
-                int vWidth, 
-                int vHeight, 
                 OrthographicCamera camera, 
                 GameInput& input, 
                 Props& props, 
@@ -24,8 +22,8 @@ public:
     {
         glm::vec2 mouseWorldPos = 
         {
-            (input.GetCursorX() / (windowWidth / vWidth)) - (camera.Size.x * 0.5) + camera.Pos.x, 
-            (((windowHeight - input.GetCursorY()) / (windowHeight / vHeight)) - (camera.Size.y * 0.5) + camera.Pos.y) 
+            (input.GetCursorX() / (windowWidth / camera.Size.x)) - (camera.Size.x * 0.5) + camera.Pos.x, 
+            (((windowHeight - input.GetCursorY()) / (windowHeight / camera.Size.y)) - (camera.Size.y * 0.5) + camera.Pos.y) 
         };
 
         if (input.Pressed(Action::PlaceTile))

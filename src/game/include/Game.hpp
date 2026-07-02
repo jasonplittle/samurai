@@ -13,6 +13,7 @@
 #include "GameInput.hpp"
 #include "HitboxManager.hpp"
 #include "ProjectileManager.hpp"
+#include "GameHUD.hpp"
 
 
 class Game : public IGameplayContext
@@ -52,6 +53,8 @@ private:
     World m_world;
     BackgroundParallax m_background;
     Props m_props;
+
+    GameHUD m_hud;
 
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;

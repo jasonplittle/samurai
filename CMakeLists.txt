@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(samurai)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(thirdparty/glfw-3.4)
@@ -23,6 +23,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/Props.cpp
     ${CMAKE_SOURCE_DIR}/src/game/MobManager.cpp
     ${CMAKE_SOURCE_DIR}/src/game/GameInput.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/GameHUD.cpp
 
     ${CMAKE_SOURCE_DIR}/src/renderer/Renderer.cpp 
     ${CMAKE_SOURCE_DIR}/src/renderer/IndexBuffer.cpp 
@@ -57,8 +58,9 @@ target_include_directories("${CMAKE_PROJECT_NAME}"
         ${CMAKE_SOURCE_DIR}/src/game/include/character/state/states
         ${CMAKE_SOURCE_DIR}/src/game/include/controller
         ${CMAKE_SOURCE_DIR}/src/game/include/gameplay
-        ${CMAKE_SOURCE_DIR}/src/game/include/rendering
+        ${CMAKE_SOURCE_DIR}/src/game/include/ui
         ${CMAKE_SOURCE_DIR}/src/game/include/world
+        
 
         ${CMAKE_SOURCE_DIR}/src/renderer/include
 

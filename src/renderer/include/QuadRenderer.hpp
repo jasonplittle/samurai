@@ -20,7 +20,12 @@ class QuadRenderer
 public:
     QuadRenderer();
 
-    void Render(OrthographicCamera camera, glm::vec2 position, glm::vec2 size, glm::vec4 color) const;
+    void Render(OrthographicCamera camera, glm::vec2 position, glm::vec2 size, glm::vec4 color) const
+    {
+        Render(camera, position, size, color, color, color);
+    }
+
+    void Render(OrthographicCamera camera, glm::vec2 position, glm::vec2 size, glm::vec4 color1, glm::vec4 color2, glm::vec4 color3) const;
 
 private:
     std::unique_ptr<Shader> m_shader;

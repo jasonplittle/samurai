@@ -212,8 +212,6 @@ int main()
     
     std::cout << glGetString(GL_VERSION) << std::endl;
 
-    std::cout << "Gamepad name: " << glfwGetGamepadName(GLFW_JOYSTICK_1) << std::endl;
-
     glfwSetWindowUserPointer(window, &input);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetMouseButtonCallback(window, mouseButtonCallback);

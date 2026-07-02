@@ -39,7 +39,7 @@ void Game::Init()
 
 void Game::Update(float dt, int windowWidth, int windowHeight)
 {
-    m_worldEditior.Update(windowWidth, windowHeight, VIRTUAL_SCEEEN.x, VIRTUAL_SCEEEN.y, m_camera, m_gameInput, m_props, m_world, m_mobManager, *this);
+    m_worldEditior.Update(windowWidth, windowHeight, m_camera, m_gameInput, m_props, m_world, m_mobManager, *this);
     m_playerController.Update(dt);
     m_physics.UpdateBody(m_player->Body(), m_world, dt);
     m_props.Update(dt);
@@ -47,6 +47,7 @@ void Game::Update(float dt, int windowWidth, int windowHeight)
     m_mobManager.Update(dt, *m_player, m_world, m_physics, m_hitboxManager);
     m_projectileManager.Update(dt, m_physics, m_world);
     m_hitboxManager.Update(dt);
+    m_hud.Update(dt, m_player->Health() / m_player->Stats().MaxHealth);
 
     m_camera.Pos.x = std::max(m_player->Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
 }
@@ -71,9 +72,5 @@ void Game::Render()
         m_player->DeathDecay()
     );
 
-    glm::vec2 barSize = glm::vec2(200, 15);
-    glm::vec2 healthSize = glm::vec2(150, 15);
-    // m_quadRenderer.Render(m_camera, glm::vec2(m_camera.Pos.x - (VIRTUAL_SCEEEN.x) * 0.5, m_camera.Pos.y + (VIRTUAL_SCEEEN.y * 0.5)), glm::vec2(100, 20), glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
-    m_quadRenderer.Render(m_camera, m_camera.Pos + glm::vec2(-VIRTUAL_SCEEEN.x * 0.5 + 5, VIRTUAL_SCEEEN.y * 0.5 - barSize.y - 5), barSize, glm::vec4(0.2f, 0.2f, 0.2f, 1.0f));
-    m_quadRenderer.Render(m_camera, m_camera.Pos + glm::vec2(-VIRTUAL_SCEEEN.x * 0.5 + 5, VIRTUAL_SCEEEN.y * 0.5 - barSize.y - 5), healthSize, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+    m_hud.DrawHUD(m_quadRenderer, m_camera);
 }

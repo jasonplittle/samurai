@@ -69,7 +69,7 @@ public:
         {
             c.Heals() -= 1;
             c.Health() += 80;
-            c.Health() = std::max(c.Health(), c.Stats().MaxHealth);
+            c.Health() = std::min(c.Health(), c.Stats().MaxHealth);
             m_healed = true;
         }
 

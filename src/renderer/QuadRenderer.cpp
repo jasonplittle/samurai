@@ -16,26 +16,27 @@ QuadRenderer::QuadRenderer()
     // };
 
     float verticies[] = {
-        0.f, 0.f,
-        1.f, 0.f,
-        1.f, 1.f,
-        0.f, 1.f
+        0.f, 0.f, 0.f, 0.f,
+        1.f, 0.f, 1.f, 0.f,
+        1.f, 1.f, 1.f, 1.f,
+        0.f, 1.f, 0.f, 1.f
     };
 
     m_shader = std::make_unique<Shader>("src/renderer/shaders/Color.shader");
 
     m_vertexArray = std::make_unique<VertexArray>();
     m_indexBuffer = std::make_unique<IndexBuffer>(indicies, 6);
-    m_vertexBuffer = std::make_unique<VertexBuffer>(verticies, 4 * 2 * sizeof(float));
+    m_vertexBuffer = std::make_unique<VertexBuffer>(verticies, 4 * 4 * sizeof(float));
 
     VertexBufferLayout layout;
 
+    layout.Push<float>(2);
     layout.Push<float>(2);
     m_vertexArray->AddBuffer(*m_vertexBuffer, layout);
 }
 
 
-void QuadRenderer::Render(OrthographicCamera camera, glm::vec2 position, glm::vec2 size, glm::vec4 color) const
+void QuadRenderer::Render(OrthographicCamera camera, glm::vec2 position, glm::vec2 size, glm::vec4 color1, glm::vec4 color2, glm::vec4 color3) const
 {
     Renderer renderer;
 
@@ -53,7 +54,10 @@ void QuadRenderer::Render(OrthographicCamera camera, glm::vec2 position, glm::ve
     
     m_shader->Bind();
     m_shader->SetUniformMat4f("u_MVP", mvp);
-    m_shader->SetUniform4f("u_Color", color.x, color.y, color.z, color.w);
+    m_shader->SetUniform4f("u_Color1", color1.x, color1.y, color1.z, color1.w);
+    m_shader->SetUniform4f("u_Color2", color2.x, color2.y, color2.z, color2.w);
+    m_shader->SetUniform4f("u_Color3", color3.x, color3.y, color3.z, color3.w);
+    
 
     renderer.Draw(*m_vertexArray, *m_indexBuffer, *m_shader);
 }
