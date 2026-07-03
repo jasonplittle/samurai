@@ -20,6 +20,8 @@ public:
     void Update(float dt, Character& player, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager);
     void DrawMobs(SpriteRenderer& renderer, OrthographicCamera camera);
 
+    const std::vector<Mob>& Mobs() const { return m_mobs; }
+
 private:
     std::vector<Mob> m_mobs;
     float m_spawnThrottleTimer = 0.0;

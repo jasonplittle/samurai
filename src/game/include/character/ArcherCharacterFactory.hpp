@@ -32,7 +32,7 @@ public:
 
         CharacterStats stats
         {
-            .MaxHealth = 100,
+            .MaxHealth = 50,
             .Mass = 2,
             
             .CanJump = true,
@@ -46,7 +46,7 @@ public:
             .Width = 32,
             .Height = 32,
             .RadiusX = 8,
-            .RadiusY = 14,
+            .RadiusY = 18,
 
             .IdleSpeed = idleSpeed,
             .WalkSpeed = walkSpeed,

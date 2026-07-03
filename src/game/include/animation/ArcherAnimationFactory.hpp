@@ -18,7 +18,7 @@ public:
     {
         AnimationSet set;
         
-        glm::vec2 standardFrameCenterOffset = glm::vec2(0, -8);
+        glm::vec2 standardFrameCenterOffset = glm::vec2(0, -4);
         glm::vec2 frameSize = glm::vec2(96, 80);
         float frameRate = 0.07f;
 

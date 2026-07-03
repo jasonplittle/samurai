@@ -9,7 +9,7 @@ static float EaseOut(float t)
 }
 
 
-void GameHUD::Update(float dt, Character& player)
+void GameHUD::Update(float dt, Character& player, const MobManager& mobs)
 {
     float newHealthPerc = player.Health() / player.Stats().MaxHealth;
     m_displayHealth = std::lerp(m_displayHealth, newHealthPerc, EaseOut(dt) * 2);
@@ -23,11 +23,45 @@ void GameHUD::Update(float dt, Character& player)
     m_displayMana = std::lerp(m_displayMana, newManaPerc, EaseOut(dt) * 2);
     m_displayManaMax = player.Stats().MaxMana;
 
+    for (auto& mobStruct : mobs.Mobs())
+    {
+        Character& mob = *mobStruct.Character; 
+
+        m_mobHealthBars[&mob];
+
+        if (!mob.IsAlive())
+        {
+            m_mobHealthBars.erase(&mob);
+            continue;
+        }
+
+        float newMobHealthPerc = mob.Health() / mob.Stats().MaxHealth;
+        m_mobHealthBars[&mob].MaxHealth = mob.Stats().MaxHealth;
+        m_mobHealthBars[&mob].DisplayHealth = std::lerp(m_mobHealthBars[&mob].DisplayHealth, newMobHealthPerc, EaseOut(dt) * 2);
+
+        m_mobHealthBars[&mob].BarSize = glm::vec2(mob.Stats().MaxHealth * 0.5, 3);
+        
+        m_mobHealthBars[&mob].BarPosition.x = mob.Body().Position.x - (m_mobHealthBars[&mob].BarSize.x * 0.5);
+        m_mobHealthBars[&mob].BarPosition.y = mob.Body().Position.y + mob.Body().Radii.y + 5;
+    }
+
 }
 
 
 void GameHUD::DrawHUD(QuadRenderer& quadRenderer, OrthographicCamera camera)
 {
+    for (auto& [mob, mobHealthBar] : m_mobHealthBars)
+    {
+        float mobHealthBarFill = mobHealthBar.BarSize.x * mobHealthBar.DisplayHealth;
+        if (mobHealthBarFill < 0)
+            mobHealthBarFill = 0;
+        glm::vec2 healthFillSize = glm::vec2(mobHealthBarFill, mobHealthBar.BarSize.y);
+
+        quadRenderer.Render(camera, mobHealthBar.BarPosition, mobHealthBar.BarSize, glm::vec4(0.12f, 0.12f, 0.13f, 1.0f));
+        quadRenderer.Render(camera, mobHealthBar.BarPosition, healthFillSize, glm::vec4(0.18f, 0.02f, 0.02f, 1.0f), glm::vec4(0.55f, 0.05f, 0.05f, 1.0f), glm::vec4(0.75f, 0.12f, 0.08f, 1.0f));
+        
+    }
+
     glm::vec2 healthBarSize = glm::vec2(m_displayHealthMax * 2, 10);
     glm::vec2 healthBarPosition = camera.Pos + glm::vec2(-camera.Size.x * 0.5 + 5, camera.Size.y * 0.5 - healthBarSize.y - 5);
     float healthBarFill = healthBarSize.x * m_displayHealth;

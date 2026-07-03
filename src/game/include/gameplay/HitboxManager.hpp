@@ -35,6 +35,8 @@ public:
     void DrawHitboxes(SpriteRenderer& renderer, OrthographicCamera camera)
     {
         return;
+
+        static std::unique_ptr<Sprite> m_sprite = std::make_unique<Sprite>("resources/props/BlackSquare.png", glm::vec2(32, 32));
         
         for (auto& hitbox : m_hitboxes)
         {
@@ -52,5 +54,4 @@ public:
 
 private:
     std::vector<std::shared_ptr<Hitbox>> m_hitboxes;
-    std::unique_ptr<Sprite> m_sprite = std::make_unique<Sprite>("resources/props/BlackSquare.png", glm::vec2(32, 32));
 };
