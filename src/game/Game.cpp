@@ -54,12 +54,13 @@ void Game::Update(float dt, int windowWidth, int windowHeight)
 void Game::Render()
 {
     m_background.DrawLayers(m_renderer, m_camera);
+    m_fog.DrawFog(m_noiseRenderer, m_camera, glm::vec2(0, 0), 0.9);
     m_props.DrawProps(m_renderer, m_camera);
     m_projectileManager.DrawProjectiles(m_renderer, m_camera);
     m_world.DrawTiles(m_renderer, m_camera);
     m_hitboxManager.DrawHitboxes(m_renderer, m_camera);
     m_mobManager.DrawMobs(m_renderer, m_camera);
     m_playerManager.DrawPlayers(m_renderer, m_camera);
-    m_fog.DrawFog(m_noiseRenderer, m_camera);
+    m_fog.DrawFog(m_noiseRenderer, m_camera, glm::vec2(20, 20), 0.4);
     m_hud.DrawHUD(m_quadRenderer, m_camera);
 }
