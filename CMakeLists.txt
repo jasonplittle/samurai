@@ -25,6 +25,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/game/PlayerManager.cpp
     ${CMAKE_SOURCE_DIR}/src/game/GameInput.cpp
     ${CMAKE_SOURCE_DIR}/src/game/GameHUD.cpp
+    ${CMAKE_SOURCE_DIR}/src/game/Fog.cpp
 
     ${CMAKE_SOURCE_DIR}/src/renderer/Renderer.cpp 
     ${CMAKE_SOURCE_DIR}/src/renderer/IndexBuffer.cpp 
@@ -37,6 +38,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
     ${CMAKE_SOURCE_DIR}/src/renderer/Sprite.cpp
     ${CMAKE_SOURCE_DIR}/src/renderer/SpriteRenderer.cpp
     ${CMAKE_SOURCE_DIR}/src/renderer/QuadRenderer.cpp
+    ${CMAKE_SOURCE_DIR}/src/renderer/NoiseRenderer.cpp
 )
 
 target_link_libraries("${CMAKE_PROJECT_NAME}"

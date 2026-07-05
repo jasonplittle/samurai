@@ -44,6 +44,7 @@ void Game::Update(float dt, int windowWidth, int windowHeight)
     m_mobManager.Update(dt, m_playerManager.Player(), m_world, m_physics, m_hitboxManager);
     m_projectileManager.Update(dt, m_physics, m_world);
     m_hitboxManager.Update(dt);
+    m_fog.Update(dt);
     m_hud.Update(dt, m_playerManager.Player(), m_mobManager);
 
     m_camera.Pos.x = std::max(m_playerManager.Player().Body().Position.x, VIRTUAL_SCEEEN.x * 0.5f);
@@ -59,5 +60,6 @@ void Game::Render()
     m_hitboxManager.DrawHitboxes(m_renderer, m_camera);
     m_mobManager.DrawMobs(m_renderer, m_camera);
     m_playerManager.DrawPlayers(m_renderer, m_camera);
+    m_fog.DrawFog(m_noiseRenderer, m_camera);
     m_hud.DrawHUD(m_quadRenderer, m_camera);
 }

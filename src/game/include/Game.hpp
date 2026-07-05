@@ -15,7 +15,7 @@
 #include "ProjectileManager.hpp"
 #include "GameHUD.hpp"
 #include "PlayerManager.hpp"
-
+#include "Fog.hpp"
 
 class Game : public IGameplayContext
 {
@@ -52,6 +52,7 @@ private:
 
     World m_world;
     BackgroundParallax m_background;
+    Fog m_fog;
     Props m_props;
 
     GameHUD m_hud;
@@ -59,4 +60,5 @@ private:
     OrthographicCamera m_camera;
     SpriteRenderer m_renderer;
     QuadRenderer m_quadRenderer;
+    NoiseRenderer m_noiseRenderer;
 };
