@@ -3,10 +3,19 @@
 
 void Fog::Update(float dt)
 {
-    float wind = std::sin(dt * 0.2f);
+    m_time += dt;
 
-    m_movement.x += 6 * wind * dt;
-    m_movement.y = 0.5f * std::sin(dt * 0.1f);
+    float windX =
+        0.06f
+        + 0.02f * std::sin(m_time * 0.11f)
+        + 0.01f * std::sin(m_time * 0.37f)
+        + 0.005f * std::sin(m_time * 0.91f);
+
+    float windY =
+        0.004f * std::sin(m_time * 0.21f)
+        + 0.002f * std::sin(m_time * 0.73f);
+
+    m_fogOffset += glm::vec2(windX, windY) * dt;
 }
 
 void Fog::DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera) const
@@ -17,7 +26,7 @@ void Fog::DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera) const
         camera.Pos,
         camera.Size,
         glm::vec2(1.f, 1.f),
-        (camera.Pos / camera.Size) + m_movement,
+        (camera.Pos / camera.Size) + m_fogOffset,
         glm::vec4(0.45f, 0.50f, 0.60f, 0.32f)
     );
 }

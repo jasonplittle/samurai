@@ -11,7 +11,8 @@ public:
     void DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera) const;
 
 private:
-    glm::vec2 m_movement = glm::vec2(0, 0);
+    float m_time = 0;
+    glm::vec2 m_fogOffset  = glm::vec2(0, 0);
     std::unique_ptr<Sprite> m_fogSprite = std::make_unique<Sprite>("resources/atmosphere/fog.jpg", glm::vec2(1000, 1000));
 
 };

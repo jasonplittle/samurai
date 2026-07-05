@@ -11,7 +11,7 @@ void Props::AddProp(int worldX, const World& world)
 {
     Prop newProp;
 
-    switch (worldX % 18)
+    switch (worldX % 36)
     {
         case 0:
         case 1:
@@ -38,60 +38,69 @@ void Props::AddProp(int worldX, const World& world)
             newProp.Type = PropType::Tree;
             break;
 
-        // case 13:
-        //     newProp.Id = PropId::Bush1;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 14:
-        //     newProp.Id = PropId::Bush2;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 15:
-        //     newProp.Id = PropId::Bush3;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 16:
-        //     newProp.Id = PropId::Bush4;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 17:
-        //     newProp.Id = PropId::Bush5;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-        
-        // case 18:
-        //     newProp.Id = PropId::Bush6;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 19:
-        //     newProp.Id = PropId::Bush7;
-        //     newProp.Type = PropType::Bush;
-        //     break;
-
-        // case 20:
-        //     newProp.Id = PropId::Lamp;
-        //     newProp.Type = PropType::Object;
-        //     break;
-
-        // case 21:
-        //     newProp.Id = PropId::Torii;
-        //     newProp.Type = PropType::Object;
-        //     break;
-
-        // case 22:
-        //     newProp.Id = PropId::Well;
-        //     newProp.Type = PropType::Object;
-        //     break;
         case 13:
+            newProp.Id = PropId::Bush1;
+            newProp.Type = PropType::Bush;
+            break;
+
         case 14:
+            newProp.Id = PropId::Bush2;
+            newProp.Type = PropType::Bush;
+            break;
+
         case 15:
+            newProp.Id = PropId::Bush3;
+            newProp.Type = PropType::Bush;
+            break;
+
         case 16:
+            newProp.Id = PropId::Bush4;
+            newProp.Type = PropType::Bush;
+            break;
+
         case 17:
+            newProp.Id = PropId::Bush5;
+            newProp.Type = PropType::Bush;
+            break;
+        
+        case 18:
+            newProp.Id = PropId::Bush6;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 19:
+            newProp.Id = PropId::Bush7;
+            newProp.Type = PropType::Bush;
+            break;
+
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+            newProp.Id = PropId::Lamp;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 24:
+        case 25:
+        case 26:
+        case 27:
+            newProp.Id = PropId::Torii;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 28:
+        case 29:
+        case 30:
+        case 31:
+            newProp.Id = PropId::Well;
+            newProp.Type = PropType::Object;
+            break;
+
+        case 32:
+        case 33:
+        case 34:
+        case 35:
             newProp.Id = PropId::Flag;
             newProp.Type = PropType::Object;
             break;
