@@ -14,14 +14,15 @@
 #include "HitboxManager.hpp"
 #include "ProjectileManager.hpp"
 #include "GameHUD.hpp"
+#include "PlayerManager.hpp"
 
 
 class Game : public IGameplayContext
 {
 public:
-    Game(GameInput& gameInput);
+    Game();
 
-    void Init();
+    void Init(std::shared_ptr<GameInput> gameInput);
     void Update(float dt, int windowWidth, int windowHeight);
     void Render();
 
@@ -37,10 +38,9 @@ public:
     }
 
 private:
-    std::shared_ptr<Character> m_player;
-    PlayerController m_playerController;
+    PlayerManager m_playerManager;
 
-    GameInput& m_gameInput;
+    std::shared_ptr<GameInput> m_gameInput;
 
     WorldEditor m_worldEditior;
     MobManager m_mobManager;

@@ -179,7 +179,8 @@ int main()
     float currentTime;
     float dt;
     InputSystem input;
-    GameInput gameInput(input, getKeyBinds());
+    std::shared_ptr<GameInput> gameInput = std::make_shared<GameInput>(input, getKeyBinds());
+    
 
 
     if (!glfwInit())
@@ -219,12 +220,9 @@ int main()
     setIcon(window, &icon);
     
     renderer.EnableBlending();
-
-
-    Game game(gameInput);
-    game.Init();
+    Game game;
+    game.Init(gameInput);
     lastTime = glfwGetTime();
-    
     
     while (!glfwWindowShouldClose(window))
     {
