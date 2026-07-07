@@ -4,26 +4,39 @@
 
 void PlayerManager::AddPlayer(glm::vec2 position, IGameplayContext& context, GameInput& gameInput)
 {
-    m_player = std::shared_ptr<Character>(SamuraiCharacterFactory::CreateCharacter(position, context));
-    m_controller = std::make_unique<PlayerController>(m_player, gameInput);
+    auto player = std::shared_ptr<Character>(SamuraiCharacterFactory::CreateCharacter(position, context));
+    m_controller = std::make_unique<PlayerController>(player, gameInput);
+    m_players.push_back(player);
 }
 
-void PlayerManager::Update(float dt, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager)
+void PlayerManager::Update(float dt, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager, IGameplayContext& context)
 {
     m_controller->Update(dt);
-    physics.UpdateBody(m_player->Body(), world, dt);
-    m_player->Update(dt, hitboxManager);
+
+    for (auto& player : m_players)
+    {
+        physics.UpdateBody(player->Body(), world, dt);
+        player->Update(dt, hitboxManager);
+    }
+    
+    if (m_players.back()->IsFullDead())
+    {
+        context.PlayerDied();
+    }
 }
 
 void PlayerManager::DrawPlayers(SpriteRenderer& renderer, OrthographicCamera camera)
 {
-    renderer.Render(
-        m_player->Animator().GetCurrentSprite(),
-        glm::ivec2(m_player->Animator().GetCurrentFrame(), 0), 
-        !m_player->IsFacingRight() ^ m_player->Animator().FlipX(),
-        camera,
-        m_player->Body().Position - m_player->Animator().GetFrameCenterOffset(),
-        m_player->Animator().GetFrameSize(),
-        m_player->DeathDecay()
-    );
+    for (auto& player : m_players)
+    {
+        renderer.Render(
+            player->Animator().GetCurrentSprite(),
+            glm::ivec2(player->Animator().GetCurrentFrame(), 0), 
+            !player->IsFacingRight() ^ player->Animator().FlipX(),
+            camera,
+            player->Body().Position - player->Animator().GetFrameCenterOffset(),
+            player->Animator().GetFrameSize(),
+            player->DeathDecay()
+        );
+    }
 }

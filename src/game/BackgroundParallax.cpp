@@ -1,7 +1,5 @@
 #include "BackgroundParallax.hpp"
 
-#include <iostream>
-
 
 BackgroundParallax::BackgroundParallax(ParallaxLayers parallaxLayers)
     : 

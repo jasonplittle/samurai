@@ -11,12 +11,12 @@ class PlayerManager
 {
 public:
     void AddPlayer(glm::vec2 position, IGameplayContext& context, GameInput& gameInput);
-    void Update(float dt, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager);
+    void Update(float dt, const World& world, PhysicsSystem& physics, HitboxManager& hitboxManager, IGameplayContext& context);
     void DrawPlayers(SpriteRenderer& renderer, OrthographicCamera camera);
 
-    Character& Player() const { return *m_player; }
+    Character& Player() const { return *m_players.back(); }
 
 private:
-    std::shared_ptr<Character> m_player;
+    std::vector<std::shared_ptr<Character>> m_players;
     std::unique_ptr<PlayerController> m_controller;
 };

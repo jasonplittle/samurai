@@ -22,7 +22,7 @@ void LightManager::DrawLights(SpriteRenderer& renderer, OrthographicCamera camer
             camera,
             light->Position,
             glm::vec2(light->Radius * 2, light->Radius * 2),
-            glm::vec4(light->Color, light->Intensity)
+            glm::vec4(light->Color.x, light->Color.y, light->Color.z, light->Intensity)
         );
     }
 }

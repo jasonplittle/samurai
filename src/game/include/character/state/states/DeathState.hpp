@@ -27,8 +27,15 @@ public:
             m_dead = true;
         }
 
-        if (m_dead && c.DeathDecay() > 0.5)
+        if (m_dead && !m_fullDead)
+        {
             c.DeathDecay() -= dt;
+            if (c.DeathDecay() <= 0.5)
+            {
+                m_fullDead = true;
+                c.IsFullDead() = true;
+            }
+        }
     }
 
     virtual bool CanTransitionTo(StateID next, Character& c)
@@ -43,4 +50,5 @@ public:
 
 private:
     bool m_dead = false;
+    bool m_fullDead = false;
 };

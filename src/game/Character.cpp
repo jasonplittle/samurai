@@ -48,7 +48,7 @@ void Character::Update(float dt, const HitboxManager& hitboxManager)
     }
     else if (hit)
     {
-        std::cout << m_health << std::endl;
+        // std::cout << m_health << std::endl;
         m_stateMachine.RequestState(StateID::Hurt, *this);
     }
     else

@@ -120,8 +120,9 @@ public:
     int& Heals() { return m_heals; }
     int& Throwables() { return m_throwables; }
     float& Defence() { return m_defence; }
-    bool IsAlive() { return m_health >= 0.0; }
+    bool IsAlive() { return m_health > 0.0; }
     float& DeathDecay() { return m_deathDecay; }
+    bool& IsFullDead() { return m_isFullDead; }
 
 
     bool CanDoubleJump() { return true; }
@@ -149,7 +150,7 @@ private:
     float m_stamina;
     float m_mana;
     float m_defence = 0.0;
-    bool m_isAlive = true;
+    bool m_isFullDead = false;
     float m_deathDecay = 1.0;
     int m_heals = 0;
     int m_throwables = 0;

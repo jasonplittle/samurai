@@ -5,6 +5,7 @@
 #include "Sprite.hpp"
 #include "SpriteRenderer.hpp"
 
+
 struct BackgroundLayer
 {
     glm::vec2 Position;

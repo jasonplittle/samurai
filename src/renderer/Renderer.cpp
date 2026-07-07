@@ -32,7 +32,7 @@ void Renderer::EnableBlending() const
 void Renderer::EnableAdditiveBlending() const
 {
     GLCall(glEnable(GL_BLEND));
-    GLCall(glBlendFunc(GL_ONE, GL_ONE));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE));
 }
 
 

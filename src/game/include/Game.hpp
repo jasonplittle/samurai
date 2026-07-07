@@ -27,6 +27,7 @@ public:
     void Init(std::shared_ptr<GameInput> gameInput);
     void Update(float dt, int windowWidth, int windowHeight);
     void Render();
+    void Reset();
 
     void SpawnHitbox(std::shared_ptr<Hitbox> hitbox) override
     {
@@ -38,6 +39,8 @@ public:
         m_hitboxManager.AddHitbox(projectile->Hitbox);
         m_projectileManager.AddProjectile(projectile);
     }
+
+    void PlayerDied() override;
 
 private:
     PlayerManager m_playerManager;

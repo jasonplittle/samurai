@@ -19,7 +19,7 @@ struct Light
 
     float Radius = 64.f;
 
-    float Intensity = 0.5f;
+    float Intensity = 1.f;
 
     std::unique_ptr<AnimationPlayer> Animator;
 };

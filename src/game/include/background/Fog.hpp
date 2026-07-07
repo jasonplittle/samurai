@@ -10,8 +10,6 @@ public:
     void Update(float dt);
     void DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2 offset, float depth, float intensity) const;
 
-
-
 private:
     float m_time = 0;
     glm::vec2 m_fogOffset = glm::vec2(0, 0);
