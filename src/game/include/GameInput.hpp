@@ -34,6 +34,7 @@ enum class Action
     RemoveTile,
     PlaceMob,
     PlaceProp,
+    PlaceLight
 };
 
 

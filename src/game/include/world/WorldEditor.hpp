@@ -5,6 +5,7 @@
 #include "Props.hpp"
 #include "GameInput.hpp"
 #include "SpriteRenderer.hpp"
+#include "LightManager.hpp"
 #include "IGameplayContext.hpp"
 
 
@@ -17,7 +18,8 @@ public:
                 GameInput& input, 
                 Props& props, 
                 World& world, 
-                MobManager& mobs, 
+                MobManager& mobs,
+                LightManager& lights,
                 IGameplayContext& context)
     {
         glm::vec2 mouseWorldPos = 
@@ -44,6 +46,13 @@ public:
         if (input.Pressed(Action::PlaceProp))
         {
             props.AddProp(mouseWorldPos.x, world);
+        }
+
+        if (input.Pressed(Action::PlaceLight))
+        {
+            Light light;
+            light.Position = mouseWorldPos;
+            lights.Add(light);
         }
     }
 };

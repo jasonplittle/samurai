@@ -11,6 +11,7 @@ class Renderer
 {
 public:
     void EnableBlending() const;
+    void EnableAdditiveBlending() const;
     void Clear() const;
 
     void Viewport(int width, int height) const;

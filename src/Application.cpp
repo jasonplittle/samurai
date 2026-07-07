@@ -53,6 +53,7 @@ ActionMap getKeyBinds()
     actionMap.Bind(Action::RemoveTile, { InputType::MouseButton, GLFW_MOUSE_BUTTON_RIGHT });
     actionMap.Bind(Action::PlaceMob, { InputType::KeyboardKey, GLFW_KEY_M });
     actionMap.Bind(Action::PlaceProp, { InputType::KeyboardKey, GLFW_KEY_T });
+    actionMap.Bind(Action::PlaceLight, { InputType::KeyboardKey, GLFW_KEY_L });
 
     return actionMap;
 }

@@ -18,7 +18,7 @@ void Fog::Update(float dt)
     m_fogOffset += glm::vec2(windX, windY) * dt;
 }
 
-void Fog::DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2 offset, float depth) const
+void Fog::DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2 offset, float depth, float intensity) const
 {
     renderer.Render(
         *m_fogSprite,
@@ -27,6 +27,6 @@ void Fog::DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2
         camera.Size,
         glm::vec2(1.f, 1.f),
         ((camera.Pos * depth) / camera.Size) + m_fogOffset + offset,
-        glm::vec4(0.45f, 0.50f, 0.60f, 0.32f)
+        glm::vec4(0.45f, 0.50f, 0.60f, intensity)
     );
 }

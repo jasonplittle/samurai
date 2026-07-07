@@ -8,7 +8,7 @@ class Fog
 {
 public:
     void Update(float dt);
-    void DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2 offset, float depth) const;
+    void DrawFog(NoiseRenderer& renderer, OrthographicCamera& camera, glm::vec2 offset, float depth, float intensity) const;
 
 
 

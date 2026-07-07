@@ -12,7 +12,7 @@ public:
 
         glm::vec2 frameSize;
         
-        frameSize = glm::vec2(120, 160);
+        frameSize = glm::vec2(120, 159);
         propSet->Set[PropId::Tree1] = 
         {
             .Size = frameSize,
@@ -24,7 +24,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(120, 160);
+        frameSize = glm::vec2(120, 159);
         propSet->Set[PropId::Tree2] = 
         {
             .Size = frameSize,
@@ -36,7 +36,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(130, 160);
+        frameSize = glm::vec2(130, 159);
         propSet->Set[PropId::Tree3] = 
         {
             .Size = frameSize,
@@ -48,7 +48,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(60, 32);
+        frameSize = glm::vec2(60, 31);
         propSet->Set[PropId::Bush1] = 
         {
             .Size = frameSize,
@@ -60,7 +60,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(14, 32);
+        frameSize = glm::vec2(14, 31);
         propSet->Set[PropId::Bush2] = 
         {
             .Size = frameSize,
@@ -72,7 +72,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(14, 32);
+        frameSize = glm::vec2(14, 31);
         propSet->Set[PropId::Bush3] = 
         {
             .Size = frameSize,
@@ -84,7 +84,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(40, 32);
+        frameSize = glm::vec2(40, 31);
         propSet->Set[PropId::Bush4] = 
         {
             .Size = frameSize,
@@ -96,7 +96,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(40, 32);
+        frameSize = glm::vec2(35, 31);
         propSet->Set[PropId::Bush5] = 
         {
             .Size = frameSize,
@@ -108,7 +108,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(24, 32);
+        frameSize = glm::vec2(24, 31);
         propSet->Set[PropId::Bush6] = 
         {
             .Size = frameSize,
@@ -120,7 +120,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(20, 32);
+        frameSize = glm::vec2(20, 31);
         propSet->Set[PropId::Bush7] = 
         {
             .Size = frameSize,
@@ -132,7 +132,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(32, 96);
+        frameSize = glm::vec2(32, 95);
         propSet->Set[PropId::Lamp] = 
         {
             .Size = frameSize,
@@ -144,7 +144,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(98, 96);
+        frameSize = glm::vec2(98, 95);
         propSet->Set[PropId::Torii] = 
         {
             .Size = frameSize,
@@ -156,7 +156,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(78, 96);
+        frameSize = glm::vec2(78, 77);
         propSet->Set[PropId::Well] = 
         {
             .Size = frameSize,
@@ -168,7 +168,7 @@ public:
             },
         };
 
-        frameSize = glm::vec2(29, 64);
+        frameSize = glm::vec2(29, 63);
         propSet->Set[PropId::Flag] = 
         {
             .Size = frameSize,

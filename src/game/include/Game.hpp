@@ -16,6 +16,8 @@
 #include "GameHUD.hpp"
 #include "PlayerManager.hpp"
 #include "Fog.hpp"
+#include "LightManager.hpp"
+
 
 class Game : public IGameplayContext
 {
@@ -54,11 +56,13 @@ private:
     BackgroundParallax m_background;
     Fog m_fog;
     Props m_props;
+    LightManager m_lights;
 
     GameHUD m_hud;
 
     OrthographicCamera m_camera;
-    SpriteRenderer m_renderer;
+    Renderer m_renderer;
+    SpriteRenderer m_spriteRenderer;
     QuadRenderer m_quadRenderer;
     NoiseRenderer m_noiseRenderer;
 };
