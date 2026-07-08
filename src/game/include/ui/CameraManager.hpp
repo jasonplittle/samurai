@@ -10,20 +10,16 @@ class CameraManager
 {
 public:
 
-    CameraManager(OrthographicCamera camera) : m_camera(camera) {}
+    CameraManager(OrthographicCamera camera) : m_camera(camera) { m_virtualCameraX = camera.Pos.x; }
 
     void Update(float dt, Character& player)
     {
         float deadZone = 75.0f;
 
-        // How far ahead the camera looks
-        float lookAhead = player.Body().Velocity.x * 0.3f;
-        lookAhead = std::clamp(lookAhead, -150.0f, 150.0f);
+        float left  = m_virtualCameraX - deadZone * 0.5f;
+        float right = m_virtualCameraX + deadZone * 0.5f;
 
-        float left  = m_camera.Pos.x - deadZone * 0.5f;
-        float right = m_camera.Pos.x + deadZone * 0.5f;
-
-        float targetX = m_camera.Pos.x;
+        float targetX = m_virtualCameraX;
 
         float playerX = player.Body().Position.x;
 
@@ -36,14 +32,14 @@ public:
             targetX = playerX - deadZone * 0.5f;
         }
 
-        targetX += lookAhead;
+        float t = 1.0f - std::exp(-3.0f * dt);
+        m_virtualCameraX += (targetX - m_virtualCameraX) * t;
 
-        float t = 1.0f - std::exp(-5.0f * dt);
-
-        m_camera.Pos.x += (targetX - m_camera.Pos.x) * t;
+        m_camera.Pos.x = playerX + (playerX - m_virtualCameraX);
+        // m_camera.Pos.x = m_virtualCameraX;
     }
 
-    
+
     void DrawCamera(SpriteRenderer& renderer)
     {
         return;
@@ -59,11 +55,23 @@ public:
             glm::vec2(16, 16),
             0.5
         );
+
+        renderer.Render(
+            *m_sprite,
+            glm::ivec2(0, 0),
+            false,
+            m_camera,
+            glm::vec2(m_virtualCameraX, m_camera.Pos.y),
+            glm::vec2(16, 16),
+            1.f
+        );
     }
 
     OrthographicCamera& Camera() { return m_camera; }
 
 private:
     OrthographicCamera m_camera;
+
+    float m_virtualCameraX = 0;
 
 };
