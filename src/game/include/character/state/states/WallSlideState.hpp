@@ -39,6 +39,12 @@ public:
             c.StateMachine().RequestState(StateID::WallJump, c);
             return;
         }
+
+        if (!c.Body().Walled.IsFull())
+        {
+            c.StateMachine().RequestState(StateID::Float, c);
+            return;
+        }
         
         bool intentionIntoWall = c.Body().Walled.IsRight() ? c.Intent().MoveX > 0 : c.Intent().MoveX < 0;
 
