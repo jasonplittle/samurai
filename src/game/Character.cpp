@@ -5,8 +5,8 @@ Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStat
     : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities)), m_gameplayContext(gameplayContext)
 {
     m_body.Position = initPosition;
-    m_body.Radii.x = m_stats.RadiusX;
-    m_body.Radii.y = m_stats.RadiusY;
+    m_body.Radii.x = m_stats.RadiusX * m_stats.Scale;
+    m_body.Radii.y = m_stats.RadiusY * m_stats.Scale;
 
     m_health = m_stats.MaxHealth;
     m_heals = m_stats.MaxHeals;

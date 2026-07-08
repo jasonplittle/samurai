@@ -69,6 +69,7 @@ struct CharacterStats
     float Height;
     float RadiusX;
     float RadiusY;
+    float Scale = 1;
 
     float IdleSpeed;
     float WalkSpeed;

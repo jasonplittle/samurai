@@ -68,7 +68,7 @@ void MobManager::DrawMobs(SpriteRenderer& renderer, OrthographicCamera camera)
             !mob.Character->IsFacingRight() ^ mob.Character->Animator().FlipX(),
             camera,
             mob.Character->Body().Position - mob.Character->Animator().GetFrameCenterOffset(),
-            mob.Character->Animator().GetFrameSize(),
+            mob.Character->Animator().GetFrameSize() * mob.Character->Stats().Scale,
             mob.Character->DeathDecay()
         );
     }

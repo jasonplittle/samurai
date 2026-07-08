@@ -17,6 +17,7 @@
 #include "PlayerManager.hpp"
 #include "Fog.hpp"
 #include "LightManager.hpp"
+#include "CameraManager.hpp"
 
 
 class Game : public IGameplayContext
@@ -63,7 +64,8 @@ private:
 
     GameHUD m_hud;
 
-    OrthographicCamera m_camera;
+    CameraManager m_cameraManager;
+
     Renderer m_renderer;
     SpriteRenderer m_spriteRenderer;
     QuadRenderer m_quadRenderer;
