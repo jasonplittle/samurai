@@ -74,5 +74,6 @@ void Game::Render()
     m_renderer.EnableBlending();
     m_fog.DrawFog(m_noiseRenderer, m_cameraManager.Camera(), glm::vec2(20, 20), 0.8, 0.32);
     m_hud.DrawHUD(m_quadRenderer, m_cameraManager.Camera());
+    m_cameraManager.DrawCamera(m_spriteRenderer);
     
 }
