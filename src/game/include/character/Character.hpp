@@ -97,7 +97,7 @@ struct CharacterStats
 class Character
 {
 public:
-    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext);
+    Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, bool isPlayer, IGameplayContext& gameplayContext);
 
     void Update(float dt, const HitboxManager& hitboxManager);
 
@@ -124,6 +124,7 @@ public:
     bool IsAlive() { return m_health > 0.0; }
     float& DeathDecay() { return m_deathDecay; }
     bool& IsFullDead() { return m_isFullDead; }
+    bool IsPlayer() { return m_isPlayer; }
 
 
     bool CanDoubleJump() { return true; }
@@ -156,4 +157,5 @@ private:
     int m_heals = 0;
     int m_throwables = 0;
     bool m_isInvincable = false;
+    bool m_isPlayer = false;
 };

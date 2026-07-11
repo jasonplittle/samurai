@@ -24,19 +24,19 @@ void MobManager::AddMob(glm::vec2 position, IGameplayContext& context)
             case 1: 
             case 2: 
             case 3:
-                character = ExecutionerCharacterFactory::CreateCharacter(position, context);
+                character = ExecutionerCharacterFactory::CreateCharacter(position, false, context);
                 break;
 
             case 4:
-                character = ArcherCharacterFactory::CreateCharacter(position, context, ArcherColor::Green);
+                character = ArcherCharacterFactory::CreateCharacter(position, false, context, ArcherColor::Green);
                 break;
 
             case 5:
-                character = ArcherCharacterFactory::CreateCharacter(position, context, ArcherColor::Red);
+                character = ArcherCharacterFactory::CreateCharacter(position, false, context, ArcherColor::Red);
                 break;
 
             case 6:
-                character = ArcherCharacterFactory::CreateCharacter(position, context, ArcherColor::Blue);
+                character = ArcherCharacterFactory::CreateCharacter(position, false, context, ArcherColor::Blue);
                 break;
         }
         

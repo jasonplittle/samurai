@@ -36,7 +36,7 @@ public:
         m_virtualCameraX += (targetX - m_virtualCameraX) * t;
 
         m_camera.Pos.x = playerX + (playerX - m_virtualCameraX);
-        // m_camera.Pos.x = m_virtualCameraX;
+        m_camera.Pos.x = m_virtualCameraX;
     }
 
 

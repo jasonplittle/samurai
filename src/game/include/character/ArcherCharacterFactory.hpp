@@ -12,7 +12,7 @@
 class ArcherCharacterFactory
 {
 public:
-    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext, ArcherColor color)
+    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, bool isPlayer, IGameplayContext& gameplayContext, ArcherColor color)
     {
         constexpr float jumpPeakTs = 0.2;
         constexpr float jumpPeakHeight = 48;
@@ -80,7 +80,7 @@ public:
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<ArcherStateFactory>());
 
-        std::unique_ptr<Character> archer = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), gameplayContext);
+        std::unique_ptr<Character> archer = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), isPlayer, gameplayContext);
         return archer;
     }
 };

@@ -18,6 +18,7 @@
 #include "Fog.hpp"
 #include "LightManager.hpp"
 #include "CameraManager.hpp"
+#include "HitstopManager.hpp"
 
 
 class Game : public IGameplayContext
@@ -26,7 +27,7 @@ public:
     Game();
 
     void Init(std::shared_ptr<GameInput> gameInput);
-    void Update(float dt, int windowWidth, int windowHeight);
+    void Update(float realDt, int windowWidth, int windowHeight);
     void Render();
     void Reset();
 
@@ -42,6 +43,11 @@ public:
     }
 
     void PlayerDied() override;
+
+    void TriggerHitstop(float length) override
+    {
+        m_hitstopManager.Trigger(length);
+    }
 
 private:
     PlayerManager m_playerManager;
@@ -65,6 +71,8 @@ private:
     GameHUD m_hud;
 
     CameraManager m_cameraManager;
+
+    HitstopManager m_hitstopManager;
 
     Renderer m_renderer;
     SpriteRenderer m_spriteRenderer;

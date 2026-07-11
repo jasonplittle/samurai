@@ -4,7 +4,7 @@
 
 void PlayerManager::AddPlayer(glm::vec2 position, IGameplayContext& context, GameInput& gameInput)
 {
-    auto player = std::shared_ptr<Character>(SamuraiCharacterFactory::CreateCharacter(position, context));
+    auto player = std::shared_ptr<Character>(SamuraiCharacterFactory::CreateCharacter(position, true, context));
     m_controller = std::make_unique<PlayerController>(player, gameInput);
     m_players.push_back(player);
 }

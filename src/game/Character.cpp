@@ -1,8 +1,8 @@
 #include "Character.hpp"
 
 
-Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, IGameplayContext& gameplayContext)
-    : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities)), m_gameplayContext(gameplayContext)
+Character::Character(glm::vec2 initPosition, CharacterStats stats, CharacterStateMachine stateMachine, AnimationSetPlayer animator, CharacterAbilities abilities, bool isPlayer, IGameplayContext& gameplayContext)
+    : m_stats(stats), m_stateMachine(std::move(stateMachine)), m_animator(std::move(animator)), m_abilities(std::move(abilities)), m_isPlayer(isPlayer), m_gameplayContext(gameplayContext)
 {
     m_body.Position = initPosition;
     m_body.Radii.x = m_stats.RadiusX * m_stats.Scale;
@@ -118,7 +118,11 @@ bool Character::applyHitboxes(const HitboxManager& hitboxManager)
 
         // Damage
         bool crit = (m_isFacingRight && direction.x > 0.0) || (!m_isFacingRight && direction.x < 0.0);
-        m_health -= hitbox->Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
+        float damage = hitbox->Damage * (crit ? 1.4 : 1) * (hitboxDefended ? 1.f - m_defence : 1.0f);
+        m_health -= damage;
+
+        if (m_health + damage > 0.f && !(hitbox->Instigator->IsPlayer() == m_isPlayer))
+            m_gameplayContext.TriggerHitstop(0.075f);
     }
 
     return hit;

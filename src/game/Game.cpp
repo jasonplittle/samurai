@@ -44,18 +44,28 @@ void Game::PlayerDied()
 }
 
 
-void Game::Update(float dt, int windowWidth, int windowHeight)
+void Game::Update(float realDt, int windowWidth, int windowHeight)
 {
+    float gameDt = realDt;
+
+    m_hitstopManager.Update(realDt);
+
+    if (m_hitstopManager.Active())
+        gameDt = 0.f;
+
     m_worldEditior.Update(windowWidth, windowHeight, m_cameraManager.Camera(), *m_gameInput, m_props, m_world, m_mobManager, m_lights, *this);
-    m_playerManager.Update(dt, m_world, m_physics, m_hitboxManager, *this);
-    m_props.Update(dt);
-    m_mobManager.Update(dt, m_playerManager.Player(), m_world, m_physics, m_hitboxManager);
-    m_projectileManager.Update(dt, m_physics, m_world);
-    m_hitboxManager.Update(dt);
-    m_fog.Update(dt);
-    m_lights.Update(dt);
-    m_hud.Update(dt, m_playerManager.Player(), m_mobManager);
-    m_cameraManager.Update(dt, m_playerManager.Player());
+    
+    m_playerManager.Update(gameDt, m_world, m_physics, m_hitboxManager, *this);
+    m_props.Update(gameDt);
+    m_mobManager.Update(gameDt, m_playerManager.Player(), m_world, m_physics, m_hitboxManager);
+    m_projectileManager.Update(gameDt, m_physics, m_world);
+    m_hitboxManager.Update(gameDt);
+
+    m_fog.Update(gameDt);
+    m_lights.Update(gameDt);
+
+    m_hud.Update(realDt, m_playerManager.Player(), m_mobManager);
+    m_cameraManager.Update(realDt, m_playerManager.Player());
 }
 
 

@@ -12,7 +12,7 @@
 class SamuraiCharacterFactory
 {
 public:
-    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, IGameplayContext& gameplayContext)
+    static std::unique_ptr<Character> CreateCharacter(glm::vec2 initPos, bool isPlayer, IGameplayContext& gameplayContext)
     {
         constexpr float jumpPeakTs = 0.4;
         constexpr float jumpPeakHeight = 96;
@@ -76,7 +76,7 @@ public:
 
         CharacterStateMachine stateMachine = CharacterStateMachine(std::make_unique<SamuraiStateFactory>());
 
-        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), gameplayContext);
+        std::unique_ptr<Character> samurai = std::make_unique<Character>(initPos, stats, std::move(stateMachine), std::move(animator), std::move(abilities), isPlayer, gameplayContext);
         return samurai;
     }
 };

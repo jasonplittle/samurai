@@ -14,4 +14,6 @@ public:
     virtual void SpawnProjectile(std::unique_ptr<Projectile>& projectile) = 0;
 
     virtual void PlayerDied() = 0;
+
+    virtual void TriggerHitstop(float length) = 0;
 };
